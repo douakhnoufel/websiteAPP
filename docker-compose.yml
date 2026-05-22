@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  potatoescan:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DEMO_MODE=0
+      - MODEL_DIR=/app/models
+      - OUTPUTS_DIR=/app/outputs
+      - UPLOADS_DIR=/app/uploads
+      - ALLOWED_ORIGINS=*
+      - MODEL_CONF=0.25
+      - MODEL_IMGSZ=640
+      - FRAME_MAX_EDGE=640
+      - VIDEO_SAMPLE_FPS=5
+    volumes:
+      - ./uploads:/app/uploads
+      - ./outputs:/app/outputs
