@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+
+uploads/
+outputs/
+
+cert.pem
+key.pem
+
+.env
