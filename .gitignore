@@ -8,3 +8,6 @@ cert.pem
 key.pem
 
 .env
+
+# iOS build artifacts
+*.ipa
