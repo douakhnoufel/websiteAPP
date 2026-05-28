@@ -18,20 +18,38 @@ MODEL_CONF = float(os.getenv("MODEL_CONF", "0.25"))
 MODEL_IMGSZ = int(os.getenv("MODEL_IMGSZ", "640"))
 MODEL_DEVICE = os.getenv("MODEL_DEVICE", "").strip()
 FRAME_MAX_EDGE = int(os.getenv("FRAME_MAX_EDGE", "640"))
+FRAME_MIN_CONF = float(os.getenv("FRAME_MIN_CONF", "0.55"))
+FRAME_MIN_BOX_AREA_RATIO = float(os.getenv("FRAME_MIN_BOX_AREA_RATIO", "0.02"))
 
 ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "*")
 DJI_BRIDGE_LOCAL_ONLY = os.getenv("DJI_BRIDGE_LOCAL_ONLY", "1") == "1"
 DJI_BRIDGE_TOKEN = os.getenv("DJI_BRIDGE_TOKEN", "").strip()
 DJI_TELEMETRY_HZ = float(os.getenv("DJI_TELEMETRY_HZ", "2"))
 DRONE_COMMAND_TTL_SEC = int(os.getenv("DRONE_COMMAND_TTL_SEC", "20"))
+STREAM_ALLOWED_SCHEMES = {
+    s.strip().lower()
+    for s in os.getenv("STREAM_ALLOWED_SCHEMES", "rtmp,rtsp,http,https").split(",")
+    if s.strip()
+}
+STREAM_ALLOWED_HOSTS = {
+    h.strip().lower()
+    for h in os.getenv("STREAM_ALLOWED_HOSTS", "").split(",")
+    if h.strip()
+}
 
 MODELS = [
     {
         "id": "potato",
         "name": "Potato Disease",
-        "path": MODEL_DIR / "modelsigot" / "best.pt",
+        "path": MODEL_DIR / "potato.pt",
         "classes": ["early", "healthy", "late"],
-        "labels": {"early": "Early blight", "healthy": "Healthy", "late": "Late blight"},
+        "labels": {
+            "early": "Early blight",
+            "healthy": "Healthy",
+            "late": "Late blight",
+            "no_detection": "No detection",
+            "unknown": "Unknown",
+        },
         "description": "YOLOv8n trained on 90 potato leaves",
     },
 ]

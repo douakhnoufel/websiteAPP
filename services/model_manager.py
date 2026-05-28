@@ -1,5 +1,8 @@
 from pathlib import Path
+from threading import Lock
+
 from fastapi import HTTPException
+
 from core.config import MODELS, DEMO_MODE, PALETTE_BGR
 
 _yolo_ok = False
@@ -48,6 +51,7 @@ def load_models(strict=True):
             "yolo": yolo,
             "meta": entry,
             "error": error,
+            "lock": Lock(),
             "colors": {cls: PALETTE_BGR[i % len(PALETTE_BGR)]
                        for i, cls in enumerate(entry["classes"])},
         }

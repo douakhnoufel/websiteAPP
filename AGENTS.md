@@ -14,7 +14,7 @@ This repository contains a FastAPI-based potato disease detection service backed
 
 ## Build, Test, and Development Commands
 
-- `python -m pip install -r requirements.txt`: install FastAPI, Uvicorn, Ultralytics, OpenCV, NumPy, and Pillow.
+- `python -m pip install -r requirements.txt`: install FastAPI, Uvicorn, Ultralytics, OpenCV, NumPy, Pillow, and certificate helpers.
 - `python -m uvicorn main:app --reload`: run the API locally on `http://127.0.0.1:8000`.
 - `start.bat`: run the service with HTTPS using `cert.pem` and `key.pem`.
 - `docker compose up --build`: build and run the containerized service on port `8000`.

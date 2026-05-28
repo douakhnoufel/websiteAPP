@@ -3,6 +3,8 @@ import random
 from core.config import MODEL_CONF, MODEL_IMGSZ, MODEL_DEVICE
 from services.model_manager import get_model_info, label_for
 
+NO_DETECTION_CLASS = "no_detection"
+
 def run_inference(img, model_id, info=None):
     info = info or get_model_info(model_id)
     yolo = info["yolo"]
@@ -16,6 +18,7 @@ def run_inference(img, model_id, info=None):
             "class": cls,
             "label": label_for(info, cls),
             "confidence": conf,
+            "detected": True,
             "boxes": [{"class": cls, "confidence": conf, "bbox": [int(w*0.1), int(h*0.1), int(w*0.9), int(h*0.9)]}],
             "scores": {c: round(1.0 / len(classes), 3) for c in classes}
         }
@@ -24,20 +27,25 @@ def run_inference(img, model_id, info=None):
     if MODEL_DEVICE:
         predict_kwargs["device"] = MODEL_DEVICE
         
-    results = yolo.predict(img, **predict_kwargs)[0]
+    lock = info.get("lock")
+    if lock:
+        with lock:
+            results = yolo.predict(img, **predict_kwargs)[0]
+    else:
+        results = yolo.predict(img, **predict_kwargs)[0]
     boxes_out = []
     class_votes = {}
     
     for box in results.boxes:
         cls_id = int(box.cls[0])
-        cls = classes[cls_id] if cls_id < len(classes) else "unknown"
+        cls = classes[cls_id] if 0 <= cls_id < len(classes) else "unknown"
         conf = float(box.conf[0])
         x1, y1, x2, y2 = map(int, box.xyxy[0].tolist())
         boxes_out.append({"class": cls, "confidence": round(conf, 3), "bbox": [x1, y1, x2, y2]})
         class_votes[cls] = max(class_votes.get(cls, 0), conf)
         
     if not boxes_out:
-        top_cls, top_conf = classes[0] if classes else "unknown", 0.0
+        top_cls, top_conf = NO_DETECTION_CLASS, 0.0
     else:
         top_cls = max(class_votes, key=class_votes.get)
         top_conf = class_votes[top_cls]
@@ -48,6 +56,7 @@ def run_inference(img, model_id, info=None):
         "class": top_cls,
         "label": label_for(info, top_cls),
         "confidence": round(top_conf, 3),
+        "detected": bool(boxes_out),
         "boxes": boxes_out,
         "scores": scores
     }

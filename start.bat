@@ -18,19 +18,31 @@ if errorlevel 1 (
 )
 
 if not exist "%KEY_FILE%" (
+  echo [INFO] SSL key not found. Trying to generate local certificates...
+  python "%~dp0gen_certs.py"
+)
+
+if not exist "%CERT_FILE%" (
+  echo [INFO] SSL certificate not found. Trying to generate local certificates...
+  python "%~dp0gen_certs.py"
+)
+
+if not exist "%KEY_FILE%" (
   echo [ERROR] Missing SSL key: "%KEY_FILE%"
+  echo [ERROR] Certificate generation did not succeed.
   pause
   exit /b 1
 )
 
 if not exist "%CERT_FILE%" (
   echo [ERROR] Missing SSL certificate: "%CERT_FILE%"
+  echo [ERROR] Certificate generation did not succeed.
   pause
   exit /b 1
 )
 
 set "PHONE_IP="
-for /f "usebackq delims=" %%a in (`powershell -NoProfile -Command "$ip = Get-NetIPAddress -AddressFamily IPv4 ^| Where-Object { $_.IPAddress -notlike '127.*' -and $_.PrefixOrigin -ne 'WellKnown' } ^| Sort-Object InterfaceMetric ^| Select-Object -First 1 -ExpandProperty IPAddress; if ($ip) { $ip }"`) do set "PHONE_IP=%%a"
+for /f "usebackq delims=" %%a in (`powershell -NoProfile -Command "$ip = Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -notlike '127.*' -and $_.PrefixOrigin -ne 'WellKnown' } | Sort-Object InterfaceMetric | Select-Object -First 1 -ExpandProperty IPAddress; if ($ip) { $ip }"`) do set "PHONE_IP=%%a"
 
 echo.
 echo ============================================
@@ -53,12 +65,14 @@ set "PORT_IN_USE="
 for /f "usebackq delims=" %%p in (`powershell -NoProfile -Command "$c = Get-NetTCPConnection -LocalPort %PORT% -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1; if ($c) { $c.OwningProcess }"`) do set "PORT_IN_USE=%%p"
 
 if defined PORT_IN_USE (
-  echo [ERROR] Port %PORT% is already in use by process ID %PORT_IN_USE%.
-  echo Close the other server first, or open the existing app here:
+  echo [INFO] Port %PORT% is already in use by process ID %PORT_IN_USE%.
+  echo [INFO] Opening the already running app:
   echo   %LOCAL_URL%
+  start "" "%LOCAL_URL%"
   echo.
+  echo If you want to restart it, stop the existing Python process first and run this file again.
   pause
-  exit /b 1
+  exit /b 0
 )
 
 start "" powershell -NoProfile -WindowStyle Hidden -Command "Start-Sleep -Seconds 3; Start-Process '%LOCAL_URL%'"

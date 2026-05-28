@@ -14,6 +14,8 @@ services:
       - MODEL_IMGSZ=640
       - FRAME_MAX_EDGE=640
       - VIDEO_SAMPLE_FPS=5
+      - STREAM_ALLOWED_SCHEMES=rtmp,rtsp,http,https
+      - STREAM_ALLOWED_HOSTS=
     volumes:
       - ./uploads:/app/uploads
       - ./outputs:/app/outputs

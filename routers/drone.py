@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field
 
 from core.config import DJI_BRIDGE_LOCAL_ONLY, DJI_TELEMETRY_HZ
+from services.security import drone_auth_status, require_drone_access
 from services.drone_manager import (
     acknowledge_command,
     get_command_status,
@@ -47,7 +48,7 @@ async def telemetry():
         "telemetry": get_drone_telemetry(),
         "bridge": {
             "local_only": DJI_BRIDGE_LOCAL_ONLY,
-            "auth": "disabled",
+            "auth": drone_auth_status(),
             "telemetry_hz_target": DJI_TELEMETRY_HZ,
         },
     }
@@ -60,14 +61,14 @@ async def state():
         "state": get_drone_state(),
         "bridge": {
             "local_only": DJI_BRIDGE_LOCAL_ONLY,
-            "auth": "disabled",
+            "auth": drone_auth_status(),
             "telemetry_hz_target": DJI_TELEMETRY_HZ,
         },
     }
 
 
 @router.post("/command")
-async def command(payload: DroneCommand):
+async def command(payload: DroneCommand, _: None = Depends(require_drone_access)):
     try:
         queued = queue_command(payload.command)
     except ValueError as exc:
@@ -76,7 +77,7 @@ async def command(payload: DroneCommand):
 
 
 @router.get("/command/{command_id}")
-async def command_status(command_id: str):
+async def command_status(command_id: str, _: None = Depends(require_drone_access)):
     try:
         status = get_command_status(command_id)
     except ValueError as exc:
@@ -85,17 +86,17 @@ async def command_status(command_id: str):
 
 
 @router.post("/bridge/telemetry")
-async def bridge_telemetry(payload: DroneTelemetryIn):
+async def bridge_telemetry(payload: DroneTelemetryIn, _: None = Depends(require_drone_access)):
     return {"ok": True, "telemetry": ingest_telemetry(payload.model_dump(exclude_none=True))}
 
 
 @router.get("/bridge/commands")
-async def bridge_commands(limit: int = Query(10, ge=1, le=100)):
+async def bridge_commands(limit: int = Query(10, ge=1, le=100), _: None = Depends(require_drone_access)):
     return {"ok": True, "commands": poll_commands(limit=limit)}
 
 
 @router.post("/bridge/ack")
-async def bridge_ack(payload: CommandAckIn):
+async def bridge_ack(payload: CommandAckIn, _: None = Depends(require_drone_access)):
     try:
         ack = acknowledge_command(payload.id, payload.success, payload.detail)
     except ValueError as exc:

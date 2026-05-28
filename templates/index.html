@@ -784,6 +784,11 @@
     background: rgba(201, 88, 55, 0.14);
   }
 
+  .badge-no-detection,
+  .badge-unknown {
+    background: rgba(156, 163, 175, 0.12);
+  }
+
   .result-class-name {
     font-size: 1.4rem;
     font-weight: 900;
@@ -800,6 +805,11 @@
 
   .cls-late {
     color: var(--danger);
+  }
+
+  .cls-no-detection,
+  .cls-unknown {
+    color: var(--muted);
   }
 
   .result-meta {
@@ -1143,6 +1153,16 @@
     position: absolute;
     inset: 0;
     height: 100%;
+  }
+
+  #webcam-video {
+    z-index: 1;
+  }
+
+  #webcam-canvas {
+    z-index: 2;
+    background: transparent !important;
+    pointer-events: none;
   }
 
   .webcam-result {
@@ -1584,9 +1604,11 @@
                 <div class="preview-box-label" style="padding:0 0 12px;border-bottom:none">Annotated Drone Stream</div>
                 <div class="drone-stream-controls">
                   <input id="drone-stream-url" class="drone-input" type="text" placeholder="rtmp://your-server/live/stream-key">
+                  <button class="btn" onclick="testDroneStream()">Test RTMP</button>
                   <button class="btn primary" onclick="startDroneStream()">Start Stream</button>
                   <button class="btn danger" onclick="stopDroneStream()">Stop Stream</button>
                 </div>
+                <div class="drone-bridge-note" id="drone-stream-status">RTMP not tested yet.</div>
                 <div class="drone-stream-view">
                   <img id="drone-stream-view" alt="Annotated drone stream preview" style="display:none">
                   <div id="drone-stream-empty" class="stream-empty">
@@ -1867,6 +1889,11 @@ const WC_MAX_INTERVAL = 2000;
 const WC_MAX_WIDTH = 640;
 const WC_JPEG_QUALITY = 0.7;
 
+function droneAuthHeaders() {
+  const token = (localStorage.getItem('potatoscan_drone_token') || '').trim();
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
+
 function showPanel(name) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -1992,7 +2019,7 @@ async function sendDroneCommand(command) {
     statusEl.textContent = `Queueing: ${command}`;
     const res = await fetch(API + '/drone/command', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...droneAuthHeaders() },
       body: JSON.stringify({ command })
     });
     const data = await res.json();
@@ -2016,7 +2043,9 @@ function watchDroneCommand(commandId) {
   droneCommandWatch = setInterval(async () => {
     tries += 1;
     try {
-      const res = await fetch(API + `/drone/command/${encodeURIComponent(commandId)}`);
+      const res = await fetch(API + `/drone/command/${encodeURIComponent(commandId)}`, {
+        headers: droneAuthHeaders()
+      });
       const data = await res.json();
       if (!res.ok || !data.ok || !data.command) return;
       const st = data.command.status || 'unknown';
@@ -2041,11 +2070,14 @@ function watchDroneCommand(commandId) {
 function startDroneStream() {
   const urlInput = document.getElementById('drone-stream-url');
   const streamUrl = (urlInput.value || '').trim();
+  const statusEl = document.getElementById('drone-stream-status');
   if (!streamUrl) {
     toast('Please enter an RTMP URL');
+    if (statusEl) statusEl.textContent = 'Please enter an RTMP URL before testing or starting.';
     return;
   }
 
+  if (statusEl) statusEl.textContent = 'Starting annotated stream...';
   const img = document.getElementById('drone-stream-view');
   const empty = document.getElementById('drone-stream-empty');
   const src = `${API}/stream/drone?url=${encodeURIComponent(streamUrl)}&model_id=potato&t=${Date.now()}`;
@@ -2062,6 +2094,7 @@ function startDroneStream() {
   }
 
   droneStreamActive = true;
+  if (statusEl) statusEl.textContent = 'Annotated stream started. If no video appears, run Test RTMP first.';
   toast('Drone stream started');
 }
 
@@ -2081,7 +2114,44 @@ function stopDroneStream() {
     heroImg.style.display = 'none';
     heroEmpty.style.display = 'grid';
   }
+  const statusEl = document.getElementById('drone-stream-status');
+  if (statusEl) statusEl.textContent = 'Stream stopped.';
   droneStreamActive = false;
+}
+
+async function testDroneStream() {
+  const urlInput = document.getElementById('drone-stream-url');
+  const streamUrl = (urlInput.value || '').trim();
+  const statusEl = document.getElementById('drone-stream-status');
+  if (!streamUrl) {
+    toast('Please enter an RTMP URL');
+    if (statusEl) statusEl.textContent = 'Please enter an RTMP URL.';
+    return;
+  }
+
+  if (statusEl) statusEl.textContent = 'Testing RTMP connection...';
+  try {
+    const res = await fetch(API + `/stream/test?url=${encodeURIComponent(streamUrl)}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || `HTTP ${res.status}`);
+
+    if (data.ok && data.stream) {
+      const w = data.stream.width || 0;
+      const h = data.stream.height || 0;
+      const fps = Number(data.stream.fps || 0).toFixed(2);
+      if (statusEl) statusEl.textContent = `RTMP OK: ${w}x${h} @ ${fps} fps`;
+      toast('RTMP test passed');
+      return;
+    }
+
+    const reason = (data.stream && data.stream.error) ? data.stream.error : 'unknown';
+    const hints = Array.isArray(data.hints) ? ` Tips: ${data.hints.join(' ')}` : '';
+    if (statusEl) statusEl.textContent = `RTMP test failed: ${reason}.${hints}`;
+    toast(`RTMP test failed: ${reason}`);
+  } catch (e) {
+    if (statusEl) statusEl.textContent = `RTMP test error: ${e.message}`;
+    toast('RTMP test error: ' + e.message);
+  }
 }
 
 function initButtonClickAnimations() {
@@ -2103,31 +2173,45 @@ async function checkHealth() {
     const dot = document.getElementById('api-dot');
     dot.className = 'status-dot live';
     document.getElementById('api-status').textContent = 'API Online';
-    document.getElementById('hero-api').textContent = 'Online';
+    const heroApi = document.getElementById('hero-api');
+    if (heroApi) heroApi.textContent = 'Online';
     const loaded = Object.values(d.models || {}).some(m => m.loaded);
     const hasError = Object.values(d.models || {}).some(m => m.error);
     const modelText = hasError ? 'Model error' : (loaded ? 'Model loaded' : 'Demo mode');
     document.getElementById('model-status').textContent = modelText;
-    document.getElementById('hero-model').textContent = modelText;
+    const heroModel = document.getElementById('hero-model');
+    if (heroModel) heroModel.textContent = modelText;
   } catch {
     const dot = document.getElementById('api-dot');
     dot.className = 'status-dot offline';
     document.getElementById('api-status').textContent = 'API Offline';
     document.getElementById('model-status').textContent = 'Cannot reach server';
-    document.getElementById('hero-api').textContent = 'Offline';
-    document.getElementById('hero-model').textContent = 'Unavailable';
+    const heroApi = document.getElementById('hero-api');
+    if (heroApi) heroApi.textContent = 'Offline';
+    const heroModel = document.getElementById('hero-model');
+    if (heroModel) heroModel.textContent = 'Unavailable';
   }
 }
 checkHealth();
 setInterval(checkHealth, 30000);
 
-const CLS_MAP = { healthy: 'healthy', early: 'early', late: 'late', early_blight: 'early', late_blight: 'late' };
+const CLS_MAP = {
+  healthy: 'healthy',
+  early: 'early',
+  late: 'late',
+  early_blight: 'early',
+  late_blight: 'late',
+  no_detection: 'no-detection',
+  unknown: 'unknown'
+};
 const LABEL_MAP = {
   healthy: 'Healthy',
   early: 'Early blight',
   late: 'Late blight',
   early_blight: 'Early blight',
-  late_blight: 'Late blight'
+  late_blight: 'Late blight',
+  no_detection: 'No detection',
+  unknown: 'Unknown'
 };
 
 function clsKey(cls) {
@@ -2135,15 +2219,15 @@ function clsKey(cls) {
 }
 
 function clsIcon(cls) {
-  return { healthy: '🌿', early: '🟡', late: '🔴', early_blight: '🟡', late_blight: '🔴' }[cls] || '?';
+  return { healthy: '🌿', early: '🟡', late: '🔴', early_blight: '🟡', late_blight: '🔴', no_detection: '--', unknown: '?' }[cls] || '?';
 }
 
 function clsColor(cls) {
-  return { healthy: 'var(--secondary)', early: 'var(--warning)', late: '#d96a4d', early_blight: 'var(--warning)', late_blight: '#d96a4d' }[cls] || '#888';
+  return { healthy: 'var(--secondary)', early: 'var(--warning)', late: '#d96a4d', early_blight: 'var(--warning)', late_blight: '#d96a4d', no_detection: 'var(--muted)', unknown: 'var(--muted)' }[cls] || '#888';
 }
 
 function clsBgColor(cls) {
-  return { healthy: '#4caf50', early: '#e6a817', late: '#d96a4d', early_blight: '#e6a817', late_blight: '#d96a4d' }[cls] || '#888';
+  return { healthy: '#4caf50', early: '#e6a817', late: '#d96a4d', early_blight: '#e6a817', late_blight: '#d96a4d', no_detection: '#6b7280', unknown: '#6b7280' }[cls] || '#888';
 }
 
 function formatLabel(cls) {
@@ -2164,7 +2248,7 @@ function confBars(scores) {
 }
 
 function resultHTML(pred) {
-  const cls = pred.class || pred.dominant_class || 'healthy';
+  const cls = pred.class || pred.dominant_class || 'no_detection';
   const label = pred.label || pred.dominant_label || formatLabel(cls);
   const conf = Math.round((pred.confidence || pred.avg_confidence || 0) * 100);
   const scores = pred.scores || {};
@@ -2280,6 +2364,9 @@ async function handleVideoFile(file) {
       </div>`;
 
     const dist = data.class_distribution || {};
+    const distClasses = Object.prototype.hasOwnProperty.call(dist, 'no_detection')
+      ? ['early', 'healthy', 'late', 'no_detection']
+      : ['early', 'healthy', 'late'];
     document.getElementById('vid-result').innerHTML = `
       <div class="result-header">
         <div class="result-badge badge-${clsKey(cls)}">${clsIcon(cls)}</div>
@@ -2291,7 +2378,7 @@ async function handleVideoFile(file) {
       <div class="result-body">
         <div class="result-section">Frame-Level Class Distribution</div>
         <div class="dist-chart">
-          ${['early', 'healthy', 'late'].map(c => {
+          ${distClasses.map(c => {
             const distPct = Math.round(dist[c] || 0);
             const lbl = formatLabel(c);
             return `<div class="dist-row">
@@ -2335,6 +2422,7 @@ async function startWebcam() {
     const vid = document.getElementById('webcam-video');
     vid.srcObject = wcStream;
     vid.onloadedmetadata = () => {
+      vid.play().catch(() => {});
       const cvs = document.getElementById('webcam-canvas');
       cvs.width = vid.videoWidth;
       cvs.height = vid.videoHeight;
@@ -2433,7 +2521,7 @@ function startWcLoop() {
 }
 
 function updateWcDisplay(data) {
-  const cls = data.class || 'healthy';
+  const cls = data.class || 'no_detection';
   const label = data.label || formatLabel(cls);
   const conf = Math.round((data.confidence || 0) * 100);
   const scores = data.scores || {};

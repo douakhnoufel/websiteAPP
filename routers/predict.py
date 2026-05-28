@@ -1,45 +1,179 @@
 import uuid
 import time
-import shutil
 import cv2
 import numpy as np
 from pathlib import Path
 
 from fastapi import APIRouter, File, UploadFile, HTTPException, BackgroundTasks, Query
 from fastapi.responses import JSONResponse
+from starlette.concurrency import run_in_threadpool
 
-from core.config import UPLOADS_DIR, OUTPUTS_DIR, MAX_IMAGE_MB, MAX_VIDEO_MB, VIDEO_SAMPLE_FPS, FRAME_MAX_EDGE
-from services.inference import run_inference, draw_inference, resize_max_edge
+from core.config import (
+    UPLOADS_DIR,
+    OUTPUTS_DIR,
+    MAX_IMAGE_MB,
+    MAX_VIDEO_MB,
+    VIDEO_SAMPLE_FPS,
+    FRAME_MAX_EDGE,
+    FRAME_MIN_CONF,
+    FRAME_MIN_BOX_AREA_RATIO,
+)
+from services.inference import NO_DETECTION_CLASS, run_inference, draw_inference, resize_max_edge
 from services.file_handler import remove_file
 from services.model_manager import get_model_info, label_for
 
 router = APIRouter(prefix="/predict", tags=["predict"])
 
-@router.post("/image")
-async def predict_image(bg: BackgroundTasks, file: UploadFile = File(...), model_id: str = Query("potato")):
-    uid = uuid.uuid4().hex[:8]
-    img_path = UPLOADS_DIR / f"{uid}{Path(file.filename).suffix}"
-    out_path = OUTPUTS_DIR / f"{uid}_out.jpg"
-    
-    with open(img_path, "wb") as f:
-        shutil.copyfileobj(file.file, f)
-        
-    if img_path.stat().st_size > MAX_IMAGE_MB * 1024 * 1024:
-        bg.add_task(remove_file, str(img_path))
-        raise HTTPException(413, f"Image exceeds {MAX_IMAGE_MB}MB limit")
-        
-    img = cv2.imread(str(img_path))
-    if img is None:
-        bg.add_task(remove_file, str(img_path))
-        raise HTTPException(400, "Cannot read image")
-        
+CHUNK_SIZE = 1024 * 1024
+IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
+VIDEO_EXTS = {".mp4", ".mov", ".avi", ".mkv", ".webm"}
+
+
+def _safe_suffix(file: UploadFile, allowed_exts: set[str], default: str, kind: str) -> str:
+    suffix = Path(file.filename or "").suffix.lower()
+    if not suffix:
+        return default
+    if suffix not in allowed_exts:
+        raise HTTPException(400, f"Unsupported {kind} file type: {suffix}")
+    return suffix
+
+
+async def _save_upload_limited(file: UploadFile, dest: Path, max_mb: int, kind: str) -> int:
+    max_bytes = max_mb * 1024 * 1024
+    total = 0
+    try:
+        with dest.open("wb") as out:
+            while True:
+                chunk = await file.read(CHUNK_SIZE)
+                if not chunk:
+                    break
+                total += len(chunk)
+                if total > max_bytes:
+                    raise HTTPException(413, f"{kind} exceeds {max_mb}MB limit")
+                out.write(chunk)
+    except HTTPException:
+        dest.unlink(missing_ok=True)
+        raise
+    except Exception:
+        dest.unlink(missing_ok=True)
+        raise
+    finally:
+        await file.close()
+    return total
+
+
+async def _read_upload_limited(file: UploadFile, max_mb: int, kind: str) -> bytes:
+    max_bytes = max_mb * 1024 * 1024
+    chunks = []
+    total = 0
+    try:
+        while True:
+            chunk = await file.read(CHUNK_SIZE)
+            if not chunk:
+                break
+            total += len(chunk)
+            if total > max_bytes:
+                raise HTTPException(413, f"{kind} exceeds {max_mb}MB limit")
+            chunks.append(chunk)
+    finally:
+        await file.close()
+    return b"".join(chunks)
+
+
+def _infer_image_file(img, model_id: str, out_path: Path) -> tuple[dict, int]:
     t0 = time.time()
     pred = run_inference(img, model_id)
     ms = int((time.time() - t0) * 1000)
     pred["inference_ms"] = ms
+    ok = cv2.imwrite(str(out_path), draw_inference(img, pred, model_id))
+    if not ok:
+        raise HTTPException(500, "Cannot write annotated image")
+    return pred, ms
+
+
+def _process_video_file(img_path: Path, out_path: Path, model_id: str) -> dict:
+    info = get_model_info(model_id)
+    cap = cv2.VideoCapture(str(img_path))
+    if not cap.isOpened():
+        raise HTTPException(400, "Cannot open video")
+
+    writer = None
+    try:
+        fps = cap.get(cv2.CAP_PROP_FPS) or 25
+        width, height = int(cap.get(3)), int(cap.get(4))
+        total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        if width <= 0 or height <= 0:
+            raise HTTPException(400, "Video has invalid dimensions")
+
+        writer = cv2.VideoWriter(
+            str(out_path),
+            cv2.VideoWriter_fourcc(*"mp4v"),
+            fps,
+            (width, height),
+        )
+        if not writer.isOpened():
+            raise HTTPException(500, "Cannot create annotated video")
+
+        preds, frame_index, t0 = [], 0, time.time()
+        skip = max(1, int(round(fps / max(VIDEO_SAMPLE_FPS, 0.1))))
+
+        while True:
+            ret, frame = cap.read()
+            if not ret:
+                break
+            if frame_index % skip == 0:
+                preds.append(run_inference(frame, model_id, info=info))
+            writer.write(draw_inference(frame, preds[-1] if preds else {"boxes": []}, model_id))
+            frame_index += 1
+    finally:
+        cap.release()
+        if writer is not None:
+            writer.release()
+
+    ms = int((time.time() - t0) * 1000) if "t0" in locals() else 0
+    votes = {}
+    for pred in preds:
+        cls = pred.get("class") or NO_DETECTION_CLASS
+        votes[cls] = votes.get(cls, 0) + 1
+
+    dom = max(votes, key=votes.get) if votes else NO_DETECTION_CLASS
+    avg = round(sum(p.get("confidence", 0.0) for p in preds) / max(len(preds), 1), 3)
+    classes = [*info["meta"]["classes"], NO_DETECTION_CLASS]
+    dist = {c: round(votes.get(c, 0) / max(len(preds), 1) * 100, 1) for c in classes}
+
+    return {
+        "dominant_class": dom,
+        "dominant_label": label_for(info, dom),
+        "avg_confidence": avg,
+        "class_distribution": dist,
+        "frames_analyzed": len(preds),
+        "detected_frames": sum(1 for p in preds if p.get("detected")),
+        "total_frames": total,
+        "inference_ms": ms,
+    }
+
+
+@router.post("/image")
+async def predict_image(bg: BackgroundTasks, file: UploadFile = File(...), model_id: str = Query("potato")):
+    uid = uuid.uuid4().hex[:8]
+    suffix = _safe_suffix(file, IMAGE_EXTS, ".jpg", "image")
+    img_path = UPLOADS_DIR / f"{uid}{suffix}"
+    out_path = OUTPUTS_DIR / f"{uid}_out.jpg"
     
-    cv2.imwrite(str(out_path), draw_inference(img, pred, model_id))
-    bg.add_task(remove_file, str(img_path))
+    await _save_upload_limited(file, img_path, MAX_IMAGE_MB, "Image")
+
+    img = await run_in_threadpool(cv2.imread, str(img_path))
+    if img is None:
+        bg.add_task(remove_file, str(img_path))
+        raise HTTPException(400, "Cannot read image")
+        
+    try:
+        pred, ms = await run_in_threadpool(_infer_image_file, img, model_id, out_path)
+    except Exception:
+        bg.add_task(remove_file, str(out_path))
+        raise
+    finally:
+        bg.add_task(remove_file, str(img_path))
     
     return JSONResponse({"id": uid, "model_id": model_id, "prediction": pred,
                          "inference_ms": ms, "result_url": f"/outputs/{out_path.name}"})
@@ -47,70 +181,59 @@ async def predict_image(bg: BackgroundTasks, file: UploadFile = File(...), model
 @router.post("/video")
 async def predict_video(bg: BackgroundTasks, file: UploadFile = File(...), model_id: str = Query("potato")):
     uid = uuid.uuid4().hex[:8]
-    img_path = UPLOADS_DIR / f"{uid}{Path(file.filename).suffix}"
+    suffix = _safe_suffix(file, VIDEO_EXTS, ".mp4", "video")
+    img_path = UPLOADS_DIR / f"{uid}{suffix}"
     out_path = OUTPUTS_DIR / f"{uid}_out.mp4"
     
-    with open(img_path, "wb") as f:
-        shutil.copyfileobj(file.file, f)
-        
-    if img_path.stat().st_size > MAX_VIDEO_MB * 1024 * 1024:
+    await _save_upload_limited(file, img_path, MAX_VIDEO_MB, "Video")
+
+    try:
+        summary = await run_in_threadpool(_process_video_file, img_path, out_path, model_id)
+    except Exception:
+        bg.add_task(remove_file, str(out_path))
+        raise
+    finally:
         bg.add_task(remove_file, str(img_path))
-        raise HTTPException(413, f"Video exceeds {MAX_VIDEO_MB}MB limit")
-        
-    cap = cv2.VideoCapture(str(img_path))
-    if not cap.isOpened():
-        bg.add_task(remove_file, str(img_path))
-        raise HTTPException(400, "Cannot open video")
-        
-    fps = cap.get(cv2.CAP_PROP_FPS) or 25
-    W, H = int(cap.get(3)), int(cap.get(4))
-    total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-    writer = cv2.VideoWriter(str(out_path), cv2.VideoWriter_fourcc(*"mp4v"), fps, (W, H))
     
-    preds, fi, t0 = [], 0, time.time()
-    skip = max(1, int(round(fps / max(VIDEO_SAMPLE_FPS, 0.1))))
-    info = get_model_info(model_id)
-    
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
-        if fi % skip == 0:
-            p = run_inference(frame, model_id, info=info)
-            preds.append(p)
-        writer.write(draw_inference(frame, preds[-1] if preds else {"boxes": []}, model_id))
-        fi += 1
-        
-    cap.release()
-    writer.release()
-    
-    ms = int((time.time() - t0) * 1000)
-    votes = {}
-    for p in preds:
-        votes[p["class"]] = votes.get(p["class"], 0) + 1
-        
-    dom = max(votes, key=votes.get) if votes else "unknown"
-    avg = round(sum(p["confidence"] for p in preds) / max(len(preds), 1), 3)
-    classes = info["meta"]["classes"]
-    dist = {c: round(votes.get(c, 0) / max(len(preds), 1) * 100, 1) for c in classes}
-    dom_label = label_for(info, dom)
-    
-    bg.add_task(remove_file, str(img_path))
-    
-    return JSONResponse({"id": uid, "model_id": model_id, "dominant_class": dom,
-                         "dominant_label": dom_label, "avg_confidence": avg, "class_distribution": dist,
-                         "frames_analyzed": len(preds), "total_frames": total,
-                         "inference_ms": ms, "result_url": f"/outputs/{out_path.name}"})
+    return JSONResponse({"id": uid, "model_id": model_id, **summary,
+                         "result_url": f"/outputs/{out_path.name}"})
 
 @router.post("/frame")
 async def predict_frame(file: UploadFile = File(...), model_id: str = Query("potato")):
-    data = await file.read()
+    data = await _read_upload_limited(file, MAX_IMAGE_MB, "Frame")
     img = cv2.imdecode(np.frombuffer(data, np.uint8), cv2.IMREAD_COLOR)
     if img is None:
         raise HTTPException(400, "Cannot decode frame")
         
     img = resize_max_edge(img, FRAME_MAX_EDGE)
     t0 = time.time()
-    pred = run_inference(img, model_id)
+    pred = await run_in_threadpool(run_inference, img, model_id)
+
+    h, w = img.shape[:2]
+    frame_area = max(float(h * w), 1.0)
+    strong_boxes = []
+    for box in pred.get("boxes", []):
+        x1, y1, x2, y2 = box.get("bbox", [0, 0, 0, 0])
+        bw = max(0.0, float(x2 - x1))
+        bh = max(0.0, float(y2 - y1))
+        area_ratio = (bw * bh) / frame_area
+        if float(box.get("confidence", 0.0)) >= FRAME_MIN_CONF and area_ratio >= FRAME_MIN_BOX_AREA_RATIO:
+            strong_boxes.append(box)
+
+    if not strong_boxes:
+        info = get_model_info(model_id)
+        pred["class"] = NO_DETECTION_CLASS
+        pred["label"] = label_for(info, NO_DETECTION_CLASS)
+        pred["confidence"] = 0.0
+        pred["detected"] = False
+        pred["boxes"] = []
+    else:
+        pred["boxes"] = strong_boxes
+        best_box = max(strong_boxes, key=lambda b: float(b.get("confidence", 0.0)))
+        pred["class"] = best_box.get("class", pred.get("class", NO_DETECTION_CLASS))
+        pred["label"] = label_for(get_model_info(model_id), pred["class"])
+        pred["confidence"] = round(float(best_box.get("confidence", pred.get("confidence", 0.0))), 3)
+        pred["detected"] = True
+
     pred["inference_ms"] = int((time.time() - t0) * 1000)
     return JSONResponse(pred)
