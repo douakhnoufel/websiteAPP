@@ -1876,8 +1876,9 @@ print(res["result_url"])</div>
 
 <script>
 const API = location.protocol === 'file:'
-  ? 'https://localhost:8000'
+  ? (localStorage.getItem('potatoscan_api_base') || 'https://localhost:8000')
   : '';
+const IS_MOBILE = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || '');
 let wcStream = null, wcTimer = null, wcFacing = 'environment', wcInfer = false;
 let wcAvgMs = null, wcLastTick = 0, wcLastFps = 0, wcLastLatency = 0;
 let droneTimer = null;
@@ -2416,10 +2417,27 @@ function resetVideo() {
 }
 
 async function startWebcam() {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    toast('Camera API is not available on this browser');
+    return;
+  }
+  if (!window.isSecureContext && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+    toast('Camera needs HTTPS on mobile. Open this page with HTTPS and accept the certificate.');
+    return;
+  }
   try {
     if (wcStream) wcStream.getTracks().forEach(t => t.stop());
-    wcStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: wcFacing }, audio: false });
+    const primary = { video: { facingMode: { ideal: wcFacing } }, audio: false };
+    const fallback = { video: true, audio: false };
+    try {
+      wcStream = await navigator.mediaDevices.getUserMedia(primary);
+    } catch {
+      wcStream = await navigator.mediaDevices.getUserMedia(fallback);
+    }
     const vid = document.getElementById('webcam-video');
+    vid.setAttribute('playsinline', 'true');
+    vid.setAttribute('muted', 'true');
+    vid.setAttribute('autoplay', 'true');
     vid.srcObject = wcStream;
     vid.onloadedmetadata = () => {
       vid.play().catch(() => {});
@@ -2439,7 +2457,10 @@ async function startWebcam() {
     document.getElementById('wc-result-card').style.display = 'block';
     document.getElementById('webcam-empty').style.display = 'none';
   } catch (e) {
-    toast('Camera error: ' + e.message);
+    const mobileHint = IS_MOBILE
+      ? ' On mobile: use HTTPS, allow camera permission, and retry.'
+      : '';
+    toast('Camera error: ' + e.message + mobileHint);
   }
 }
 
