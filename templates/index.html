@@ -40,10 +40,12 @@
   html {
     scroll-behavior: smooth;
     color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
     min-height: 100vh;
+    min-height: 100dvh;
     font-family: "Chivo", sans-serif;
     color: var(--ink);
     background:
@@ -354,6 +356,17 @@
   .mini-stat span:last-child {
     color: var(--ink);
     font-family: "IBM Plex Mono", monospace;
+  }
+
+  .mini-stat a {
+    color: var(--ink);
+    font-family: "IBM Plex Mono", monospace;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .mini-stat a:hover {
+    color: var(--primary-strong);
   }
 
   .content {
@@ -676,6 +689,7 @@
 
   .progress-bar,
   .progress-fill,
+  .conf-fill,
   .dist-bar,
   .telemetry-progress span {
     height: 100%;
@@ -1442,10 +1456,11 @@
         <div class="mini-label">Model Snapshot</div>
         <div class="mini-stat"><span>Architecture</span><span>YOLOv8n</span></div>
         <div class="mini-stat"><span>Classes</span><span>3</span></div>
-        <div class="mini-stat"><span>Dataset</span><span>99 pictures</span></div>
+        <div class="mini-stat"><span>Dataset</span><a href="https://www.kaggle.com/datasets/aarishasifkhan/plantvillage-potato-disease-dataset/data" target="_blank" rel="noopener noreferrer">PlantVillage (Kaggle)</a></div>
         <div class="mini-stat"><span>Input</span><span>640x640</span></div>
         <div class="mini-stat"><span>Target</span><span>&lt;1s/image</span></div>
         <div class="mini-stat"><span>Mission</span><span>Field diagnosis</span></div>
+        <div class="mini-stat"><span>Android App</span><a href="/static/apps/potatoscan.apk" download>Download APK</a></div>
       </div>
     </aside>
 
@@ -1462,10 +1477,10 @@
             </div>
 
             <div class="upload-zone" id="img-zone" ondragover="ev.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleImgDrop(event)">
-              <input type="file" accept="image/*" onchange="handleImageFile(this.files[0])">
+              <input id="img-file-input" type="file" accept="image/*,.heic,.heif" onchange="handleImageFile(this.files[0])">
               <div class="upload-icon-wrap">Leaf</div>
               <div class="upload-title">Drop a potato leaf image</div>
-              <div class="upload-sub">JPG, PNG, and WEBP are supported. Best for quick classroom demos and field diagnosis.</div>
+              <div class="upload-sub">JPG, PNG, WEBP, and iPhone HEIC photos are supported. Best for quick classroom demos and field diagnosis.</div>
             </div>
 
             <div class="progress-wrap" id="img-progress">
@@ -1502,7 +1517,7 @@
             </div>
 
             <div class="upload-zone" id="vid-zone" ondragover="ev.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleVidDrop(event)">
-              <input type="file" accept="video/*" onchange="handleVideoFile(this.files[0])">
+              <input id="vid-file-input" type="file" accept="video/*,.mov" onchange="handleVideoFile(this.files[0])">
               <div class="upload-icon-wrap" aria-hidden="true">
                 <svg viewBox="0 0 24 24">
                   <rect x="4" y="6" width="10" height="12" rx="1.5"></rect>
@@ -1757,6 +1772,13 @@ print(res["result_url"])</div>
               <div class="support-title">3. End with scale</div>
               <div class="support-copy">Use drone mode as the future-facing layer: field scouting, telemetry, and larger agricultural operations.</div>
             </div>
+            <div class="support-item">
+              <div class="support-title">4. Ask users to test from this dataset</div>
+              <div class="support-copy">Ask users to open this PlantVillage Kaggle dataset, download potato leaf images, and test predictions directly in this app.</div>
+              <div class="build-actions" style="margin-top:12px">
+                <a class="btn primary" href="https://www.kaggle.com/datasets/aarishasifkhan/plantvillage-potato-disease-dataset/data" target="_blank" rel="noopener noreferrer">Open Dataset To Test</a>
+              </div>
+            </div>
           </div>
         </aside>
       </section>
@@ -1765,15 +1787,15 @@ print(res["result_url"])</div>
         <div class="preview-head">
           <div>
             <div class="preview-label">Mobile Builds</div>
-            <div class="panel-title" style="margin-top:8px;font-size:1.6rem">Flutter and phone install area</div>
-            <div class="preview-copy">Keep mobile deliverables in their own place so the docs panel stays focused on demo notes and backend endpoints.</div>
+            <div class="panel-title" style="margin-top:8px;font-size:1.6rem">Flutter Android download</div>
+            <div class="preview-copy">Install the latest PotatoScan Android release directly from the website after the APK is placed on the server.</div>
           </div>
         </div>
         <div class="mobile-builds">
           <div class="mobile-build-card docs-card">
             <span class="method-badge method-post">Android</span>
-            <div class="build-title">Flutter APK Slot</div>
-            <div class="build-text">If you package a Flutter client, place the APK in <strong>static/apps</strong> so the dashboard can still act as a simple delivery hub.</div>
+            <div class="build-title">PotatoScan Android APK</div>
+            <div class="build-text">Current release build: <strong>226.56 MB</strong>, generated on <strong>2026-05-29 17:41</strong>. Android users can download and install it from this link.</div>
             <div class="build-path">/static/apps/potatoscan.apk</div>
             <div class="build-actions">
               <a class="btn primary" href="/static/apps/potatoscan.apk" download>Download APK</a>
@@ -1889,10 +1911,131 @@ const WC_MIN_INTERVAL = 350;
 const WC_MAX_INTERVAL = 2000;
 const WC_MAX_WIDTH = 640;
 const WC_JPEG_QUALITY = 0.7;
+const MAX_IMAGE_BYTES = 20 * 1024 * 1024;
+const MAX_RAW_IMAGE_BYTES = 80 * 1024 * 1024;
+const MAX_VIDEO_BYTES = 100 * 1024 * 1024;
+const MOBILE_IMAGE_MAX_EDGE = 1600;
+const MOBILE_IMAGE_JPEG_QUALITY = 0.86;
+let wcLastErrorToast = 0;
+let imgObjectUrl = null;
 
 function droneAuthHeaders() {
   const token = (localStorage.getItem('potatoscan_drone_token') || '').trim();
   return token ? { Authorization: `Bearer ${token}` } : {};
+}
+
+async function readJsonResponse(res) {
+  let data = {};
+  try {
+    data = await res.json();
+  } catch {
+    data = {};
+  }
+  if (!res.ok) {
+    throw new Error(data.detail || data.message || `Request failed (${res.status})`);
+  }
+  return data;
+}
+
+function isImageUpload(file) {
+  const name = (file && file.name ? file.name : '').toLowerCase();
+  return !!file && (
+    (file.type || '').startsWith('image/') ||
+    name.endsWith('.heic') ||
+    name.endsWith('.heif')
+  );
+}
+
+function isVideoUpload(file) {
+  const name = (file && file.name ? file.name : '').toLowerCase();
+  return !!file && (
+    (file.type || '').startsWith('video/') ||
+    name.endsWith('.mov')
+  );
+}
+
+function setImageObjectUrl(url) {
+  if (imgObjectUrl) URL.revokeObjectURL(imgObjectUrl);
+  imgObjectUrl = url;
+  document.getElementById('img-original').src = url;
+}
+
+function loadImageFromFile(file) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => resolve({ img, url });
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error('Safari could not read this image. Try a JPG or PNG export.'));
+    };
+    img.src = url;
+  });
+}
+
+function canvasToJpegBlob(canvas, quality) {
+  return new Promise((resolve, reject) => {
+    if (canvas.toBlob) {
+      canvas.toBlob(blob => {
+        if (blob) resolve(blob);
+        else reject(new Error('Could not prepare this image for upload'));
+      }, 'image/jpeg', quality);
+      return;
+    }
+
+    try {
+      const dataUrl = canvas.toDataURL('image/jpeg', quality);
+      const raw = atob(dataUrl.split(',')[1]);
+      const bytes = new Uint8Array(raw.length);
+      for (let i = 0; i < raw.length; i += 1) bytes[i] = raw.charCodeAt(i);
+      resolve(new Blob([bytes], { type: 'image/jpeg' }));
+    } catch {
+      reject(new Error('Could not prepare this image for upload'));
+    }
+  });
+}
+
+async function prepareImageUpload(file) {
+  const name = (file.name || '').toLowerCase();
+  const likelyIphoneFormat = name.endsWith('.heic') || name.endsWith('.heif') || /heic|heif/i.test(file.type || '');
+  const shouldNormalize = IS_MOBILE || likelyIphoneFormat || file.size > MAX_IMAGE_BYTES;
+  const { img, url } = await loadImageFromFile(file);
+
+  if (!shouldNormalize) {
+    return { uploadFile: file, previewUrl: url };
+  }
+
+  const naturalWidth = img.naturalWidth || img.width;
+  const naturalHeight = img.naturalHeight || img.height;
+  if (!naturalWidth || !naturalHeight) {
+    URL.revokeObjectURL(url);
+    throw new Error('This image has invalid dimensions');
+  }
+
+  const scale = Math.min(1, MOBILE_IMAGE_MAX_EDGE / Math.max(naturalWidth, naturalHeight));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.max(1, Math.round(naturalWidth * scale));
+  canvas.height = Math.max(1, Math.round(naturalHeight * scale));
+  canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+
+  const blob = await canvasToJpegBlob(canvas, MOBILE_IMAGE_JPEG_QUALITY);
+  const uploadName = (file.name || 'leaf-image').replace(/\.[^.]+$/, '') + '.jpg';
+  const uploadFile = new File([blob], uploadName, { type: 'image/jpeg' });
+
+  if (uploadFile.size > MAX_IMAGE_BYTES) {
+    URL.revokeObjectURL(url);
+    throw new Error('Image is still over 20MB after Safari conversion');
+  }
+
+  return { uploadFile, previewUrl: url };
+}
+
+async function canvasToFrameBlob(canvas) {
+  try {
+    return await canvasToJpegBlob(canvas, WC_JPEG_QUALITY);
+  } catch {
+    return null;
+  }
 }
 
 function showPanel(name) {
@@ -1937,8 +2080,8 @@ async function refreshDroneTelemetry() {
       fetch(API + '/drone/telemetry'),
       fetch(API + '/drone/state')
     ]);
-    const dt = await rt.json();
-    const ds = await rs.json();
+    const dt = await readJsonResponse(rt);
+    const ds = await readJsonResponse(rs);
     if (!dt.ok || !dt.telemetry) return;
     const t = dt.telemetry;
     const s = (ds && ds.state) ? ds.state : {};
@@ -2023,8 +2166,8 @@ async function sendDroneCommand(command) {
       headers: { 'Content-Type': 'application/json', ...droneAuthHeaders() },
       body: JSON.stringify({ command })
     });
-    const data = await res.json();
-    if (!res.ok || !data.ok) throw new Error(data.detail || 'Command failed');
+    const data = await readJsonResponse(res);
+    if (!data.ok) throw new Error(data.detail || 'Command failed');
     const cmd = data.queued || {};
     statusEl.textContent = `Queued: ${cmd.command || command} (${cmd.id || 'no-id'})`;
     toast(`Drone command queued: ${command}`);
@@ -2047,8 +2190,8 @@ function watchDroneCommand(commandId) {
       const res = await fetch(API + `/drone/command/${encodeURIComponent(commandId)}`, {
         headers: droneAuthHeaders()
       });
-      const data = await res.json();
-      if (!res.ok || !data.ok || !data.command) return;
+      const data = await readJsonResponse(res);
+      if (!data.ok || !data.command) return;
       const st = data.command.status || 'unknown';
       statusEl.textContent = `Command ${commandId.slice(0, 8)}: ${st}`;
       if (st.startsWith('ack_') || st === 'expired') {
@@ -2133,8 +2276,7 @@ async function testDroneStream() {
   if (statusEl) statusEl.textContent = 'Testing RTMP connection...';
   try {
     const res = await fetch(API + `/stream/test?url=${encodeURIComponent(streamUrl)}`);
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.detail || `HTTP ${res.status}`);
+    const data = await readJsonResponse(res);
 
     if (data.ok && data.stream) {
       const w = data.stream.width || 0;
@@ -2170,7 +2312,7 @@ initButtonClickAnimations();
 async function checkHealth() {
   try {
     const r = await fetch(API + '/health');
-    const d = await r.json();
+    const d = await readJsonResponse(r);
     const dot = document.getElementById('api-dot');
     dot.className = 'status-dot live';
     document.getElementById('api-status').textContent = 'API Online';
@@ -2274,22 +2416,32 @@ function handleImgDrop(ev) {
 }
 
 async function handleImageFile(file) {
-  if (!file || !file.type.startsWith('image/')) return toast('Please select an image file');
+  if (!isImageUpload(file)) return toast('Please select an image file');
+  if (file.size > MAX_RAW_IMAGE_BYTES) return toast('Image must be under 80MB');
 
-  document.getElementById('img-original').src = URL.createObjectURL(file);
+  let prepared;
+  try {
+    prepared = await prepareImageUpload(file);
+  } catch (e) {
+    toast('Image error: ' + e.message);
+    return;
+  }
+
+  setImageObjectUrl(prepared.previewUrl);
   document.getElementById('img-zone').style.display = 'none';
   document.getElementById('img-progress').style.display = 'block';
   document.getElementById('img-pbar').style.width = '30%';
   document.getElementById('img-plabel').textContent = 'Uploading...';
 
   const fd = new FormData();
-  fd.append('file', file);
+  fd.append('file', prepared.uploadFile, prepared.uploadFile.name);
 
   try {
     document.getElementById('img-pbar').style.width = '60%';
     document.getElementById('img-plabel').textContent = 'Running inference...';
     const res = await fetch(API + '/predict/image', { method: 'POST', body: fd });
-    const data = await res.json();
+    const data = await readJsonResponse(res);
+    if (!data.result_url || !data.prediction) throw new Error('Prediction response was incomplete');
     document.getElementById('img-pbar').style.width = '100%';
 
     document.getElementById('img-annotated').src = data.result_url;
@@ -2307,10 +2459,16 @@ async function handleImageFile(file) {
 }
 
 function resetImage() {
+  if (imgObjectUrl) URL.revokeObjectURL(imgObjectUrl);
+  imgObjectUrl = null;
   document.getElementById('img-zone').style.display = 'block';
   document.getElementById('img-progress').style.display = 'none';
   document.getElementById('img-preview').style.display = 'none';
   document.getElementById('img-pbar').style.width = '0%';
+  document.getElementById('img-original').removeAttribute('src');
+  document.getElementById('img-annotated').removeAttribute('src');
+  const input = document.getElementById('img-file-input');
+  if (input) input.value = '';
 }
 
 function handleVidDrop(ev) {
@@ -2320,8 +2478,8 @@ function handleVidDrop(ev) {
 }
 
 async function handleVideoFile(file) {
-  if (!file || !file.type.startsWith('video/')) return toast('Please select a video file');
-  if (file.size > 100 * 1024 * 1024) return toast('Video must be under 100MB');
+  if (!isVideoUpload(file)) return toast('Please select a video file');
+  if (file.size > MAX_VIDEO_BYTES) return toast('Video must be under 100MB');
 
   document.getElementById('vid-zone').style.display = 'none';
   document.getElementById('vid-progress').style.display = 'block';
@@ -2340,7 +2498,8 @@ async function handleVideoFile(file) {
   try {
     document.getElementById('vid-plabel').textContent = 'Processing frames with YOLOv8n...';
     const res = await fetch(API + '/predict/video', { method: 'POST', body: fd });
-    const data = await res.json();
+    const data = await readJsonResponse(res);
+    if (!data.result_url) throw new Error('Video response was incomplete');
     clearInterval(pint);
     document.getElementById('vid-pbar').style.width = '100%';
 
@@ -2414,6 +2573,9 @@ function resetVideo() {
   document.getElementById('vid-progress').style.display = 'none';
   document.getElementById('vid-preview').style.display = 'none';
   document.getElementById('vid-pbar').style.width = '0%';
+  document.getElementById('vid-annotated').removeAttribute('src');
+  const input = document.getElementById('vid-file-input');
+  if (input) input.value = '';
 }
 
 async function startWebcam() {
@@ -2510,33 +2672,36 @@ function startWcLoop() {
     c.width = Math.round(vid.videoWidth * scale);
     c.height = Math.round(vid.videoHeight * scale);
     c.getContext('2d').drawImage(vid, 0, 0, c.width, c.height);
-    c.toBlob(async blob => {
-      try {
-        const fd = new FormData();
-        fd.append('file', blob, 'frame.jpg');
-        const res = await fetch(API + '/predict/frame', { method: 'POST', body: fd });
-        if (!res.ok) throw new Error('Frame request failed');
-        const data = await res.json();
-        const now = performance.now();
-        if (wcLastTick) {
-          const loopMs = now - wcLastTick;
-          wcLastFps = Math.round(1000 / loopMs);
-        }
-        wcLastTick = now;
-        wcLastLatency = data.inference_ms || 0;
-        if (wcLastLatency) {
-          wcAvgMs = wcAvgMs ? (wcAvgMs * 0.8 + wcLastLatency * 0.2) : wcLastLatency;
-        }
-        updateWcDisplay(data);
-      } catch (e) {
-        toast('Realtime error: ' + e.message);
-      } finally {
-        wcInfer = false;
-        const target = wcAvgMs ? wcAvgMs * 1.2 : WC_BASE_INTERVAL;
-        const nextDelay = Math.min(WC_MAX_INTERVAL, Math.max(WC_MIN_INTERVAL, Math.round(Math.max(WC_BASE_INTERVAL, target))));
-        wcTimer = setTimeout(tick, nextDelay);
+    try {
+      const blob = await canvasToFrameBlob(c);
+      if (!blob) throw new Error('Could not capture camera frame');
+      const fd = new FormData();
+      fd.append('file', blob, 'frame.jpg');
+      const res = await fetch(API + '/predict/frame', { method: 'POST', body: fd });
+      const data = await readJsonResponse(res);
+      const now = performance.now();
+      if (wcLastTick) {
+        const loopMs = now - wcLastTick;
+        wcLastFps = Math.round(1000 / loopMs);
       }
-    }, 'image/jpeg', WC_JPEG_QUALITY);
+      wcLastTick = now;
+      wcLastLatency = data.inference_ms || 0;
+      if (wcLastLatency) {
+        wcAvgMs = wcAvgMs ? (wcAvgMs * 0.8 + wcLastLatency * 0.2) : wcLastLatency;
+      }
+      updateWcDisplay(data);
+    } catch (e) {
+      const now = Date.now();
+      if (now - wcLastErrorToast > 5000) {
+        wcLastErrorToast = now;
+        toast('Realtime error: ' + e.message);
+      }
+    } finally {
+      wcInfer = false;
+      const target = wcAvgMs ? wcAvgMs * 1.2 : WC_BASE_INTERVAL;
+      const nextDelay = Math.min(WC_MAX_INTERVAL, Math.max(WC_MIN_INTERVAL, Math.round(Math.max(WC_BASE_INTERVAL, target))));
+      wcTimer = setTimeout(tick, nextDelay);
+    }
   };
   tick();
 }

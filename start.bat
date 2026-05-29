@@ -42,7 +42,14 @@ if not exist "%CERT_FILE%" (
 )
 
 set "PHONE_IP="
-for /f "usebackq delims=" %%a in (`powershell -NoProfile -Command "$ip = Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -notlike '127.*' -and $_.PrefixOrigin -ne 'WellKnown' } | Sort-Object InterfaceMetric | Select-Object -First 1 -ExpandProperty IPAddress; if ($ip) { $ip }"`) do set "PHONE_IP=%%a"
+for /f "usebackq delims=" %%a in (`powershell -NoProfile -Command "$routes = Get-NetRoute -DestinationPrefix '0.0.0.0/0' -ErrorAction SilentlyContinue | Sort-Object RouteMetric; $routeIds = @($routes | ForEach-Object InterfaceIndex); $blocked = 'Loopback|VirtualBox|VMware|vEthernet|Docker|WSL|Bluetooth|Tailscale|ZeroTier'; $ips = Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -notlike '127.*' -and $_.PrefixOrigin -ne 'WellKnown' -and $_.InterfaceAlias -notmatch $blocked }; if ($routeIds.Count -gt 0) { $ips = $ips | Where-Object { $routeIds -contains $_.InterfaceIndex } }; $ip = $ips | Sort-Object InterfaceMetric | Select-Object -First 1 -ExpandProperty IPAddress; if ($ip) { $ip }"`) do set "PHONE_IP=%%a"
+
+echo [INFO] Checking HTTPS certificate for local and phone access...
+if defined PHONE_IP (
+  python "%~dp0gen_certs.py" "%PHONE_IP%"
+) else (
+  python "%~dp0gen_certs.py"
+)
 
 echo.
 echo ============================================

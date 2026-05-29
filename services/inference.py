@@ -9,11 +9,11 @@ def run_inference(img, model_id, info=None):
     info = info or get_model_info(model_id)
     yolo = info["yolo"]
     classes = info["meta"]["classes"]
+    h, w = img.shape[:2]
     
     if yolo is None:
         cls = random.choice(classes)
         conf = round(random.uniform(0.70, 0.97), 3)
-        h, w = img.shape[:2]
         return {
             "class": cls,
             "label": label_for(info, cls),
@@ -41,6 +41,12 @@ def run_inference(img, model_id, info=None):
         cls = classes[cls_id] if 0 <= cls_id < len(classes) else "unknown"
         conf = float(box.conf[0])
         x1, y1, x2, y2 = map(int, box.xyxy[0].tolist())
+        x1 = max(0, min(w - 1, x1))
+        y1 = max(0, min(h - 1, y1))
+        x2 = max(0, min(w, x2))
+        y2 = max(0, min(h, y2))
+        if x2 <= x1 or y2 <= y1:
+            continue
         boxes_out.append({"class": cls, "confidence": round(conf, 3), "bbox": [x1, y1, x2, y2]})
         class_votes[cls] = max(class_votes.get(cls, 0), conf)
         
@@ -74,8 +80,10 @@ def draw_inference(img, pred, model_id):
         color = colors.get(cls, (200, 200, 200))
         cv2.rectangle(out, (x1, y1), (x2, y2), color, 2)
         (tw, th), _ = cv2.getTextSize(f"{cls} {conf:.0%}", cv2.FONT_HERSHEY_SIMPLEX, 0.55, 1)
-        cv2.rectangle(out, (x1, y1 - th - 8), (x1 + tw + 8, y1), color, -1)
-        cv2.putText(out, f"{cls} {conf:.0%}", (x1 + 4, y1 - 4),
+        label_top = max(0, y1 - th - 8)
+        label_bottom = max(th + 8, y1)
+        cv2.rectangle(out, (x1, label_top), (min(out.shape[1], x1 + tw + 8), label_bottom), color, -1)
+        cv2.putText(out, f"{cls} {conf:.0%}", (x1 + 4, label_bottom - 4),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.55, (255, 255, 255), 1, cv2.LINE_AA)
     return out
 

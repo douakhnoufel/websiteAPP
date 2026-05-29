@@ -51,6 +51,8 @@ async def _save_upload_limited(file: UploadFile, dest: Path, max_mb: int, kind: 
                 if total > max_bytes:
                     raise HTTPException(413, f"{kind} exceeds {max_mb}MB limit")
                 out.write(chunk)
+            if total == 0:
+                raise HTTPException(400, f"{kind} file is empty")
     except HTTPException:
         dest.unlink(missing_ok=True)
         raise
@@ -75,6 +77,8 @@ async def _read_upload_limited(file: UploadFile, max_mb: int, kind: str) -> byte
             if total > max_bytes:
                 raise HTTPException(413, f"{kind} exceeds {max_mb}MB limit")
             chunks.append(chunk)
+        if total == 0:
+            raise HTTPException(400, f"{kind} file is empty")
     finally:
         await file.close()
     return b"".join(chunks)
@@ -91,6 +95,15 @@ def _infer_image_file(img, model_id: str, out_path: Path) -> tuple[dict, int]:
     return pred, ms
 
 
+def _open_video_writer(out_path: Path, fps: float, size: tuple[int, int]) -> tuple[cv2.VideoWriter, str]:
+    for codec in ("avc1", "H264", "mp4v"):
+        writer = cv2.VideoWriter(str(out_path), cv2.VideoWriter_fourcc(*codec), fps, size)
+        if writer.isOpened():
+            return writer, codec
+        writer.release()
+    raise HTTPException(500, "Cannot create annotated video")
+
+
 def _process_video_file(img_path: Path, out_path: Path, model_id: str) -> dict:
     info = get_model_info(model_id)
     cap = cv2.VideoCapture(str(img_path))
@@ -105,14 +118,7 @@ def _process_video_file(img_path: Path, out_path: Path, model_id: str) -> dict:
         if width <= 0 or height <= 0:
             raise HTTPException(400, "Video has invalid dimensions")
 
-        writer = cv2.VideoWriter(
-            str(out_path),
-            cv2.VideoWriter_fourcc(*"mp4v"),
-            fps,
-            (width, height),
-        )
-        if not writer.isOpened():
-            raise HTTPException(500, "Cannot create annotated video")
+        writer, output_codec = _open_video_writer(out_path, fps, (width, height))
 
         preds, frame_index, t0 = [], 0, time.time()
         skip = max(1, int(round(fps / max(VIDEO_SAMPLE_FPS, 0.1))))
@@ -150,6 +156,7 @@ def _process_video_file(img_path: Path, out_path: Path, model_id: str) -> dict:
         "detected_frames": sum(1 for p in preds if p.get("detected")),
         "total_frames": total,
         "inference_ms": ms,
+        "output_video_codec": output_codec,
     }
 
 

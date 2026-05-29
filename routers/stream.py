@@ -86,6 +86,7 @@ async def stream_drone(url: str = Query(...), model_id: str = Query("potato")):
     and yields an MJPEG stream for the frontend.
     """
     _validate_stream_url(url)
+    info = get_model_info(model_id)
     cap = cv2.VideoCapture(url)
     if not cap.isOpened():
         cap.release()
@@ -97,26 +98,27 @@ async def stream_drone(url: str = Query(...), model_id: str = Query("potato")):
         raise HTTPException(502, "Stream opened but no frames were received")
 
     def _generate():
-        info = get_model_info(model_id)
+        try:
+            pred = run_inference(first_frame, model_id, info=info)
+            annotated = draw_inference(first_frame, pred, model_id)
+            ok, buffer = cv2.imencode(".jpg", annotated, [cv2.IMWRITE_JPEG_QUALITY, 80])
+            if ok:
+                yield (b'--frame\r\n'
+                       b'Content-Type: image/jpeg\r\n\r\n' + buffer.tobytes() + b'\r\n')
 
-        pred = run_inference(first_frame, model_id, info=info)
-        annotated = draw_inference(first_frame, pred, model_id)
-        _, buffer = cv2.imencode(".jpg", annotated, [cv2.IMWRITE_JPEG_QUALITY, 80])
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + buffer.tobytes() + b'\r\n')
+            while True:
+                ret, frame = cap.read()
+                if not ret:
+                    break
 
-        while True:
-            ret, frame = cap.read()
-            if not ret:
-                break
-            
-            # Process frame with YOLO
-            pred = run_inference(frame, model_id, info=info)
-            annotated = draw_inference(frame, pred, model_id)
-            
-            _, buffer = cv2.imencode(".jpg", annotated, [cv2.IMWRITE_JPEG_QUALITY, 80])
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + buffer.tobytes() + b'\r\n')
-        cap.release()
+                pred = run_inference(frame, model_id, info=info)
+                annotated = draw_inference(frame, pred, model_id)
+                ok, buffer = cv2.imencode(".jpg", annotated, [cv2.IMWRITE_JPEG_QUALITY, 80])
+                if not ok:
+                    continue
+                yield (b'--frame\r\n'
+                       b'Content-Type: image/jpeg\r\n\r\n' + buffer.tobytes() + b'\r\n')
+        finally:
+            cap.release()
 
     return StreamingResponse(_generate(), media_type="multipart/x-mixed-replace; boundary=frame")

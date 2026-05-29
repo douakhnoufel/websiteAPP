@@ -11,3 +11,6 @@ key.pem
 
 # iOS build artifacts
 *.ipa
+
+# Android build artifacts are distributed from the server, not GitHub.
+*.apk
