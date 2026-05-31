@@ -44,6 +44,7 @@ _STATE = {
     "updated_at": time.time(),
 }
 _COMMAND_QUEUE = []
+COMMAND_QUEUE_MAX = 200  # hard cap; pruned after each expire pass
 
 
 def _now() -> float:
@@ -145,12 +146,20 @@ def _normalize_status(value: str | None) -> str | None:
     return lower if lower in KNOWN_STATUS else "unknown"
 
 
+_TERMINAL_STATUSES = {"expired", "ack_success", "ack_failed"}
+
+
 def _expire_commands_locked() -> None:
     now = _now()
     for command in _COMMAND_QUEUE:
         if command["status"] in {"queued", "delivered"} and now > command["expires_at"]:
             command["status"] = "expired"
             command["expired_at"] = now
+    # Prune terminal entries once we exceed the cap, keeping the most recent ones
+    terminal = [c for c in _COMMAND_QUEUE if c["status"] in _TERMINAL_STATUSES]
+    if len(_COMMAND_QUEUE) > COMMAND_QUEUE_MAX and terminal:
+        remove = set(id(c) for c in terminal[: len(_COMMAND_QUEUE) - COMMAND_QUEUE_MAX])
+        _COMMAND_QUEUE[:] = [c for c in _COMMAND_QUEUE if id(c) not in remove]
 
 
 def ingest_telemetry(payload: dict) -> dict:

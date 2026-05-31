@@ -17,9 +17,11 @@ from core.config import (
     FRAME_MAX_EDGE,
     FRAME_MIN_CONF,
     FRAME_MIN_BOX_AREA_RATIO,
+    DEMO_MODE,
+    OUTPUT_TTL_SEC,
 )
 from services.inference import NO_DETECTION_CLASS, run_inference, draw_inference, resize_max_edge
-from services.file_handler import remove_file
+from services.file_handler import remove_file, remove_file_after
 from services.model_manager import get_model_info, label_for
 
 router = APIRouter(prefix="/predict", tags=["predict"])
@@ -29,10 +31,10 @@ IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
 VIDEO_EXTS = {".mp4", ".mov", ".avi", ".mkv", ".webm"}
 
 
-def _safe_suffix(file: UploadFile, allowed_exts: set[str], default: str, kind: str) -> str:
+def _safe_suffix(file: UploadFile, allowed_exts: set[str], kind: str) -> str:
     suffix = Path(file.filename or "").suffix.lower()
     if not suffix:
-        return default
+        raise HTTPException(400, f"{kind} file must have an extension (e.g. .jpg, .png)")
     if suffix not in allowed_exts:
         raise HTTPException(400, f"Unsupported {kind} file type: {suffix}")
     return suffix
@@ -163,17 +165,17 @@ def _process_video_file(img_path: Path, out_path: Path, model_id: str) -> dict:
 @router.post("/image")
 async def predict_image(bg: BackgroundTasks, file: UploadFile = File(...), model_id: str = Query("potato")):
     uid = uuid.uuid4().hex[:8]
-    suffix = _safe_suffix(file, IMAGE_EXTS, ".jpg", "image")
+    suffix = _safe_suffix(file, IMAGE_EXTS, "image")
     img_path = UPLOADS_DIR / f"{uid}{suffix}"
     out_path = OUTPUTS_DIR / f"{uid}_out.jpg"
-    
+
     await _save_upload_limited(file, img_path, MAX_IMAGE_MB, "Image")
 
     img = await run_in_threadpool(cv2.imread, str(img_path))
     if img is None:
         bg.add_task(remove_file, str(img_path))
         raise HTTPException(400, "Cannot read image")
-        
+
     try:
         pred, ms = await run_in_threadpool(_infer_image_file, img, model_id, out_path)
     except Exception:
@@ -181,17 +183,22 @@ async def predict_image(bg: BackgroundTasks, file: UploadFile = File(...), model
         raise
     finally:
         bg.add_task(remove_file, str(img_path))
-    
-    return JSONResponse({"id": uid, "model_id": model_id, "prediction": pred,
-                         "inference_ms": ms, "result_url": f"/outputs/{out_path.name}"})
+
+    if OUTPUT_TTL_SEC > 0:
+        bg.add_task(remove_file_after, str(out_path), OUTPUT_TTL_SEC)
+
+    return JSONResponse({"id": uid, "model_id": model_id, "demo": DEMO_MODE,
+                         "prediction": pred, "inference_ms": ms,
+                         "result_url": f"/outputs/{out_path.name}"})
+
 
 @router.post("/video")
 async def predict_video(bg: BackgroundTasks, file: UploadFile = File(...), model_id: str = Query("potato")):
     uid = uuid.uuid4().hex[:8]
-    suffix = _safe_suffix(file, VIDEO_EXTS, ".mp4", "video")
+    suffix = _safe_suffix(file, VIDEO_EXTS, "video")
     img_path = UPLOADS_DIR / f"{uid}{suffix}"
     out_path = OUTPUTS_DIR / f"{uid}_out.mp4"
-    
+
     await _save_upload_limited(file, img_path, MAX_VIDEO_MB, "Video")
 
     try:
@@ -201,9 +208,13 @@ async def predict_video(bg: BackgroundTasks, file: UploadFile = File(...), model
         raise
     finally:
         bg.add_task(remove_file, str(img_path))
-    
-    return JSONResponse({"id": uid, "model_id": model_id, **summary,
-                         "result_url": f"/outputs/{out_path.name}"})
+
+    if OUTPUT_TTL_SEC > 0:
+        bg.add_task(remove_file_after, str(out_path), OUTPUT_TTL_SEC)
+
+    return JSONResponse({"id": uid, "model_id": model_id, "demo": DEMO_MODE,
+                         **summary, "result_url": f"/outputs/{out_path.name}"})
+
 
 @router.post("/frame")
 async def predict_frame(file: UploadFile = File(...), model_id: str = Query("potato")):
@@ -211,7 +222,7 @@ async def predict_frame(file: UploadFile = File(...), model_id: str = Query("pot
     img = cv2.imdecode(np.frombuffer(data, np.uint8), cv2.IMREAD_COLOR)
     if img is None:
         raise HTTPException(400, "Cannot decode frame")
-        
+
     img = resize_max_edge(img, FRAME_MAX_EDGE)
     t0 = time.time()
     pred = await run_in_threadpool(run_inference, img, model_id)
@@ -243,4 +254,5 @@ async def predict_frame(file: UploadFile = File(...), model_id: str = Query("pot
         pred["detected"] = True
 
     pred["inference_ms"] = int((time.time() - t0) * 1000)
+    pred["demo"] = DEMO_MODE
     return JSONResponse(pred)

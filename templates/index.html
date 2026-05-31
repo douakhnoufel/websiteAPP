@@ -1460,7 +1460,7 @@
         <div class="mini-stat"><span>Input</span><span>640x640</span></div>
         <div class="mini-stat"><span>Target</span><span>&lt;1s/image</span></div>
         <div class="mini-stat"><span>Mission</span><span>Field diagnosis</span></div>
-        <div class="mini-stat"><span>Android App</span><a href="/static/apps/potatoscan.apk" download>Download APK</a></div>
+        <div class="mini-stat"><span>Android App</span><a href="/static/apps/potatoscan.apk" download>Download APK (221 MB)</a></div>
       </div>
     </aside>
 
@@ -1477,10 +1477,10 @@
             </div>
 
             <div class="upload-zone" id="img-zone" ondragover="ev.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleImgDrop(event)">
-              <input id="img-file-input" type="file" accept="image/*,.heic,.heif" onchange="handleImageFile(this.files[0])">
+              <input id="img-file-input" type="file" accept=".jpg,.jpeg,.png,.webp,.bmp,image/jpeg,image/png,image/webp,image/bmp" onchange="handleImageFile(this.files[0])">
               <div class="upload-icon-wrap">Leaf</div>
               <div class="upload-title">Drop a potato leaf image</div>
-              <div class="upload-sub">JPG, PNG, WEBP, and iPhone HEIC photos are supported. Best for quick classroom demos and field diagnosis.</div>
+              <div class="upload-sub">JPG, PNG, WEBP, or BMP. Best for quick classroom demos and field diagnosis.</div>
             </div>
 
             <div class="progress-wrap" id="img-progress">
@@ -1689,7 +1689,7 @@
               <div class="note-card">
                 <div class="note-step">1</div>
                 <div class="note-title">Open the service</div>
-                <div class="note-text">Run <strong>start.bat</strong> or start Uvicorn, then open <strong>https://localhost:8000</strong> to present the full experience.</div>
+                <div class="note-text">The service is live at <strong><a href="https://noufeldouakh.me" target="_blank" rel="noopener">noufeldouakh.me</a></strong>. For local demos, run <strong>start.bat</strong> or Uvicorn and open <strong>https://localhost:8000</strong>.</div>
               </div>
               <div class="note-card">
                 <div class="note-step">2</div>
@@ -1743,7 +1743,7 @@
 
             <div class="code-block">import requests
 
-url = "http://localhost:8000/predict/image"
+url = "https://noufeldouakh.me/predict/image"
 files = {"file": open("leaf.jpg", "rb")}
 res = requests.post(url, files=files).json()
 
@@ -1751,7 +1751,7 @@ print(res["prediction"]["class"])
 print(res["prediction"]["confidence"])
 print(res["result_url"])</div>
 
-            <div class="code-block">curl -X POST http://localhost:8000/predict/image \
+            <div class="code-block">curl -X POST https://noufeldouakh.me/predict/image \
   -F "file=@leaf.jpg"</div>
           </div>
         </section>
@@ -1795,19 +1795,19 @@ print(res["result_url"])</div>
           <div class="mobile-build-card docs-card">
             <span class="method-badge method-post">Android</span>
             <div class="build-title">PotatoScan Android APK</div>
-            <div class="build-text">Current release build: <strong>226.56 MB</strong>, generated on <strong>2026-05-29 17:41</strong>. Android users can download and install it from this link.</div>
+            <div class="build-text">Current release build: <strong>220.80 MB</strong>, generated on <strong>2026-05-31 12:02</strong>. Android users can download and install it from this link.</div>
             <div class="build-path">/static/apps/potatoscan.apk</div>
             <div class="build-actions">
-              <a class="btn primary" href="/static/apps/potatoscan.apk" download>Download APK</a>
+              <a class="btn primary" href="/static/apps/potatoscan.apk" download>Download APK <span style="opacity:0.7;font-size:0.85em;margin-left:4px;">· 221 MB</span></a>
             </div>
           </div>
           <div class="mobile-build-card docs-card">
             <span class="method-badge method-get">iOS</span>
             <div class="build-title">iPhone Build Slot</div>
-            <div class="build-text">Use TestFlight for the normal iPhone path. A signed IPA can also live here for internal sharing when needed.</div>
-            <div class="build-path">/static/apps/potatoscan.ipa</div>
+            <div class="build-text">iOS distribution requires a signed build via TestFlight or an Enterprise profile. A signed IPA will be hosted here once available.</div>
+            <div class="build-path">Coming soon — TestFlight link TBD</div>
             <div class="build-actions">
-              <a class="btn primary" href="/static/apps/potatoscan.ipa" download>Download IPA</a>
+              <span class="btn" style="opacity:0.45;cursor:not-allowed;" aria-disabled="true">Not yet available</span>
             </div>
           </div>
         </div>
@@ -1939,10 +1939,10 @@ async function readJsonResponse(res) {
 
 function isImageUpload(file) {
   const name = (file && file.name ? file.name : '').toLowerCase();
+  const ALLOWED = ['.jpg','.jpeg','.png','.webp','.bmp'];
   return !!file && (
     (file.type || '').startsWith('image/') ||
-    name.endsWith('.heic') ||
-    name.endsWith('.heif')
+    ALLOWED.some(ext => name.endsWith(ext))
   );
 }
 
@@ -1997,8 +1997,7 @@ function canvasToJpegBlob(canvas, quality) {
 
 async function prepareImageUpload(file) {
   const name = (file.name || '').toLowerCase();
-  const likelyIphoneFormat = name.endsWith('.heic') || name.endsWith('.heif') || /heic|heif/i.test(file.type || '');
-  const shouldNormalize = IS_MOBILE || likelyIphoneFormat || file.size > MAX_IMAGE_BYTES;
+  const shouldNormalize = IS_MOBILE || file.size > MAX_IMAGE_BYTES;
   const { img, url } = await loadImageFromFile(file);
 
   if (!shouldNormalize) {

@@ -1,0 +1,1212 @@
+{
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\gen_certs.py": {
+    "mtime": 1780071908.3411782,
+    "ast_hash": "d301f3ce99a7456dd16b510c8624a692",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\main.py": {
+    "mtime": 1780000973.671951,
+    "ast_hash": "9efae98da126d073a189a841790c80a0",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\validate.py": {
+    "mtime": 1779457496.1350422,
+    "ast_hash": "4c8c7235ec87d778f297c0384d1350fe",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\.codex\\hooks.json": {
+    "mtime": 1780219596.7480764,
+    "ast_hash": "73b0825126c0530654b32b475e428206",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\gemini-extension.json": {
+    "mtime": 1780220948.2152507,
+    "ast_hash": "b66a56b7179c57fb8a0a9279c8ac65e5",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\install.ps1": {
+    "mtime": 1780220948.2167597,
+    "ast_hash": "189791d4429ac9a6a8c5ad14f9d520af",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\install.sh": {
+    "mtime": 1780220948.2182899,
+    "ast_hash": "874c6ce0f7a81baa7ed36de0a6a29358",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\package.json": {
+    "mtime": 1780220948.2188036,
+    "ast_hash": "526497ae2988ffc8e9896387c2ed1d79",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills-lock.json": {
+    "mtime": 1780221470.9052145,
+    "ast_hash": "28e5edd5cf3588bb2f3feca381ddfaf3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\plugins\\marketplace.json": {
+    "mtime": 1780220948.1360848,
+    "ast_hash": "7a7c9d4a3c93fe00c0324966bef6f3c6",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman-compress\\scripts\\benchmark.py": {
+    "mtime": 1780221465.1378522,
+    "ast_hash": "07500037c8606fc9ab1832f55a5ff346",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman-compress\\scripts\\cli.py": {
+    "mtime": 1780221465.1378522,
+    "ast_hash": "c558740fb2c74c292c1886353add193a",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman-compress\\scripts\\compress.py": {
+    "mtime": 1780221465.1388786,
+    "ast_hash": "b64cfd042fdf93e8ac852fb3b87195a3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman-compress\\scripts\\detect.py": {
+    "mtime": 1780221465.1399217,
+    "ast_hash": "951a4593947c23cb9bfe8d99dc245b16",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman-compress\\scripts\\validate.py": {
+    "mtime": 1780221465.1408553,
+    "ast_hash": "5d3394df7677d1ee08f0b69bb767b38c",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman-compress\\scripts\\__init__.py": {
+    "mtime": 1780221465.136874,
+    "ast_hash": "d6acae7e188357d1bc1258ce02a29811",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman-compress\\scripts\\__main__.py": {
+    "mtime": 1780221465.136874,
+    "ast_hash": "5bd0e02db4907bf4e435e5d770256fef",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.claude-plugin\\marketplace.json": {
+    "mtime": 1780220948.141088,
+    "ast_hash": "e5227dc7f420052ea05c0b3541b61e4d",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.claude-plugin\\plugin.json": {
+    "mtime": 1780220948.1421964,
+    "ast_hash": "1089ef1d169eb58e865abc2f22965237",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.codex\\hooks.json": {
+    "mtime": 1780220948.1461408,
+    "ast_hash": "cd58ac55ed502d58bebddf217a1ba790",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman-compress\\scripts\\benchmark.py": {
+    "mtime": 1780221465.1378522,
+    "ast_hash": "07500037c8606fc9ab1832f55a5ff346",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman-compress\\scripts\\cli.py": {
+    "mtime": 1780221465.1378522,
+    "ast_hash": "c558740fb2c74c292c1886353add193a",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman-compress\\scripts\\compress.py": {
+    "mtime": 1780221465.1388786,
+    "ast_hash": "b64cfd042fdf93e8ac852fb3b87195a3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman-compress\\scripts\\detect.py": {
+    "mtime": 1780221465.1399217,
+    "ast_hash": "951a4593947c23cb9bfe8d99dc245b16",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman-compress\\scripts\\validate.py": {
+    "mtime": 1780221465.1408553,
+    "ast_hash": "5d3394df7677d1ee08f0b69bb767b38c",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman-compress\\scripts\\__init__.py": {
+    "mtime": 1780221465.136874,
+    "ast_hash": "d6acae7e188357d1bc1258ce02a29811",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman-compress\\scripts\\__main__.py": {
+    "mtime": 1780221465.136874,
+    "ast_hash": "5bd0e02db4907bf4e435e5d770256fef",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman-compress\\scripts\\benchmark.py": {
+    "mtime": 1780221465.1378522,
+    "ast_hash": "07500037c8606fc9ab1832f55a5ff346",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman-compress\\scripts\\cli.py": {
+    "mtime": 1780221465.1378522,
+    "ast_hash": "c558740fb2c74c292c1886353add193a",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman-compress\\scripts\\compress.py": {
+    "mtime": 1780221465.1388786,
+    "ast_hash": "b64cfd042fdf93e8ac852fb3b87195a3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman-compress\\scripts\\detect.py": {
+    "mtime": 1780221465.1399217,
+    "ast_hash": "951a4593947c23cb9bfe8d99dc245b16",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman-compress\\scripts\\validate.py": {
+    "mtime": 1780221465.1408553,
+    "ast_hash": "5d3394df7677d1ee08f0b69bb767b38c",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman-compress\\scripts\\__init__.py": {
+    "mtime": 1780221465.136874,
+    "ast_hash": "d6acae7e188357d1bc1258ce02a29811",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman-compress\\scripts\\__main__.py": {
+    "mtime": 1780221465.136874,
+    "ast_hash": "5bd0e02db4907bf4e435e5d770256fef",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman-compress\\scripts\\benchmark.py": {
+    "mtime": 1780221465.1378522,
+    "ast_hash": "07500037c8606fc9ab1832f55a5ff346",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman-compress\\scripts\\cli.py": {
+    "mtime": 1780221465.1378522,
+    "ast_hash": "c558740fb2c74c292c1886353add193a",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman-compress\\scripts\\compress.py": {
+    "mtime": 1780221465.1388786,
+    "ast_hash": "b64cfd042fdf93e8ac852fb3b87195a3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman-compress\\scripts\\detect.py": {
+    "mtime": 1780221465.1399217,
+    "ast_hash": "951a4593947c23cb9bfe8d99dc245b16",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman-compress\\scripts\\validate.py": {
+    "mtime": 1780221465.1408553,
+    "ast_hash": "5d3394df7677d1ee08f0b69bb767b38c",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman-compress\\scripts\\__init__.py": {
+    "mtime": 1780221465.136874,
+    "ast_hash": "d6acae7e188357d1bc1258ce02a29811",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman-compress\\scripts\\__main__.py": {
+    "mtime": 1780221465.136874,
+    "ast_hash": "5bd0e02db4907bf4e435e5d770256fef",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\benchmarks\\prompts.json": {
+    "mtime": 1780220948.1776063,
+    "ast_hash": "118bb3be1bcb3160dc02f98204f6729a",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\benchmarks\\run.py": {
+    "mtime": 1780220948.182128,
+    "ast_hash": "fa73a2f83ebdd1bd4c252a11ab5ef9a8",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\bin\\install.js": {
+    "mtime": 1780220948.1855104,
+    "ast_hash": "5dda771f84dd674bf6ef9935b9ddf051",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\bin\\lib\\openclaw.js": {
+    "mtime": 1780220948.187108,
+    "ast_hash": "acb6acd4351f7c7f01cae18115b77864",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\bin\\lib\\settings.js": {
+    "mtime": 1780220948.188582,
+    "ast_hash": "777b2345261840b560b922be3315c453",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\evals\\llm_run.py": {
+    "mtime": 1780220948.2085154,
+    "ast_hash": "5e35c4902a8a89e7f982c91a38e7c06c",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\evals\\measure.py": {
+    "mtime": 1780220948.2090836,
+    "ast_hash": "a3b70208993525e7bea234ca893effba",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\evals\\plot.py": {
+    "mtime": 1780220948.2096794,
+    "ast_hash": "02ba92a2a308aab29a671581307c1723",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\.codex-plugin\\plugin.json": {
+    "mtime": 1780220948.2219234,
+    "ast_hash": "e8265258a183dbcbe81b315cda2d0c82",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\skills\\caveman-compress\\scripts\\benchmark.py": {
+    "mtime": 1780220948.23542,
+    "ast_hash": "07500037c8606fc9ab1832f55a5ff346",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\skills\\caveman-compress\\scripts\\cli.py": {
+    "mtime": 1780220948.2369387,
+    "ast_hash": "c558740fb2c74c292c1886353add193a",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\skills\\caveman-compress\\scripts\\compress.py": {
+    "mtime": 1780220948.2379594,
+    "ast_hash": "b64cfd042fdf93e8ac852fb3b87195a3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\skills\\caveman-compress\\scripts\\detect.py": {
+    "mtime": 1780220948.239142,
+    "ast_hash": "951a4593947c23cb9bfe8d99dc245b16",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\skills\\caveman-compress\\scripts\\validate.py": {
+    "mtime": 1780220948.2402174,
+    "ast_hash": "5d3394df7677d1ee08f0b69bb767b38c",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\skills\\caveman-compress\\scripts\\__init__.py": {
+    "mtime": 1780220948.2316115,
+    "ast_hash": "d6acae7e188357d1bc1258ce02a29811",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\skills\\caveman-compress\\scripts\\__main__.py": {
+    "mtime": 1780220948.2344224,
+    "ast_hash": "5bd0e02db4907bf4e435e5d770256fef",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman-compress\\scripts\\benchmark.py": {
+    "mtime": 1780221465.1378522,
+    "ast_hash": "07500037c8606fc9ab1832f55a5ff346",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman-compress\\scripts\\cli.py": {
+    "mtime": 1780221465.1378522,
+    "ast_hash": "c558740fb2c74c292c1886353add193a",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman-compress\\scripts\\compress.py": {
+    "mtime": 1780221465.1388786,
+    "ast_hash": "b64cfd042fdf93e8ac852fb3b87195a3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman-compress\\scripts\\detect.py": {
+    "mtime": 1780221465.1399217,
+    "ast_hash": "951a4593947c23cb9bfe8d99dc245b16",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman-compress\\scripts\\validate.py": {
+    "mtime": 1780221465.1408553,
+    "ast_hash": "5d3394df7677d1ee08f0b69bb767b38c",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman-compress\\scripts\\__init__.py": {
+    "mtime": 1780221465.136874,
+    "ast_hash": "d6acae7e188357d1bc1258ce02a29811",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman-compress\\scripts\\__main__.py": {
+    "mtime": 1780221465.136874,
+    "ast_hash": "5bd0e02db4907bf4e435e5d770256fef",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\hooks\\caveman-activate.js": {
+    "mtime": 1780220948.283427,
+    "ast_hash": "ff66e353507b8db95f4cc6c11e7addd8",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\hooks\\caveman-config.js": {
+    "mtime": 1780220948.284856,
+    "ast_hash": "a6868b6971ff14cb57e15d45f5a1c150",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\hooks\\caveman-mode-tracker.js": {
+    "mtime": 1780220948.2868736,
+    "ast_hash": "5be6fbf20ab30e518ff35ea37c6eb12b",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\hooks\\caveman-stats.js": {
+    "mtime": 1780220948.2878735,
+    "ast_hash": "dbebcd4dd76143fb9f0a063178e30529",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\hooks\\caveman-statusline.ps1": {
+    "mtime": 1780220948.289871,
+    "ast_hash": "1e873cf2ab451b5808bb6d8e3f7f69c4",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\hooks\\caveman-statusline.sh": {
+    "mtime": 1780220948.2918725,
+    "ast_hash": "275c166e4462f502304b05825bd7e1e5",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\hooks\\install.ps1": {
+    "mtime": 1780220948.2928703,
+    "ast_hash": "1322f3d04cdd7db255612b05e9a92d98",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\hooks\\install.sh": {
+    "mtime": 1780220948.294403,
+    "ast_hash": "f00efc9530714c670b9c61ffdbd409cb",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\hooks\\package.json": {
+    "mtime": 1780220948.294403,
+    "ast_hash": "56368b3e2b84dac2c9ed38b5c4329ec2",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\hooks\\uninstall.ps1": {
+    "mtime": 1780220948.2968173,
+    "ast_hash": "16bb04dc1a84d268a3814746de697e42",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\hooks\\uninstall.sh": {
+    "mtime": 1780220948.2973306,
+    "ast_hash": "f267cfe1c1c511911d7fcc94eaf47789",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\mcp-servers\\caveman-shrink\\compress.js": {
+    "mtime": 1780220948.3012874,
+    "ast_hash": "ca3264e3ccb7361148408e0149596da7",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\mcp-servers\\caveman-shrink\\index.js": {
+    "mtime": 1780220948.3018324,
+    "ast_hash": "e48814af48c4ed096998d8a8ecae2822",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\mcp-servers\\caveman-shrink\\package.json": {
+    "mtime": 1780220948.3029172,
+    "ast_hash": "769f139333c89115ec432ff4897de3f8",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\plugins\\opencode\\package.json": {
+    "mtime": 1780220948.3120587,
+    "ast_hash": "1322e46008e0a4f3ebdcae4a720fc264",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\plugins\\opencode\\plugin.js": {
+    "mtime": 1780220948.3130605,
+    "ast_hash": "030cd79d88be20dec251e100aa8d2bee",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\tools\\caveman-init.js": {
+    "mtime": 1780220948.3178124,
+    "ast_hash": "b1682925d6f5ff8fa77437f327d90b09",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\test_caveman_init.js": {
+    "mtime": 1780220948.3389275,
+    "ast_hash": "628fd4d28807989239137c168480ed61",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\test_caveman_stats.js": {
+    "mtime": 1780220948.340928,
+    "ast_hash": "657ac57217e6a5b4b430cd4a4bb1cf5b",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\test_compress_safety.py": {
+    "mtime": 1780220948.3419287,
+    "ast_hash": "f174f546f26e9a64e7205a1df190f209",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\test_hooks.py": {
+    "mtime": 1780220948.3429282,
+    "ast_hash": "7cecea533a7c5b9963e74256c0f1a34c",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\test_mcp_shrink.js": {
+    "mtime": 1780220948.3434484,
+    "ast_hash": "74de6ab0d14591b7a88bc5e22528d29c",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\test_symlink_flag.js": {
+    "mtime": 1780220948.3443313,
+    "ast_hash": "e57adfb67459468ecc874aa80e3470b6",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\test_validate_inline.py": {
+    "mtime": 1780220948.3453546,
+    "ast_hash": "943775a0b21e0d6001dd9c0dd37ccdce",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\verify_repo.py": {
+    "mtime": 1780220948.3468695,
+    "ast_hash": "05bc5256011ff46124268d4c76c6c33f",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\installer\\e2e.dryrun.test.mjs": {
+    "mtime": 1780220948.3318048,
+    "ast_hash": "2531f609d3580625424182d0e80e7721",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\installer\\e2e.freshinstall.test.mjs": {
+    "mtime": 1780220948.3328,
+    "ast_hash": "d7b6f268cfe5545d5f66bdf45492b3f8",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\installer\\opencode.test.mjs": {
+    "mtime": 1780220948.3369255,
+    "ast_hash": "512a761f329e3818d7636257cd19e8fe",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\installer\\unit.argv.test.mjs": {
+    "mtime": 1780220948.337927,
+    "ast_hash": "ea3cf15d12c2e78ae1fe2753a7ac0c70",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\installer\\unit.settings.test.mjs": {
+    "mtime": 1780220948.3389275,
+    "ast_hash": "8d90f5bf8ff5a23fe655757d5dae21df",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\core\\config.py": {
+    "mtime": 1780178365.4785576,
+    "ast_hash": "d09003e16a390ff01cef5f9191ce2836",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\routers\\drone.py": {
+    "mtime": 1780000973.671951,
+    "ast_hash": "b25b5958d1a772273f09e19babc9168f",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\routers\\health.py": {
+    "mtime": 1780000926.7726169,
+    "ast_hash": "f3674d769f6627d81cc3814cb2deee8c",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\routers\\predict.py": {
+    "mtime": 1780178435.9468763,
+    "ast_hash": "9c4288418fdf1fed3db51ae5aaf37c3c",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\routers\\stream.py": {
+    "mtime": 1780067571.3927684,
+    "ast_hash": "4b997bf1fd312ffdf06715bc47d6569a",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\services\\drone_manager.py": {
+    "mtime": 1780178329.160031,
+    "ast_hash": "6f001f82939ddf0fb712d1fbec4df617",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\services\\file_handler.py": {
+    "mtime": 1780178378.8179357,
+    "ast_hash": "f7a9fcac1e211d23362fbc3b57fe9217",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\services\\inference.py": {
+    "mtime": 1780067549.7077303,
+    "ast_hash": "027e7e1e0c9f52297a49d19af214ab72",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\services\\model_manager.py": {
+    "mtime": 1780000973.6741512,
+    "ast_hash": "0567388c23f2a890ef76bfdf8e87a5ba",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\services\\security.py": {
+    "mtime": 1780000973.6741512,
+    "ast_hash": "9daaf4e439b62b50a07f0e3977f6db3c",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\AGENTS.md": {
+    "mtime": 1780219571.984698,
+    "ast_hash": "e031b69b956d725296a12d3612b1c9dd",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\CLAUDE.md": {
+    "mtime": 1780182844.6810796,
+    "ast_hash": "274296acfa582bec94d8130a04c57a80",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\docker-compose.yml": {
+    "mtime": 1780012560.5290549,
+    "ast_hash": "395cd98684689e3de35ae7980699e723",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\requirements.txt": {
+    "mtime": 1780178551.1064563,
+    "ast_hash": "6a14d2ae8f3753fb64fac53e38d0c461",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\AGENTS.md": {
+    "mtime": 1780221509.6988444,
+    "ast_hash": "c9f092bcedb4266e1286d7d4fff30f24",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\CLAUDE.md": {
+    "mtime": 1780220948.1680796,
+    "ast_hash": "186cf3f31ff5ae6782ad7235ad9a9f99",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\CONTRIBUTING.md": {
+    "mtime": 1780220948.169122,
+    "ast_hash": "474b77bd58b2ceb5921d88c631c2e2f7",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\GEMINI.md": {
+    "mtime": 1780220948.17024,
+    "ast_hash": "2932bb46e95e05811603195444e5b87c",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\INSTALL.md": {
+    "mtime": 1780220948.1721082,
+    "ast_hash": "72c8a3d166c266ab54a8263af3e51cff",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\README.md": {
+    "mtime": 1780220948.1741824,
+    "ast_hash": "636e8a1e86e43642f6dbe46804aeafc6",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\cavecrew\\README.md": {
+    "mtime": 1780221465.133227,
+    "ast_hash": "8b7ca548bd36b6db39006bac6cd54759",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\cavecrew\\SKILL.md": {
+    "mtime": 1780221465.133227,
+    "ast_hash": "6ea8150438c6392a5ee0afef0a735ad4",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman\\README.md": {
+    "mtime": 1780221465.1438472,
+    "ast_hash": "3358f5119f61b24f5fa65a25de7b866b",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman\\SKILL.md": {
+    "mtime": 1780221465.144874,
+    "ast_hash": "90e5f9d97791c2080495926731e0f5ad",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman-commit\\README.md": {
+    "mtime": 1780221465.133227,
+    "ast_hash": "2fe1d98cadbd2709a34ee3c77795a143",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman-commit\\SKILL.md": {
+    "mtime": 1780221465.1348052,
+    "ast_hash": "e8d814f342ec5752f47866299badd0a7",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman-compress\\README.md": {
+    "mtime": 1780221465.135872,
+    "ast_hash": "78d3757502badfab9db0e38724d336b3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman-compress\\SECURITY.md": {
+    "mtime": 1780221465.135872,
+    "ast_hash": "b2caed82d9d4a58c0530f7e741851224",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman-compress\\SKILL.md": {
+    "mtime": 1780221465.135872,
+    "ast_hash": "5cfd6ee9993c9e72da6404a9841d82fd",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman-help\\README.md": {
+    "mtime": 1780221465.1408553,
+    "ast_hash": "f49266e99b58d33c1d40b7bf0a644ec3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman-help\\SKILL.md": {
+    "mtime": 1780221465.141835,
+    "ast_hash": "b0168dbcf14c8d3cd29101e1eb66de12",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman-review\\README.md": {
+    "mtime": 1780221465.141835,
+    "ast_hash": "9777a26704850f1e091ab072f02fa10f",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman-review\\SKILL.md": {
+    "mtime": 1780221465.142872,
+    "ast_hash": "0e038c50a6bfdc9b8a307e6316c07236",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman-stats\\README.md": {
+    "mtime": 1780221465.142872,
+    "ast_hash": "866dc96f332b4e2bc1f80fec878fea52",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.agents\\skills\\caveman-stats\\SKILL.md": {
+    "mtime": 1780221465.1438472,
+    "ast_hash": "e9966f688641209792719474f241a6ef",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.clinerules\\caveman.md": {
+    "mtime": 1780221509.6911492,
+    "ast_hash": "b270ab9b0929c4f5ddd73b9e51169a9b",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.github\\copilot-instructions.md": {
+    "mtime": 1780221509.6938028,
+    "ast_hash": "b270ab9b0929c4f5ddd73b9e51169a9b",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.github\\FUNDING.yml": {
+    "mtime": 1780220948.1492105,
+    "ast_hash": "63b34b9fcfc2c10171316e77d80bd56d",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.github\\ISSUE_TEMPLATE\\bug_report.md": {
+    "mtime": 1780220948.1512315,
+    "ast_hash": "d104dac759dc8efae547c17351451f5e",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.github\\ISSUE_TEMPLATE\\feature_request.md": {
+    "mtime": 1780220948.1523535,
+    "ast_hash": "beb4179b966426d8b0c64f8c9913de6a",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.github\\workflows\\sync-skill.yml": {
+    "mtime": 1780220948.1534297,
+    "ast_hash": "a91fe34c249ecb6d5dea92ec930c04aa",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\cavecrew\\README.md": {
+    "mtime": 1780221465.133227,
+    "ast_hash": "8b7ca548bd36b6db39006bac6cd54759",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\cavecrew\\SKILL.md": {
+    "mtime": 1780221465.133227,
+    "ast_hash": "6ea8150438c6392a5ee0afef0a735ad4",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman\\README.md": {
+    "mtime": 1780221465.1438472,
+    "ast_hash": "3358f5119f61b24f5fa65a25de7b866b",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman\\SKILL.md": {
+    "mtime": 1780221465.144874,
+    "ast_hash": "90e5f9d97791c2080495926731e0f5ad",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman-commit\\README.md": {
+    "mtime": 1780221465.133227,
+    "ast_hash": "2fe1d98cadbd2709a34ee3c77795a143",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman-commit\\SKILL.md": {
+    "mtime": 1780221465.1348052,
+    "ast_hash": "e8d814f342ec5752f47866299badd0a7",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman-compress\\README.md": {
+    "mtime": 1780221465.135872,
+    "ast_hash": "78d3757502badfab9db0e38724d336b3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman-compress\\SECURITY.md": {
+    "mtime": 1780221465.135872,
+    "ast_hash": "b2caed82d9d4a58c0530f7e741851224",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman-compress\\SKILL.md": {
+    "mtime": 1780221465.135872,
+    "ast_hash": "5cfd6ee9993c9e72da6404a9841d82fd",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman-help\\README.md": {
+    "mtime": 1780221465.1408553,
+    "ast_hash": "f49266e99b58d33c1d40b7bf0a644ec3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman-help\\SKILL.md": {
+    "mtime": 1780221465.141835,
+    "ast_hash": "b0168dbcf14c8d3cd29101e1eb66de12",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman-review\\README.md": {
+    "mtime": 1780221465.141835,
+    "ast_hash": "9777a26704850f1e091ab072f02fa10f",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman-review\\SKILL.md": {
+    "mtime": 1780221465.142872,
+    "ast_hash": "0e038c50a6bfdc9b8a307e6316c07236",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman-stats\\README.md": {
+    "mtime": 1780221465.142872,
+    "ast_hash": "866dc96f332b4e2bc1f80fec878fea52",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.junie\\skills\\caveman-stats\\SKILL.md": {
+    "mtime": 1780221465.1438472,
+    "ast_hash": "e9966f688641209792719474f241a6ef",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\cavecrew\\README.md": {
+    "mtime": 1780221465.133227,
+    "ast_hash": "8b7ca548bd36b6db39006bac6cd54759",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\cavecrew\\SKILL.md": {
+    "mtime": 1780221465.133227,
+    "ast_hash": "6ea8150438c6392a5ee0afef0a735ad4",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman\\README.md": {
+    "mtime": 1780221465.1438472,
+    "ast_hash": "3358f5119f61b24f5fa65a25de7b866b",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman\\SKILL.md": {
+    "mtime": 1780221465.144874,
+    "ast_hash": "90e5f9d97791c2080495926731e0f5ad",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman-commit\\README.md": {
+    "mtime": 1780221465.133227,
+    "ast_hash": "2fe1d98cadbd2709a34ee3c77795a143",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman-commit\\SKILL.md": {
+    "mtime": 1780221465.1348052,
+    "ast_hash": "e8d814f342ec5752f47866299badd0a7",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman-compress\\README.md": {
+    "mtime": 1780221465.135872,
+    "ast_hash": "78d3757502badfab9db0e38724d336b3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman-compress\\SECURITY.md": {
+    "mtime": 1780221465.135872,
+    "ast_hash": "b2caed82d9d4a58c0530f7e741851224",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman-compress\\SKILL.md": {
+    "mtime": 1780221465.135872,
+    "ast_hash": "5cfd6ee9993c9e72da6404a9841d82fd",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman-help\\README.md": {
+    "mtime": 1780221465.1408553,
+    "ast_hash": "f49266e99b58d33c1d40b7bf0a644ec3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman-help\\SKILL.md": {
+    "mtime": 1780221465.141835,
+    "ast_hash": "b0168dbcf14c8d3cd29101e1eb66de12",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman-review\\README.md": {
+    "mtime": 1780221465.141835,
+    "ast_hash": "9777a26704850f1e091ab072f02fa10f",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman-review\\SKILL.md": {
+    "mtime": 1780221465.142872,
+    "ast_hash": "0e038c50a6bfdc9b8a307e6316c07236",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman-stats\\README.md": {
+    "mtime": 1780221465.142872,
+    "ast_hash": "866dc96f332b4e2bc1f80fec878fea52",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.kiro\\skills\\caveman-stats\\SKILL.md": {
+    "mtime": 1780221465.1438472,
+    "ast_hash": "e9966f688641209792719474f241a6ef",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.opencode\\AGENTS.md": {
+    "mtime": 1780221509.6970806,
+    "ast_hash": "b270ab9b0929c4f5ddd73b9e51169a9b",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\cavecrew\\README.md": {
+    "mtime": 1780221465.133227,
+    "ast_hash": "8b7ca548bd36b6db39006bac6cd54759",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\cavecrew\\SKILL.md": {
+    "mtime": 1780221465.133227,
+    "ast_hash": "6ea8150438c6392a5ee0afef0a735ad4",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman\\README.md": {
+    "mtime": 1780221465.1438472,
+    "ast_hash": "3358f5119f61b24f5fa65a25de7b866b",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman\\SKILL.md": {
+    "mtime": 1780221465.144874,
+    "ast_hash": "90e5f9d97791c2080495926731e0f5ad",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman-commit\\README.md": {
+    "mtime": 1780221465.133227,
+    "ast_hash": "2fe1d98cadbd2709a34ee3c77795a143",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman-commit\\SKILL.md": {
+    "mtime": 1780221465.1348052,
+    "ast_hash": "e8d814f342ec5752f47866299badd0a7",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman-compress\\README.md": {
+    "mtime": 1780221465.135872,
+    "ast_hash": "78d3757502badfab9db0e38724d336b3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman-compress\\SECURITY.md": {
+    "mtime": 1780221465.135872,
+    "ast_hash": "b2caed82d9d4a58c0530f7e741851224",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman-compress\\SKILL.md": {
+    "mtime": 1780221465.135872,
+    "ast_hash": "5cfd6ee9993c9e72da6404a9841d82fd",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman-help\\README.md": {
+    "mtime": 1780221465.1408553,
+    "ast_hash": "f49266e99b58d33c1d40b7bf0a644ec3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman-help\\SKILL.md": {
+    "mtime": 1780221465.141835,
+    "ast_hash": "b0168dbcf14c8d3cd29101e1eb66de12",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman-review\\README.md": {
+    "mtime": 1780221465.141835,
+    "ast_hash": "9777a26704850f1e091ab072f02fa10f",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman-review\\SKILL.md": {
+    "mtime": 1780221465.142872,
+    "ast_hash": "0e038c50a6bfdc9b8a307e6316c07236",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman-stats\\README.md": {
+    "mtime": 1780221465.142872,
+    "ast_hash": "866dc96f332b4e2bc1f80fec878fea52",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.roo\\skills\\caveman-stats\\SKILL.md": {
+    "mtime": 1780221465.1438472,
+    "ast_hash": "e9966f688641209792719474f241a6ef",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\.windsurf\\rules\\caveman.md": {
+    "mtime": 1780221509.689465,
+    "ast_hash": "fdee5c88bc960d78441fdaa65d685cf2",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\agents\\cavecrew-builder.md": {
+    "mtime": 1780220948.175677,
+    "ast_hash": "c9bd5feac5ba542de2a6c59ab3e552c4",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\agents\\cavecrew-investigator.md": {
+    "mtime": 1780220948.1762083,
+    "ast_hash": "7086e92d0a9140cec9cec3a1b82463ba",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\agents\\cavecrew-reviewer.md": {
+    "mtime": 1780220948.1762083,
+    "ast_hash": "4d0841491315b77d5b45d96948510b84",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\benchmarks\\requirements.txt": {
+    "mtime": 1780220948.180124,
+    "ast_hash": "962f8f00d471929186d0603180d131bc",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\docs\\index.html": {
+    "mtime": 1780220948.2035158,
+    "ast_hash": "bdac304fe7b20e4311205abe408361c3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\docs\\install-windows.md": {
+    "mtime": 1780220948.205727,
+    "ast_hash": "3c298e27e8105132d1149532e3c659f7",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\evals\\README.md": {
+    "mtime": 1780220948.2068267,
+    "ast_hash": "0eb4ed685b6eaf21e29db37fe2b1e7e1",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\evals\\prompts\\en.txt": {
+    "mtime": 1780220948.2117515,
+    "ast_hash": "a9aa90f33cbe052a5b1186da15b1980a",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\agents\\cavecrew-builder.md": {
+    "mtime": 1780220948.2234366,
+    "ast_hash": "c9bd5feac5ba542de2a6c59ab3e552c4",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\agents\\cavecrew-investigator.md": {
+    "mtime": 1780220948.2234366,
+    "ast_hash": "7086e92d0a9140cec9cec3a1b82463ba",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\agents\\cavecrew-reviewer.md": {
+    "mtime": 1780220948.2253044,
+    "ast_hash": "4d0841491315b77d5b45d96948510b84",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\skills\\cavecrew\\SKILL.md": {
+    "mtime": 1780220948.2293503,
+    "ast_hash": "6ea8150438c6392a5ee0afef0a735ad4",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\skills\\caveman\\SKILL.md": {
+    "mtime": 1780220948.2430682,
+    "ast_hash": "90e5f9d97791c2080495926731e0f5ad",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\skills\\caveman\\agents\\openai.yaml": {
+    "mtime": 1780220948.2450874,
+    "ast_hash": "756163a23db1b56d60c527c8d7edd43b",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\skills\\caveman-compress\\SKILL.md": {
+    "mtime": 1780220948.2303438,
+    "ast_hash": "5cfd6ee9993c9e72da6404a9841d82fd",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\skills\\caveman-stats\\SKILL.md": {
+    "mtime": 1780220948.2420492,
+    "ast_hash": "e9966f688641209792719474f241a6ef",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\cavecrew\\README.md": {
+    "mtime": 1780221465.133227,
+    "ast_hash": "8b7ca548bd36b6db39006bac6cd54759",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\cavecrew\\SKILL.md": {
+    "mtime": 1780221465.133227,
+    "ast_hash": "6ea8150438c6392a5ee0afef0a735ad4",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman\\README.md": {
+    "mtime": 1780221465.1438472,
+    "ast_hash": "3358f5119f61b24f5fa65a25de7b866b",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman\\SKILL.md": {
+    "mtime": 1780221465.144874,
+    "ast_hash": "90e5f9d97791c2080495926731e0f5ad",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman-commit\\README.md": {
+    "mtime": 1780221465.133227,
+    "ast_hash": "2fe1d98cadbd2709a34ee3c77795a143",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman-commit\\SKILL.md": {
+    "mtime": 1780221465.1348052,
+    "ast_hash": "e8d814f342ec5752f47866299badd0a7",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman-compress\\README.md": {
+    "mtime": 1780221465.135872,
+    "ast_hash": "78d3757502badfab9db0e38724d336b3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman-compress\\SECURITY.md": {
+    "mtime": 1780221465.135872,
+    "ast_hash": "b2caed82d9d4a58c0530f7e741851224",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman-compress\\SKILL.md": {
+    "mtime": 1780221465.135872,
+    "ast_hash": "5cfd6ee9993c9e72da6404a9841d82fd",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman-help\\README.md": {
+    "mtime": 1780221465.1408553,
+    "ast_hash": "f49266e99b58d33c1d40b7bf0a644ec3",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman-help\\SKILL.md": {
+    "mtime": 1780221465.141835,
+    "ast_hash": "b0168dbcf14c8d3cd29101e1eb66de12",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman-review\\README.md": {
+    "mtime": 1780221465.141835,
+    "ast_hash": "9777a26704850f1e091ab072f02fa10f",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman-review\\SKILL.md": {
+    "mtime": 1780221465.142872,
+    "ast_hash": "0e038c50a6bfdc9b8a307e6316c07236",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman-stats\\README.md": {
+    "mtime": 1780221465.142872,
+    "ast_hash": "866dc96f332b4e2bc1f80fec878fea52",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\skills\\caveman-stats\\SKILL.md": {
+    "mtime": 1780221465.1438472,
+    "ast_hash": "e9966f688641209792719474f241a6ef",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\hooks\\README.md": {
+    "mtime": 1780220948.2818964,
+    "ast_hash": "0ffc4cd7cd132cd8645123b8b3d294ed",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\mcp-servers\\caveman-shrink\\README.md": {
+    "mtime": 1780220948.3000863,
+    "ast_hash": "0d82c2d142ce315b8e53afb5e02d8846",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\plugins\\opencode\\README.md": {
+    "mtime": 1780220948.3052225,
+    "ast_hash": "31add990b765cb44cd785ae6350f5fb0",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\plugins\\opencode\\commands\\caveman-commit.md": {
+    "mtime": 1780220948.3074713,
+    "ast_hash": "9e8958ccc8e078c8b8d1ae7070069bfe",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\plugins\\opencode\\commands\\caveman-help.md": {
+    "mtime": 1780220948.3090599,
+    "ast_hash": "1e0fba68bca9ac2696866203803bd1f9",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\plugins\\opencode\\commands\\caveman-review.md": {
+    "mtime": 1780220948.3100498,
+    "ast_hash": "1f6ef75453572967413b8c7abf5bf80e",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\plugins\\opencode\\commands\\caveman-stats.md": {
+    "mtime": 1780220948.3110518,
+    "ast_hash": "b64f2a924ce03c7cc398a124b5b33709",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\plugins\\opencode\\commands\\caveman.md": {
+    "mtime": 1780220948.3110518,
+    "ast_hash": "986e689be7b6ebb476233d8092f572ba",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\rules\\caveman-activate.md": {
+    "mtime": 1780220948.3143213,
+    "ast_hash": "842f73fb8944c06f82037e6f2deb28dc",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\src\\rules\\caveman-openclaw-bootstrap.md": {
+    "mtime": 1780220948.3153222,
+    "ast_hash": "ff1ddc6b0f942487d73cd70752467fcc",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\caveman-compress\\claude-md-preferences.md": {
+    "mtime": 1780220948.3205469,
+    "ast_hash": "a2bb410635ed296ba1b30ffb10f84dbe",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\caveman-compress\\claude-md-preferences.original.md": {
+    "mtime": 1780220948.3205469,
+    "ast_hash": "ef7c5b56b7fdb75b15235e998a7e744e",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\caveman-compress\\claude-md-project.md": {
+    "mtime": 1780220948.3230896,
+    "ast_hash": "2771a4d9446aa8b27b409d7f91419d51",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\caveman-compress\\claude-md-project.original.md": {
+    "mtime": 1780220948.3245294,
+    "ast_hash": "4cc90597567f4a463d26c0d16ccdbfe0",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\caveman-compress\\mixed-with-code.md": {
+    "mtime": 1780220948.325529,
+    "ast_hash": "e727a76b79a87164782c914a505776ae",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\caveman-compress\\mixed-with-code.original.md": {
+    "mtime": 1780220948.3265297,
+    "ast_hash": "d081b017c5f795993f72e04ed99d35ae",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\caveman-compress\\project-notes.md": {
+    "mtime": 1780220948.3270464,
+    "ast_hash": "15101d44f9db03298ea90ae73f0cc769",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\caveman-compress\\project-notes.original.md": {
+    "mtime": 1780220948.328063,
+    "ast_hash": "0353ad910d160db75a74aed4eb6631e6",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\caveman-compress\\todo-list.md": {
+    "mtime": 1780220948.3295014,
+    "ast_hash": "0513f74e495fa4a013bd69d1f5b54e8d",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\tests\\caveman-compress\\todo-list.original.md": {
+    "mtime": 1780220948.3295014,
+    "ast_hash": "298cd528d5ea0b1af038074e2159f874",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\static\\apps\\README.md": {
+    "mtime": 1780188929.4580758,
+    "ast_hash": "717f16e194116dcfcaa7eaafc6fe769d",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\templates\\index.html": {
+    "mtime": 1780226227.0633154,
+    "ast_hash": "3c7e052594c3fc13c9183893ca0aff9e",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\docs\\assets\\dancing-rock-32.png": {
+    "mtime": 1780220948.2000546,
+    "ast_hash": "f89c978f5ba2e36eb99911f8517888c9",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\docs\\assets\\dancing-rock.svg": {
+    "mtime": 1780220948.2017434,
+    "ast_hash": "aa048db178138ee04e58211c20ef3013",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\assets\\caveman-small.svg": {
+    "mtime": 1780220948.2263274,
+    "ast_hash": "6dc2ad37a1464bdacce5e1521dc24f49",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\assets\\caveman.svg": {
+    "mtime": 1780220948.2273517,
+    "ast_hash": "aa040c7fb59a5b7a3ca3be6f0b439c72",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\skills\\caveman\\assets\\caveman-small.svg": {
+    "mtime": 1780220948.246087,
+    "ast_hash": "6dc2ad37a1464bdacce5e1521dc24f49",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\caveman\\plugins\\caveman\\skills\\caveman\\assets\\caveman.svg": {
+    "mtime": 1780220948.2471094,
+    "ast_hash": "aa040c7fb59a5b7a3ca3be6f0b439c72",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\noufe\\OneDrive\\Desktop\\potato_api\\.planning\\config.json": {
+    "mtime": 1780226635.7016332,
+    "ast_hash": "13a39e08ef724a0d79acc17f3c31dc61",
+    "semantic_hash": ""
+  }
+}

@@ -20,6 +20,8 @@ MODEL_DEVICE = os.getenv("MODEL_DEVICE", "").strip()
 FRAME_MAX_EDGE = int(os.getenv("FRAME_MAX_EDGE", "640"))
 FRAME_MIN_CONF = float(os.getenv("FRAME_MIN_CONF", "0.55"))
 FRAME_MIN_BOX_AREA_RATIO = float(os.getenv("FRAME_MIN_BOX_AREA_RATIO", "0.02"))
+# How long (seconds) annotated output files are kept before background deletion (0 = keep forever)
+OUTPUT_TTL_SEC = int(os.getenv("OUTPUT_TTL_SEC", "3600"))
 
 ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "*")
 DJI_BRIDGE_LOCAL_ONLY = os.getenv("DJI_BRIDGE_LOCAL_ONLY", "1") == "1"
