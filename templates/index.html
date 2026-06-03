@@ -2479,14 +2479,16 @@ async function checkHealth() {
     const loaded = Object.values(d.models || {}).some(m => m.loaded);
     const hasError = Object.values(d.models || {}).some(m => m.error);
     const modelText = hasError ? 'Model error' : (loaded ? 'Model loaded' : 'Demo mode');
-    document.getElementById('model-status').textContent = modelText;
+    const modelStatus = document.getElementById('model-status');
+    if (modelStatus) modelStatus.textContent = modelText;
     const heroModel = document.getElementById('hero-model');
     if (heroModel) heroModel.textContent = modelText;
   } catch {
     const dot = document.getElementById('api-dot');
     dot.className = 'status-dot offline';
     document.getElementById('api-status').textContent = 'API Offline';
-    document.getElementById('model-status').textContent = 'Cannot reach server';
+    const modelStatus = document.getElementById('model-status');
+    if (modelStatus) modelStatus.textContent = 'Cannot reach server';
     const heroApi = document.getElementById('hero-api');
     if (heroApi) heroApi.textContent = 'Offline';
     const heroModel = document.getElementById('hero-model');
