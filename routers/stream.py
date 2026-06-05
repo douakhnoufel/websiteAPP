@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 
 from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import StreamingResponse
-from core.config import STREAM_ALLOWED_HOSTS, STREAM_ALLOWED_SCHEMES
+from core.config import DEFAULT_MODEL_ID, STREAM_ALLOWED_HOSTS, STREAM_ALLOWED_SCHEMES
 from services.security import is_private_or_loopback_host
 from services.model_manager import get_model_info
 from services.inference import run_inference, draw_inference
@@ -80,7 +80,7 @@ async def test_stream(url: str = Query(...)):
 
 
 @router.get("/drone")
-async def stream_drone(url: str = Query(...), model_id: str = Query("potato")):
+async def stream_drone(url: str = Query(...), model_id: str = Query(DEFAULT_MODEL_ID)):
     """
     Consumes an RTMP stream, processes it with YOLOv8, 
     and yields an MJPEG stream for the frontend.

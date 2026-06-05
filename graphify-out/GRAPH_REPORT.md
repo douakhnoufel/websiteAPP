@@ -1,16 +1,16 @@
-# Graph Report - potato_api  (2026-05-31)
+# Graph Report - potato_api  (2026-06-04)
 
 ## Corpus Check
-- 227 files · ~111,948 words
+- 232 files · ~277,549 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1109 nodes · 1427 edges · 121 communities (105 shown, 16 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.69)
+- 1237 nodes · 1576 edges · 124 communities (108 shown, 16 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 11 edges (avg confidence: 0.72)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `a88e7280`
+- Built from commit: `51804235`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -115,20 +115,25 @@
 - [[_COMMUNITY_Community 97|Community 97]]
 - [[_COMMUNITY_Community 119|Community 119]]
 - [[_COMMUNITY_Community 120|Community 120]]
+- [[_COMMUNITY_Community 121|Community 121]]
+- [[_COMMUNITY_Community 122|Community 122]]
+- [[_COMMUNITY_Community 123|Community 123]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `main()` - 18 edges
-2. `interface` - 15 edges
-3. `main()` - 15 edges
-4. `ensure()` - 12 edges
-5. `CLAUDE.md — caveman` - 12 edges
-6. `Contributing to caveman` - 11 edges
-7. `validate()` - 10 edges
-8. `main()` - 10 edges
-9. `detectMatch()` - 10 edges
-10. `validate()` - 10 edges
+1. `Communities (121 total, 16 thin omitted)` - 85 edges
+2. `main()` - 18 edges
+3. `interface` - 15 edges
+4. `main()` - 15 edges
+5. `ensure()` - 12 edges
+6. `CLAUDE.md — caveman` - 12 edges
+7. `Graph Report - potato_api  (2026-05-31)` - 11 edges
+8. `Contributing to caveman` - 11 edges
+9. `validate()` - 10 edges
+10. `main()` - 10 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `load_template()` --calls--> `load_models()`  [EXTRACTED]
+  routers/health.py → services/model_manager.py
 - `_validate_stream_url()` --calls--> `is_private_or_loopback_host()`  [EXTRACTED]
   routers/stream.py → services/security.py
 - `parseModeChange()` --calls--> `getDefaultMode()`  [INFERRED]
@@ -137,25 +142,23 @@
   caveman/src/plugins/opencode/plugin.js → caveman/src/hooks/caveman-config.js
 - `telemetry()` --calls--> `get_drone_telemetry()`  [EXTRACTED]
   routers/drone.py → services/drone_manager.py
-- `telemetry()` --calls--> `drone_auth_status()`  [EXTRACTED]
-  routers/drone.py → services/security.py
 
 ## Import Cycles
 - 1-file cycle: `main.py -> main.py`
 
-## Communities (121 total, 16 thin omitted)
+## Communities (124 total, 16 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.08
 Nodes (50): absoluteNodePath(), captureSpawn(), checkNodeVersion(), checkWslWindowsNode(), child_process, copyDirRecursive(), cursorExtPresent(), detectMatch() (+42 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.09
-Nodes (44): BackgroundTasks, bytes, FastAPI, lifespan(), health(), list_models(), load_template(), _refresh_template_if_changed() (+36 more)
+Cohesion: 0.07
+Nodes (61): AbstractEventLoop, BackgroundTasks, bytes, FastAPI, _ignore_windows_client_disconnects(), lifespan(), health(), list_models() (+53 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.10
-Nodes (21): Path, count_bullets(), extract_code_blocks(), extract_headings(), extract_inline_codes(), extract_paths(), extract_urls(), Line-based fenced code block extractor.      Handles ``` and ~~~ fences with v (+13 more)
+Cohesion: 0.08
+Nodes (26): Path, benchmark_pair(), count_tokens(), main(), print_table(), Path, count_bullets(), extract_code_blocks() (+18 more)
 
 ### Community 3 - "Community 3"
 Cohesion: 0.11
@@ -478,11 +481,23 @@ Cohesion: 0.83
 Nodes (3): iter_images(), main(), predict_class()
 
 ### Community 119 - "Community 119"
-Cohesion: 0.58
-Nodes (5): Path, benchmark_pair(), count_tokens(), main(), print_table()
+Cohesion: 0.02
+Nodes (85): Communities (121 total, 16 thin omitted), Community 0 - "Community 0", Community 10 - "Community 10", Community 119 - "Community 119", Community 11 - "Community 11", Community 12 - "Community 12", Community 13 - "Community 13", Community 14 - "Community 14" (+77 more)
+
+### Community 121 - "Community 121"
+Cohesion: 0.18
+Nodes (10): Community Hubs (Navigation), Corpus Check, God Nodes (most connected - your core abstractions), Graph Freshness, Graph Report - potato_api  (2026-05-31), Import Cycles, Knowledge Gaps, Suggested Questions (+2 more)
+
+### Community 122 - "Community 122"
+Cohesion: 0.25
+Nodes (7): built_at_commit, directed, graph, hyperedges, links, multigraph, nodes
+
+### Community 123 - "Community 123"
+Cohesion: 0.40
+Nodes (4): edges, nodes, timestamp, version
 
 ## Knowledge Gaps
-- **521 isolated node(s):** `bool`, `PreToolUse`, `enabled`, `name`, `description` (+516 more)
+- **626 isolated node(s):** `bool`, `AbstractEventLoop`, `PreToolUse`, `enabled`, `version` (+621 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -490,16 +505,16 @@ Nodes (5): Path, benchmark_pair(), count_tokens(), main(), print_table()
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `call_claude()` connect `Community 5` to `Community 1`?**
-  _High betweenness centrality (0.023) - this node is a cross-community bridge._
+  _High betweenness centrality (0.022) - this node is a cross-community bridge._
 - **Why does `call_claude()` connect `Community 6` to `Community 1`?**
-  _High betweenness centrality (0.019) - this node is a cross-community bridge._
-- **What connects `bool`, `PreToolUse`, `enabled` to the rest of the system?**
-  _545 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _High betweenness centrality (0.014) - this node is a cross-community bridge._
+- **Why does `FastAPI` connect `Community 1` to `Community 3`?**
+  _High betweenness centrality (0.014) - this node is a cross-community bridge._
+- **What connects `bool`, `AbstractEventLoop`, `PreToolUse` to the rest of the system?**
+  _650 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.08144796380090498 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.09019607843137255 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06542443064182195 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.09523809523809523 - nodes in this community are weakly interconnected._
-- **Should `Community 3` be split into smaller, more focused modules?**
-  _Cohesion score 0.10897435897435898 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08282828282828283 - nodes in this community are weakly interconnected._

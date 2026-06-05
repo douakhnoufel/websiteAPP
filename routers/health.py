@@ -46,13 +46,25 @@ async def root():
 async def health():
     _loaded = get_loaded_models()
     return {"status": "ok", "models": {
-        mid: {"loaded": s["yolo"] is not None, "classes": s["meta"]["classes"], "error": s.get("error")}
+        mid: {
+            "loaded": s.get("loaded", False),
+            "available": s.get("available", False),
+            "required": s["meta"].get("required", True),
+            "runtime": s["meta"].get("runtime", "ultralytics"),
+            "task": s["meta"].get("task", "detection"),
+            "classes": s["meta"]["classes"],
+            "error": s.get("error"),
+        }
         for mid, s in _loaded.items()
     }}
 
 @router.get("/models")
 async def list_models():
     _loaded = get_loaded_models()
-    return [{"id": mid, "name": s["meta"]["name"], "description": s["meta"]["description"],
-             "classes": s["meta"]["classes"], "loaded": s["yolo"] is not None, "error": s.get("error")}
+    return [{"id": mid, "name": s["meta"]["name"], "family": s["meta"].get("family", ""),
+             "runtime": s["meta"].get("runtime", "ultralytics"), "task": s["meta"].get("task", "detection"),
+             "required": s["meta"].get("required", True), "input": s["meta"].get("input", "image"),
+             "source_url": s["meta"].get("source_url"), "description": s["meta"]["description"],
+             "classes": s["meta"]["classes"], "labels": s["meta"].get("labels", {}),
+             "loaded": s.get("loaded", False), "available": s.get("available", False), "error": s.get("error")}
             for mid, s in _loaded.items()]

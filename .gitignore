@@ -14,3 +14,7 @@ key.pem
 
 # Android build artifacts are distributed from the server, not GitHub.
 *.apk
+
+# Large optional model artifacts are installed locally or on the server.
+models/plant_disease_detection.pt
+models/tomato_leaf.pt

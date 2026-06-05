@@ -19,6 +19,7 @@ from core.config import (
     FRAME_MIN_BOX_AREA_RATIO,
     DEMO_MODE,
     OUTPUT_TTL_SEC,
+    DEFAULT_MODEL_ID,
 )
 from services.inference import NO_DETECTION_CLASS, run_inference, draw_inference, resize_max_edge
 from services.file_handler import remove_file, remove_file_after
@@ -163,7 +164,7 @@ def _process_video_file(img_path: Path, out_path: Path, model_id: str) -> dict:
 
 
 @router.post("/image")
-async def predict_image(bg: BackgroundTasks, file: UploadFile = File(...), model_id: str = Query("potato")):
+async def predict_image(bg: BackgroundTasks, file: UploadFile = File(...), model_id: str = Query(DEFAULT_MODEL_ID)):
     uid = uuid.uuid4().hex[:8]
     suffix = _safe_suffix(file, IMAGE_EXTS, "image")
     img_path = UPLOADS_DIR / f"{uid}{suffix}"
@@ -193,7 +194,7 @@ async def predict_image(bg: BackgroundTasks, file: UploadFile = File(...), model
 
 
 @router.post("/video")
-async def predict_video(bg: BackgroundTasks, file: UploadFile = File(...), model_id: str = Query("potato")):
+async def predict_video(bg: BackgroundTasks, file: UploadFile = File(...), model_id: str = Query(DEFAULT_MODEL_ID)):
     uid = uuid.uuid4().hex[:8]
     suffix = _safe_suffix(file, VIDEO_EXTS, "video")
     img_path = UPLOADS_DIR / f"{uid}{suffix}"
@@ -217,7 +218,7 @@ async def predict_video(bg: BackgroundTasks, file: UploadFile = File(...), model
 
 
 @router.post("/frame")
-async def predict_frame(file: UploadFile = File(...), model_id: str = Query("potato")):
+async def predict_frame(file: UploadFile = File(...), model_id: str = Query(DEFAULT_MODEL_ID)):
     data = await _read_upload_limited(file, MAX_IMAGE_MB, "Frame")
     img = cv2.imdecode(np.frombuffer(data, np.uint8), cv2.IMREAD_COLOR)
     if img is None:

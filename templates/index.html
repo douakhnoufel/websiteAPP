@@ -577,6 +577,140 @@
     max-width: 62ch;
   }
 
+  .model-toolbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.78);
+  }
+
+  .model-active-name {
+    margin-top: 6px;
+    font-weight: 900;
+    font-size: 1.12rem;
+  }
+
+  .model-active-meta {
+    margin-top: 5px;
+    color: var(--muted);
+    line-height: 1.5;
+    font-size: 0.92rem;
+  }
+
+  .model-select-wrap {
+    display: grid;
+    gap: 6px;
+    min-width: 230px;
+    color: var(--muted);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .model-select-wrap select {
+    width: 100%;
+    min-height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 0 12px;
+    background: #fff;
+    color: var(--ink);
+    font: 700 0.92rem Inter, sans-serif;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .model-workbench-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .model-card {
+    margin-top: 0;
+  }
+
+  .model-card-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .model-card-title {
+    font-weight: 900;
+    line-height: 1.2;
+  }
+
+  .model-card-family {
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+
+  .model-status-chip {
+    flex: 0 0 auto;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 0.72rem;
+    font-family: "IBM Plex Mono", monospace;
+    border: 1px solid var(--line);
+  }
+
+  .model-status-chip.loaded {
+    color: #17683f;
+    background: rgba(35, 129, 91, 0.12);
+  }
+
+  .model-status-chip.demo {
+    color: #9a6b05;
+    background: rgba(216, 154, 29, 0.14);
+  }
+
+  .model-status-chip.missing {
+    color: #7a4a3a;
+    background: rgba(201, 88, 55, 0.1);
+  }
+
+  .model-card-desc {
+    margin-top: 12px;
+    color: var(--muted);
+    line-height: 1.55;
+    font-size: 0.93rem;
+  }
+
+  .model-card-meta {
+    display: grid;
+    gap: 8px;
+    margin-top: 14px;
+    font-size: 0.86rem;
+  }
+
+  .model-card-meta div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid rgba(31, 41, 55, 0.08);
+    padding-top: 8px;
+  }
+
+  .model-card-meta span:first-child {
+    color: var(--muted);
+  }
+
+  .model-card-actions {
+    margin-top: 14px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
   .upload-zone,
   .preview-well,
   .drone-stream-view,
@@ -1317,8 +1451,18 @@
     .mobile-builds,
     .docs-grid,
     .notes-grid,
-    .drone-detail-grid {
+    .drone-detail-grid,
+    .model-workbench-grid {
       grid-template-columns: 1fr;
+    }
+
+    .model-toolbar {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .model-select-wrap {
+      min-width: 0;
     }
 
     .drone-stream-controls {
@@ -1532,6 +1676,20 @@
     <aside class="sidebar">
       <div class="nav-group-label">Detection Modes</div>
       <div class="nav-stack">
+        <button class="nav-btn" onclick="showPanel('workbench')" id="nav-workbench">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 6.5h16M4 12h16M4 17.5h16"></path>
+              <circle cx="8" cy="6.5" r="1.5"></circle>
+              <circle cx="15" cy="12" r="1.5"></circle>
+              <circle cx="11" cy="17.5" r="1.5"></circle>
+            </svg>
+          </span>
+          <span>
+            <span class="nav-title">Model Workbench</span>
+            <span class="nav-meta">Video + realtime models</span>
+          </span>
+        </button>
         <button class="nav-btn active" onclick="showPanel('image')" id="nav-image">
           <span class="nav-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
@@ -1613,19 +1771,49 @@
         <div class="mini-stat"><span>Input</span><span>640x640</span></div>
         <div class="mini-stat"><span>Target</span><span>&lt;1s/image</span></div>
         <div class="mini-stat"><span>Mission</span><span>Field diagnosis</span></div>
-        <div class="mini-stat"><span>Android App</span><a href="/static/apps/potatoscan.apk" download>Download APK (221 MB)</a></div>
+        <div class="mini-stat"><span>Android App</span><a href="/static/apps/potatoscan.apk" download>Download APK (342 MB)</a></div>
       </div>
     </aside>
 
     <main class="content">
       <section class="workspace-grid">
         <section class="content-card">
+          <div class="model-toolbar">
+            <div>
+              <div class="panel-kicker">Active Inference Model</div>
+              <div class="model-active-name" id="active-model-name">Potato Disease</div>
+              <div class="model-active-meta" id="active-model-meta">YOLO detector for image, video, webcam, and drone workflows.</div>
+            </div>
+            <label class="model-select-wrap">
+              <span>Model</span>
+              <select id="model-select" onchange="selectModel(this.value)">
+                <option value="potato">Potato Disease</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="panel" id="panel-workbench">
+            <div class="panel-header">
+              <div>
+                <div class="panel-kicker">Model Expansion</div>
+                <h2 class="panel-title">Multi-model workbench</h2>
+                <p class="panel-copy">Select a YOLO detector or ONNX classifier, check whether the artifact is loaded, and keep each model family separated from the potato workflow.</p>
+              </div>
+            </div>
+
+            <div class="model-workbench-grid" id="model-workbench-grid">
+              <div class="result-card">
+                <div class="result-body">Loading model catalog...</div>
+              </div>
+            </div>
+          </div>
+
           <div class="panel active" id="panel-image">
             <div class="panel-header">
               <div>
                 <div class="panel-kicker">Leaf Triage</div>
-                <h2 class="panel-title">Image diagnosis with side-by-side proof</h2>
-                <p class="panel-copy">Upload one potato leaf image and immediately compare the raw input with the annotated result, confidence bars, and a download-ready report image.</p>
+                <h2 class="panel-title">Potato diagnosis with side-by-side proof</h2>
+                <p class="panel-copy">Upload one potato leaf image and compare the raw input with the annotated result, confidence bars, and a download-ready report image.</p>
               </div>
             </div>
 
@@ -1633,7 +1821,7 @@
               <input id="img-file-input" type="file" accept=".jpg,.jpeg,.png,.webp,.bmp,image/jpeg,image/png,image/webp,image/bmp" onchange="handleImageFile(this.files[0])">
               <div class="upload-icon-wrap">Leaf</div>
               <div class="upload-title">Drop a potato leaf image</div>
-              <div class="upload-sub">JPG, PNG, WEBP, or BMP. Best for quick classroom demos and field diagnosis.</div>
+              <div class="upload-sub">JPG, PNG, WEBP, or BMP. Best for potato disease diagnosis and field demos.</div>
             </div>
 
             <div class="progress-wrap" id="img-progress">
@@ -1644,11 +1832,11 @@
             <div class="preview-area" id="img-preview">
               <div class="preview-grid">
                 <div class="preview-box">
-                  <div class="preview-box-label">Original Image</div>
+                  <div class="preview-box-label" id="img-original-label">Original Image</div>
                   <img id="img-original" src="" alt="Original leaf">
                 </div>
                 <div class="preview-box">
-                  <div class="preview-box-label">YOLO Annotated Result</div>
+                  <div class="preview-box-label" id="img-annotated-label">YOLO Annotated Result</div>
                   <img id="img-annotated" src="" alt="Annotated result">
                 </div>
               </div>
@@ -1907,6 +2095,7 @@ print(res["result_url"])</div>
             <div class="code-block">curl -X POST https://noufeldouakh.me/predict/image \
   -F "file=@leaf.jpg"</div>
           </div>
+
         </section>
 
         <aside class="support-card">
@@ -1948,10 +2137,10 @@ print(res["result_url"])</div>
           <div class="mobile-build-card docs-card">
             <span class="method-badge method-post">Android</span>
             <div class="build-title">PotatoScan Android APK</div>
-            <div class="build-text">Current release build: <strong>220.80 MB</strong>, generated on <strong>2026-05-31 12:02</strong>. Android users can download and install it from this link.</div>
+            <div class="build-text">Current release build: <strong>341.98 MB</strong>, generated on <strong>2026-06-03 03:27</strong>. Android users can download and install it from this link.</div>
             <div class="build-path">/static/apps/potatoscan.apk</div>
             <div class="build-actions">
-              <a class="btn primary" href="/static/apps/potatoscan.apk" download>Download APK <span style="opacity:0.7;font-size:0.85em;margin-left:4px;">· 221 MB</span></a>
+              <a class="btn primary" href="/static/apps/potatoscan.apk" download>Download APK <span style="opacity:0.7;font-size:0.85em;margin-left:4px;">· 342 MB</span></a>
             </div>
           </div>
           <div class="mobile-build-card docs-card">
@@ -2056,12 +2245,14 @@ print(res["result_url"])</div>
 <div class="toast" id="toast"></div>
 
 <script>
-const API = location.protocol === 'file:'
-  ? (localStorage.getItem('potatoscan_api_base') || 'https://localhost:8000')
+let API = location.protocol === 'file:'
+  ? (localStorage.getItem('potatoscan_api_base') || '')
   : '';
+let apiBaseReady = null;
 const IS_MOBILE = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || '');
 let wcStream = null, wcTimer = null, wcFacing = 'environment', wcInfer = false;
 let wcAvgMs = null, wcLastTick = 0, wcLastFps = 0, wcLastLatency = 0;
+let wcFrameWidth = 0, wcFrameHeight = 0;
 let droneTimer = null;
 let droneStreamActive = false;
 let droneCommandWatch = null;
@@ -2076,6 +2267,59 @@ const MAX_VIDEO_BYTES = 100 * 1024 * 1024;
 const MOBILE_IMAGE_MAX_EDGE = 1600;
 const MOBILE_IMAGE_JPEG_QUALITY = 0.86;
 let wcLastErrorToast = 0;
+let modelCatalog = [];
+const DEFAULT_MODEL_ID = 'potato';
+const SAVED_MODEL_VERSION = 'potato-main-v1';
+if (localStorage.getItem('potatoscan_model_version') !== SAVED_MODEL_VERSION) {
+  localStorage.setItem('potatoscan_model_id', DEFAULT_MODEL_ID);
+  localStorage.setItem('potatoscan_model_version', SAVED_MODEL_VERSION);
+}
+let selectedModelId = localStorage.getItem('potatoscan_model_id') || DEFAULT_MODEL_ID;
+
+function activeModel() {
+  return modelCatalog.find(m => m.id === selectedModelId)
+    || modelCatalog.find(m => m.id === DEFAULT_MODEL_ID)
+    || modelCatalog.find(m => m.id === 'potato')
+    || null;
+}
+
+function modelQuery() {
+  return `model_id=${encodeURIComponent(selectedModelId)}`;
+}
+
+function modelSupports(kind) {
+  const model = activeModel();
+  const input = String((model && model.input) || 'image').toLowerCase();
+  return input.includes(kind);
+}
+
+async function ensureApiBase() {
+  if (location.protocol !== 'file:') return API;
+  if (apiBaseReady) return apiBaseReady;
+  apiBaseReady = (async () => {
+    const saved = (localStorage.getItem('potatoscan_api_base') || '').trim();
+    const candidates = [
+      saved,
+      'http://127.0.0.1:8010',
+      'http://127.0.0.1:8000',
+      'http://localhost:8000',
+      'https://localhost:8000'
+    ].filter(Boolean);
+    for (const base of candidates) {
+      try {
+        const res = await fetch(base + '/health', { cache: 'no-store' });
+        if (res.ok) {
+          API = base;
+          localStorage.setItem('potatoscan_api_base', base);
+          return API;
+        }
+      } catch {}
+    }
+    API = saved || 'http://127.0.0.1:8010';
+    return API;
+  })();
+  return apiBaseReady;
+}
 let imgObjectUrl = null;
 
 function droneAuthHeaders() {
@@ -2369,7 +2613,12 @@ function watchDroneCommand(commandId) {
   }, 1000);
 }
 
-function startDroneStream() {
+async function startDroneStream() {
+  await ensureApiBase();
+  if (!modelSupports('drone')) {
+    toast('Selected model does not support drone stream overlays');
+    return;
+  }
   const urlInput = document.getElementById('drone-stream-url');
   const streamUrl = (urlInput.value || '').trim();
   const statusEl = document.getElementById('drone-stream-status');
@@ -2382,7 +2631,7 @@ function startDroneStream() {
   if (statusEl) statusEl.textContent = 'Starting annotated stream...';
   const img = document.getElementById('drone-stream-view');
   const empty = document.getElementById('drone-stream-empty');
-  const src = `${API}/stream/drone?url=${encodeURIComponent(streamUrl)}&model_id=potato&t=${Date.now()}`;
+  const src = `${API}/stream/drone?url=${encodeURIComponent(streamUrl)}&${modelQuery()}&t=${Date.now()}`;
   img.src = src;
   img.style.display = 'block';
   empty.style.display = 'none';
@@ -2422,6 +2671,7 @@ function stopDroneStream() {
 }
 
 async function testDroneStream() {
+  await ensureApiBase();
   const urlInput = document.getElementById('drone-stream-url');
   const streamUrl = (urlInput.value || '').trim();
   const statusEl = document.getElementById('drone-stream-status');
@@ -2469,6 +2719,7 @@ initButtonClickAnimations();
 
 async function checkHealth() {
   try {
+    await ensureApiBase();
     const r = await fetch(API + '/health');
     const d = await readJsonResponse(r);
     const dot = document.getElementById('api-dot');
@@ -2483,6 +2734,7 @@ async function checkHealth() {
     if (modelStatus) modelStatus.textContent = modelText;
     const heroModel = document.getElementById('hero-model');
     if (heroModel) heroModel.textContent = modelText;
+    await refreshModels();
   } catch {
     const dot = document.getElementById('api-dot');
     dot.className = 'status-dot offline';
@@ -2497,6 +2749,114 @@ async function checkHealth() {
 }
 checkHealth();
 setInterval(checkHealth, 30000);
+
+async function refreshModels() {
+  await ensureApiBase();
+  const res = await fetch(API + '/models');
+  const models = await readJsonResponse(res);
+  if (!Array.isArray(models)) return;
+  modelCatalog = models;
+  const selected = modelCatalog.find(m => m.id === selectedModelId);
+  if (!selected || !selected.available) {
+    const preferred = modelCatalog.find(m => m.id === DEFAULT_MODEL_ID && m.available);
+    const firstAvailable = modelCatalog.find(m => m.available);
+    selectedModelId = (preferred || firstAvailable || { id: 'potato' }).id;
+  }
+  renderModelSelect();
+  renderModelWorkbench();
+  updateActiveModelUI();
+}
+
+function renderModelSelect() {
+  const select = document.getElementById('model-select');
+  if (!select) return;
+  select.innerHTML = modelCatalog.map(m => {
+    const state = modelStateText(m);
+    return `<option value="${m.id}" ${m.available ? '' : 'disabled'}>${m.name} - ${state}</option>`;
+  }).join('');
+  select.value = selectedModelId;
+}
+
+function modelStateText(model) {
+  if (!model) return 'unknown';
+  if (model.loaded) return 'loaded';
+  if (model.available) return 'demo';
+  const error = String(model.error || '').toLowerCase();
+  if (model.runtime === 'roboflow_workflow' || error.includes('roboflow_api_key')) return 'API key needed';
+  if (error.includes('not installed')) return 'dependency needed';
+  return 'artifact needed';
+}
+
+function renderModelWorkbench() {
+  const grid = document.getElementById('model-workbench-grid');
+  if (!grid) return;
+  grid.innerHTML = modelCatalog.map(m => {
+    const status = modelStateText(m);
+    const statusCls = m.loaded ? 'loaded' : (m.available ? 'demo' : 'missing');
+    const classes = Array.isArray(m.classes) ? m.classes.length : 0;
+    const source = m.source_url ? `<a class="btn" href="${m.source_url}" target="_blank" rel="noopener noreferrer">Source</a>` : '';
+    return `<div class="result-card model-card">
+      <div class="result-body">
+        <div class="model-card-head">
+          <div>
+            <div class="model-card-title">${m.name}</div>
+            <div class="model-card-family">${m.family || 'Model family'}</div>
+          </div>
+          <span class="model-status-chip ${statusCls}">${status}</span>
+        </div>
+        <div class="model-card-desc">${m.description || ''}</div>
+        <div class="model-card-meta">
+          <div><span>Task</span><strong>${m.task}</strong></div>
+          <div><span>Runtime</span><strong>${m.runtime}</strong></div>
+          <div><span>Input</span><strong>${m.input || 'image'}</strong></div>
+          <div><span>Classes</span><strong>${classes}</strong></div>
+        </div>
+        <div class="model-card-actions">
+          <button class="btn primary" onclick="selectModel('${m.id}')">Use Model</button>
+          ${source}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function selectModel(modelId) {
+  const nextModel = modelCatalog.find(m => m.id === modelId);
+  if (nextModel && !nextModel.available) {
+    const reason = nextModel.error || modelStateText(nextModel);
+    toast(`${nextModel.name}: ${reason}`);
+    renderModelSelect();
+    return;
+  }
+  selectedModelId = modelId || DEFAULT_MODEL_ID;
+  localStorage.setItem('potatoscan_model_id', selectedModelId);
+  renderModelSelect();
+  updateActiveModelUI();
+  resetImage();
+  resetVideo();
+  stopDroneStream();
+  toast(`Active model: ${(activeModel() || {}).name || selectedModelId}`);
+}
+
+function updateActiveModelUI() {
+  const model = activeModel();
+  if (!model) return;
+  const nameEl = document.getElementById('active-model-name');
+  const metaEl = document.getElementById('active-model-meta');
+  if (nameEl) nameEl.textContent = model.name;
+  if (metaEl) {
+    const status = model.loaded ? 'loaded' : (model.available ? 'demo-ready' : 'needs artifact');
+    metaEl.textContent = `${model.task} via ${model.runtime} - ${model.input || 'image'} - ${status}`;
+  }
+  const originalLabel = document.getElementById('img-original-label');
+  const annotatedLabel = document.getElementById('img-annotated-label');
+  if (originalLabel) originalLabel.textContent = model.id === 'potato' ? 'Potato Leaf Input' : 'Original Image';
+  if (annotatedLabel) {
+    annotatedLabel.textContent = model.id === 'potato'
+      ? 'Potato Disease YOLO Result'
+      : `${model.name} YOLO Result`;
+  }
+}
 
 const CLS_MAP = {
   healthy: 'healthy',
@@ -2518,11 +2878,11 @@ const LABEL_MAP = {
 };
 
 function clsKey(cls) {
-  return CLS_MAP[cls] || cls;
+  return CLS_MAP[cls] || String(cls || 'unknown').toLowerCase().replace(/[^a-z0-9]+/g, '-');
 }
 
 function clsIcon(cls) {
-  return { healthy: '🌿', early: '🟡', late: '🔴', early_blight: '🟡', late_blight: '🔴', no_detection: '--', unknown: '?' }[cls] || '?';
+  return { healthy: '🌿', early: '🟡', late: '🔴', early_blight: '🟡', late_blight: '🔴', no_detection: '--', unknown: '?' }[cls] || 'AI';
 }
 
 function clsColor(cls) {
@@ -2535,11 +2895,16 @@ function clsBgColor(cls) {
 
 function formatLabel(cls) {
   if (!cls) return 'Unknown';
-  return LABEL_MAP[cls] || cls.replace(/_/g, ' ');
+  const model = activeModel();
+  const labels = (model && model.labels) || {};
+  return labels[cls] || LABEL_MAP[cls] || String(cls).replace(/_/g, ' ');
 }
 
 function confBars(scores) {
-  return ['early', 'healthy', 'late'].map(c => {
+  const model = activeModel();
+  const modelClasses = model && Array.isArray(model.classes) ? model.classes : [];
+  const classes = modelClasses.length ? modelClasses : Object.keys(scores || {});
+  return classes.map(c => {
     const v = Math.round((scores[c] || 0) * 100);
     const label = formatLabel(c);
     return `<div class="conf-row">
@@ -2576,6 +2941,7 @@ function handleImgDrop(ev) {
 }
 
 async function handleImageFile(file) {
+  await ensureApiBase();
   if (!isImageUpload(file)) return toast('Please select an image file');
   if (file.size > MAX_RAW_IMAGE_BYTES) return toast('Image must be under 80MB');
 
@@ -2599,7 +2965,7 @@ async function handleImageFile(file) {
   try {
     document.getElementById('img-pbar').style.width = '60%';
     document.getElementById('img-plabel').textContent = 'Running inference...';
-    const res = await fetch(API + '/predict/image', { method: 'POST', body: fd });
+    const res = await fetch(API + `/predict/image?${modelQuery()}`, { method: 'POST', body: fd });
     const data = await readJsonResponse(res);
     if (!data.result_url || !data.prediction) throw new Error('Prediction response was incomplete');
     document.getElementById('img-pbar').style.width = '100%';
@@ -2638,7 +3004,9 @@ function handleVidDrop(ev) {
 }
 
 async function handleVideoFile(file) {
+  await ensureApiBase();
   if (!isVideoUpload(file)) return toast('Please select a video file');
+  if (!modelSupports('video')) return toast('Selected model supports image inference only');
   if (file.size > MAX_VIDEO_BYTES) return toast('Video must be under 100MB');
 
   document.getElementById('vid-zone').style.display = 'none';
@@ -2656,8 +3024,8 @@ async function handleVideoFile(file) {
   }, 800);
 
   try {
-    document.getElementById('vid-plabel').textContent = 'Processing frames with YOLOv8n...';
-    const res = await fetch(API + '/predict/video', { method: 'POST', body: fd });
+    document.getElementById('vid-plabel').textContent = `Processing frames with ${(activeModel() || {}).name || 'model'}...`;
+    const res = await fetch(API + `/predict/video?${modelQuery()}`, { method: 'POST', body: fd });
     const data = await readJsonResponse(res);
     if (!data.result_url) throw new Error('Video response was incomplete');
     clearInterval(pint);
@@ -2685,8 +3053,8 @@ async function handleVideoFile(file) {
 
     const dist = data.class_distribution || {};
     const distClasses = Object.prototype.hasOwnProperty.call(dist, 'no_detection')
-      ? ['early', 'healthy', 'late', 'no_detection']
-      : ['early', 'healthy', 'late'];
+      ? [...Object.keys(dist).filter(c => c !== 'no_detection'), 'no_detection']
+      : Object.keys(dist);
     document.getElementById('vid-result').innerHTML = `
       <div class="result-header">
         <div class="result-badge badge-${clsKey(cls)}">${clsIcon(cls)}</div>
@@ -2739,6 +3107,11 @@ function resetVideo() {
 }
 
 async function startWebcam() {
+  await ensureApiBase();
+  if (!modelSupports('webcam')) {
+    toast('Selected model does not support realtime webcam mode');
+    return;
+  }
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
     toast('Camera API is not available on this browser');
     return;
@@ -2832,12 +3205,14 @@ function startWcLoop() {
     c.width = Math.round(vid.videoWidth * scale);
     c.height = Math.round(vid.videoHeight * scale);
     c.getContext('2d').drawImage(vid, 0, 0, c.width, c.height);
+    wcFrameWidth = c.width;
+    wcFrameHeight = c.height;
     try {
       const blob = await canvasToFrameBlob(c);
       if (!blob) throw new Error('Could not capture camera frame');
       const fd = new FormData();
       fd.append('file', blob, 'frame.jpg');
-      const res = await fetch(API + '/predict/frame', { method: 'POST', body: fd });
+      const res = await fetch(API + `/predict/frame?${modelQuery()}`, { method: 'POST', body: fd });
       const data = await readJsonResponse(res);
       const now = performance.now();
       if (wcLastTick) {
@@ -2880,25 +3255,34 @@ function updateWcDisplay(data) {
 
   const cvs = document.getElementById('webcam-canvas');
   const ctx = cvs.getContext('2d');
+  if (wcFrameWidth && wcFrameHeight && (cvs.width !== wcFrameWidth || cvs.height !== wcFrameHeight)) {
+    cvs.width = wcFrameWidth;
+    cvs.height = wcFrameHeight;
+  }
   ctx.clearRect(0, 0, cvs.width, cvs.height);
-  const sx = cvs.offsetWidth / cvs.width;
-  const sy = cvs.offsetHeight / cvs.height;
   for (const box of (data.boxes || [])) {
     const [x1, y1, x2, y2] = box.bbox;
     const c = box.class || cls;
     const pct = Math.round((box.confidence || data.confidence || 0) * 100);
-    const rx = x1 * sx, ry = y1 * sy, rw = (x2 - x1) * sx, rh = (y2 - y1) * sy;
+    const rx = x1, ry = y1, rw = x2 - x1, rh = y2 - y1;
     ctx.strokeStyle = clsBgColor(c);
     ctx.lineWidth = 3;
     ctx.strokeRect(rx, ry, rw, rh);
     ctx.fillStyle = clsBgColor(c);
-    const txt = `${c} ${pct}%`;
+    const txt = overlayLabel(c, pct);
     ctx.font = '12px monospace';
-    const tw = ctx.measureText(txt).width;
-    ctx.fillRect(rx, ry - 20, tw + 10, 20);
+    const tw = Math.min(ctx.measureText(txt).width, Math.max(80, cvs.width - rx - 12));
+    const labelY = ry > 22 ? ry - 22 : ry + 4;
+    ctx.fillRect(rx, labelY, tw + 10, 20);
     ctx.fillStyle = '#0a0a0a';
-    ctx.fillText(txt, rx + 5, ry - 6);
+    ctx.fillText(txt, rx + 5, labelY + 14, tw);
   }
+}
+
+function overlayLabel(cls, pct) {
+  const label = String(cls || 'unknown').replace(/_/g, ' ');
+  const shortLabel = label.length > 28 ? label.slice(0, 27).trim() + '...' : label;
+  return `${shortLabel} ${pct}%`;
 }
 </script>
 </body>

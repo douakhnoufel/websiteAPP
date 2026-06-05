@@ -17,6 +17,7 @@ VIDEO_SAMPLE_FPS = float(os.getenv("VIDEO_SAMPLE_FPS", "5"))
 MODEL_CONF = float(os.getenv("MODEL_CONF", "0.25"))
 MODEL_IMGSZ = int(os.getenv("MODEL_IMGSZ", "640"))
 MODEL_DEVICE = os.getenv("MODEL_DEVICE", "").strip()
+DEFAULT_MODEL_ID = os.getenv("DEFAULT_MODEL_ID", "potato").strip() or "potato"
 FRAME_MAX_EDGE = int(os.getenv("FRAME_MAX_EDGE", "640"))
 FRAME_MIN_CONF = float(os.getenv("FRAME_MIN_CONF", "0.55"))
 FRAME_MIN_BOX_AREA_RATIO = float(os.getenv("FRAME_MIN_BOX_AREA_RATIO", "0.02"))
@@ -43,6 +44,10 @@ MODELS = [
     {
         "id": "potato",
         "name": "Potato Disease",
+        "family": "PotatoScan",
+        "runtime": "ultralytics",
+        "task": "detection",
+        "required": True,
         "path": MODEL_DIR / "potato.pt",
         "classes": ["early", "healthy", "late"],
         "labels": {
@@ -53,6 +58,64 @@ MODELS = [
             "unknown": "Unknown",
         },
         "description": "YOLOv8n trained on 90 potato leaves",
+        "source_url": "https://www.kaggle.com/datasets/aarishasifkhan/plantvillage-potato-disease-dataset/data",
+        "input": "image, video, webcam, drone",
+    },
+    {
+        "id": "plant_disease_detection",
+        "name": "Plant Disease Detection",
+        "family": "Multi-plant detector",
+        "runtime": "ultralytics",
+        "task": "detection",
+        "required": False,
+        "path": MODEL_DIR / "plant_disease_detection.pt",
+        "classes": ["plant_disease"],
+        "labels": {
+            "plant_disease": "Plant disease",
+            "no_detection": "No detection",
+            "unknown": "Unknown",
+        },
+        "description": "Large Ultralytics detector copied from Downloads/PlantDiseaseDetection.pt",
+        "source_url": "",
+        "input": "image, video, webcam, drone",
+    },
+    {
+        "id": "tomato_leaf",
+        "name": "Tomato Leaf Disease",
+        "family": "TomatoScan",
+        "runtime": "ultralytics",
+        "task": "detection",
+        "required": False,
+        "path": MODEL_DIR / "tomato_leaf.pt",
+        "classes": [
+            "Tomato Bacterial Spot",
+            "Tomato Early blight",
+            "Tomato Late blight",
+            "Tomato Leaf Mold",
+            "Tomato Septoria leaf spot",
+            "Tomato Spider mites Two-spotted spider mite",
+            "Tomato Target Spot",
+            "Tomato Yellow Leaf Curl Virus",
+            "Tomato healthy",
+            "Tomato mosaic virus",
+        ],
+        "labels": {
+            "Tomato Bacterial Spot": "Tomato bacterial spot",
+            "Tomato Early blight": "Tomato early blight",
+            "Tomato Late blight": "Tomato late blight",
+            "Tomato Leaf Mold": "Tomato leaf mold",
+            "Tomato Septoria leaf spot": "Tomato septoria leaf spot",
+            "Tomato Spider mites Two-spotted spider mite": "Tomato spider mites / two-spotted spider mite",
+            "Tomato Target Spot": "Tomato target spot",
+            "Tomato Yellow Leaf Curl Virus": "Tomato yellow leaf curl virus",
+            "Tomato healthy": "Healthy tomato leaf",
+            "Tomato mosaic virus": "Tomato mosaic virus",
+            "no_detection": "No detection",
+            "unknown": "Unknown",
+        },
+        "description": "Ultralytics YOLO tomato leaf disease model copied from Downloads/best_tomato_leaf_model.pt",
+        "source_url": "",
+        "input": "image, video, webcam, drone",
     },
 ]
 
