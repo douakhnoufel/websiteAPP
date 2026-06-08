@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
-from fastapi.responses import HTMLResponse
-from core.config import TEMPLATE_PATH, DEMO_MODE, TEMPLATE_AUTO_RELOAD
+from fastapi.responses import HTMLResponse, FileResponse
+from core.config import TEMPLATE_PATH, DEMO_MODE, TEMPLATE_AUTO_RELOAD, STATIC_DIR
 from services.model_manager import get_loaded_models, load_models
 
 router = APIRouter()
@@ -40,6 +40,22 @@ async def root():
     return HTMLResponse(
         _INDEX_HTML,
         headers={"Cache-Control": "no-store, max-age=0"},
+    )
+
+@router.get("/download/apk")
+async def download_apk():
+    """Serve the APK with the correct MIME type so browsers download it
+    as an .apk file instead of treating it as a generic ZIP archive."""
+    apk_path = STATIC_DIR / "apps" / "potatoscan.apk"
+    if not apk_path.exists():
+        raise HTTPException(404, "APK file not found")
+    return FileResponse(
+        path=str(apk_path),
+        media_type="application/vnd.android.package-archive",
+        filename="PotatoScan.apk",
+        headers={
+            "Content-Disposition": "attachment; filename=\"PotatoScan.apk\"",
+        },
     )
 
 @router.get("/health")
