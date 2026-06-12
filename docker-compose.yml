@@ -16,7 +16,7 @@ services:
       - VIDEO_SAMPLE_FPS=5
       - STREAM_INFERENCE_FPS=2
       - STREAM_ALLOWED_SCHEMES=rtmp,rtsp,http,https
-      - STREAM_ALLOWED_HOSTS=
+      - STREAM_ALLOWED_HOSTS=mediamtx,159.89.28.191
     volumes:
       - ./uploads:/app/uploads
       - ./outputs:/app/outputs
