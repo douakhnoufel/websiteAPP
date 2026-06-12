@@ -20,6 +20,8 @@ MODEL_DEVICE = os.getenv("MODEL_DEVICE", "").strip()
 FRAME_MAX_EDGE = int(os.getenv("FRAME_MAX_EDGE", "640"))
 FRAME_MIN_CONF = float(os.getenv("FRAME_MIN_CONF", "0.55"))
 FRAME_MIN_BOX_AREA_RATIO = float(os.getenv("FRAME_MIN_BOX_AREA_RATIO", "0.02"))
+STREAM_INFERENCE_FPS = float(os.getenv("STREAM_INFERENCE_FPS", "2"))
+STREAM_JPEG_QUALITY = int(os.getenv("STREAM_JPEG_QUALITY", "70"))
 
 ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "*")
 DJI_BRIDGE_LOCAL_ONLY = os.getenv("DJI_BRIDGE_LOCAL_ONLY", "1") == "1"
@@ -33,7 +35,7 @@ STREAM_ALLOWED_SCHEMES = {
 }
 STREAM_ALLOWED_HOSTS = {
     h.strip().lower()
-    for h in os.getenv("STREAM_ALLOWED_HOSTS", "").split(",")
+    for h in os.getenv("STREAM_ALLOWED_HOSTS", "localhost,127.0.0.1,159.89.28.191,192.168.1.10").split(",")
     if h.strip()
 }
 

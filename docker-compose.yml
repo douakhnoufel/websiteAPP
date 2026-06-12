@@ -14,8 +14,22 @@ services:
       - MODEL_IMGSZ=640
       - FRAME_MAX_EDGE=640
       - VIDEO_SAMPLE_FPS=5
+      - STREAM_INFERENCE_FPS=2
       - STREAM_ALLOWED_SCHEMES=rtmp,rtsp,http,https
       - STREAM_ALLOWED_HOSTS=
     volumes:
       - ./uploads:/app/uploads
       - ./outputs:/app/outputs
+    depends_on:
+      - mediamtx
+
+  mediamtx:
+    image: bluenviron/mediamtx:latest
+    restart: unless-stopped
+    ports:
+      - "1935:1935"
+      - "8554:8554"
+      - "8888:8888"
+      - "8889:8889"
+    volumes:
+      - ./mediamtx/mediamtx.yml:/mediamtx.yml:ro

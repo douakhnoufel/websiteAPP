@@ -735,6 +735,8 @@
   .media-frame video,
   #hero-drone-view,
   #drone-stream-view,
+  #hero-drone-overlay,
+  #drone-stream-overlay,
   #webcam-video,
   #webcam-canvas {
     width: 100%;
@@ -918,6 +920,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  #hero-drone-overlay,
+  #drone-stream-overlay {
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    pointer-events: none;
+    z-index: 2;
   }
 
   .preview-placeholder,
@@ -1601,22 +1612,24 @@
               </div>
 
               <div class="stream-card" style="padding:18px">
-                <div class="preview-box-label" style="padding:0 0 12px;border-bottom:none">Annotated Drone Stream</div>
+                <div class="preview-box-label" style="padding:0 0 12px;border-bottom:none">Live Drone Stream</div>
                 <div class="drone-stream-controls">
-                  <input id="drone-stream-url" class="drone-input" type="text" placeholder="rtmp://your-server/live/stream-key">
+                  <input id="drone-stream-url" class="drone-input" type="text" placeholder="rtmp://your-server/live/stream-key" value="rtmp://127.0.0.1:1935/live/drone">
                   <button class="btn" onclick="testDroneStream()">Test RTMP</button>
                   <button class="btn primary" onclick="startDroneStream()">Start Stream</button>
                   <button class="btn danger" onclick="stopDroneStream()">Stop Stream</button>
                 </div>
                 <div class="drone-bridge-note" id="drone-stream-status">RTMP not tested yet.</div>
+                <div class="drone-bridge-note" id="drone-detection-status">No recent detections.</div>
                 <div class="drone-stream-view">
-                  <img id="drone-stream-view" alt="Annotated drone stream preview" style="display:none">
+                  <video id="drone-stream-view" autoplay muted playsinline controls style="display:none"></video>
+                  <canvas id="drone-stream-overlay" style="display:none"></canvas>
                   <div id="drone-stream-empty" class="stream-empty">
                     <svg class="crosshair" viewBox="0 0 80 80" fill="none">
                       <circle cx="40" cy="40" r="18" stroke="rgba(93,143,42,0.55)"></circle>
                       <path d="M40 8v16M40 56v16M8 40h16M56 40h16" stroke="rgba(93,143,42,0.55)"></path>
                     </svg>
-                    <div>Start an RTMP stream to mirror the live airborne scan with YOLO overlays.</div>
+                    <div>Start an RTMP stream to mirror the live airborne scan with smooth playback and sampled YOLO overlays.</div>
                   </div>
                 </div>
               </div>
@@ -1823,7 +1836,8 @@ print(res["result_url"])</div>
           </div>
         </div>
         <div class="preview-well">
-          <img id="hero-drone-view" alt="Drone footage preview" style="display:none">
+          <video id="hero-drone-view" autoplay muted playsinline controls style="display:none"></video>
+          <canvas id="hero-drone-overlay" style="display:none"></canvas>
           <div id="hero-drone-empty" class="preview-placeholder">
             <svg class="crosshair" viewBox="0 0 80 80" fill="none">
               <circle cx="40" cy="40" r="18" stroke="rgba(93,143,42,0.55)"></circle>
@@ -1874,6 +1888,7 @@ print(res["result_url"])</div>
 
 <div class="toast" id="toast"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js"></script>
 <script>
 const API = location.protocol === 'file:'
   ? 'https://localhost:8000'
@@ -1883,11 +1898,16 @@ let wcAvgMs = null, wcLastTick = 0, wcLastFps = 0, wcLastLatency = 0;
 let droneTimer = null;
 let droneStreamActive = false;
 let droneCommandWatch = null;
+let droneDetectTimer = null;
+let droneDetectionLastAt = 0;
+let droneCurrentUrl = '';
 const WC_BASE_INTERVAL = 800;
 const WC_MIN_INTERVAL = 350;
 const WC_MAX_INTERVAL = 2000;
 const WC_MAX_WIDTH = 640;
 const WC_JPEG_QUALITY = 0.7;
+const DRONE_DETECT_INTERVAL = 1200;
+const DRONE_OVERLAY_TTL_MS = 2200;
 
 function droneAuthHeaders() {
   const token = (localStorage.getItem('potatoscan_drone_token') || '').trim();
@@ -2013,6 +2033,133 @@ function stopDronePolling() {
   }
 }
 
+function buildDroneHlsUrl(streamUrl) {
+  const parsed = new URL(streamUrl);
+  const streamPath = parsed.pathname.replace(/^\/+/, '') || 'live/drone';
+  return `http://${parsed.hostname}:8888/${streamPath}/index.m3u8`;
+}
+
+function attachDroneVideo(videoEl, src) {
+  if (!videoEl) return;
+  if (videoEl._hls) {
+    videoEl._hls.destroy();
+    videoEl._hls = null;
+  }
+  videoEl.pause();
+  videoEl.removeAttribute('src');
+  videoEl.load();
+
+  if (window.Hls && window.Hls.isSupported()) {
+    const hls = new window.Hls({
+      lowLatencyMode: true,
+      backBufferLength: 2,
+      liveSyncDurationCount: 2,
+    });
+    hls.loadSource(src);
+    hls.attachMedia(videoEl);
+    videoEl._hls = hls;
+  } else {
+    videoEl.src = src;
+  }
+}
+
+function fitOverlayToVideo(videoEl, canvasEl) {
+  if (!videoEl || !canvasEl || !videoEl.videoWidth || !videoEl.videoHeight) return false;
+  const rect = videoEl.getBoundingClientRect();
+  const width = Math.max(1, Math.round(rect.width));
+  const height = Math.max(1, Math.round(rect.height));
+  if (canvasEl.width !== width) canvasEl.width = width;
+  if (canvasEl.height !== height) canvasEl.height = height;
+  canvasEl.style.width = width + 'px';
+  canvasEl.style.height = height + 'px';
+  return true;
+}
+
+function clearDroneOverlayCanvas(id) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function clearDroneOverlays() {
+  clearDroneOverlayCanvas('drone-stream-overlay');
+  clearDroneOverlayCanvas('hero-drone-overlay');
+}
+
+function drawDroneOverlay(canvasEl, frameMeta, prediction) {
+  if (!canvasEl || !frameMeta || !prediction || !Array.isArray(prediction.boxes)) return;
+  const ctx = canvasEl.getContext('2d');
+  ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
+  if (!prediction.boxes.length) return;
+
+  const scaleX = canvasEl.width / frameMeta.width;
+  const scaleY = canvasEl.height / frameMeta.height;
+  for (const box of prediction.boxes) {
+    const [x1, y1, x2, y2] = box.bbox;
+    const cls = box.class || prediction.class || 'unknown';
+    const pct = Math.round((box.confidence || prediction.confidence || 0) * 100);
+    const color = clsBgColor(cls);
+    const left = x1 * scaleX;
+    const top = y1 * scaleY;
+    const boxWidth = Math.max(1, (x2 - x1) * scaleX);
+    const boxHeight = Math.max(1, (y2 - y1) * scaleY);
+    const label = `${formatLabel(cls)} ${pct}%`;
+
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 3;
+    ctx.strokeRect(left, top, boxWidth, boxHeight);
+    ctx.font = '13px "IBM Plex Mono", monospace';
+    const textWidth = ctx.measureText(label).width;
+    ctx.fillStyle = color;
+    ctx.fillRect(left, Math.max(0, top - 24), textWidth + 12, 24);
+    ctx.fillStyle = '#0b0c10';
+    ctx.fillText(label, left + 6, Math.max(16, top - 8));
+  }
+}
+
+async function pollDroneDetections() {
+  if (!droneStreamActive || !droneCurrentUrl) return;
+  try {
+    const res = await fetch(API + `/stream/detect?url=${encodeURIComponent(droneCurrentUrl)}&model_id=potato`);
+    const data = await res.json();
+    if (!res.ok || !data.ok) throw new Error(data.detail || `HTTP ${res.status}`);
+
+    const frameMeta = data.frame;
+    const prediction = data.prediction || {};
+    const detected = !!data.detected;
+    const statusEl = document.getElementById('drone-detection-status');
+
+    const overlays = [
+      ['drone-stream-view', 'drone-stream-overlay'],
+      ['hero-drone-view', 'hero-drone-overlay'],
+    ];
+
+    for (const [videoId, overlayId] of overlays) {
+      const video = document.getElementById(videoId);
+      const overlay = document.getElementById(overlayId);
+      if (!fitOverlayToVideo(video, overlay)) continue;
+      overlay.style.display = 'block';
+      if (detected) drawDroneOverlay(overlay, frameMeta, prediction);
+    }
+
+    if (detected) {
+      droneDetectionLastAt = Date.now();
+      if (statusEl) {
+        const label = prediction.label || formatLabel(prediction.class);
+        const conf = Math.round((prediction.confidence || 0) * 100);
+        statusEl.textContent = `Latest detection: ${label} (${conf}%)`;
+      }
+    } else if (Date.now() - droneDetectionLastAt > DRONE_OVERLAY_TTL_MS) {
+      clearDroneOverlays();
+      if (statusEl) statusEl.textContent = 'No recent detections.';
+    }
+  } catch (e) {
+    const statusEl = document.getElementById('drone-detection-status');
+    if (statusEl) statusEl.textContent = `Detection poll error: ${e.message}`;
+  }
+}
+
 async function sendDroneCommand(command) {
   try {
     const statusEl = document.getElementById('drone-command-status');
@@ -2077,45 +2224,78 @@ function startDroneStream() {
     return;
   }
 
-  if (statusEl) statusEl.textContent = 'Starting annotated stream...';
+  const hlsUrl = buildDroneHlsUrl(streamUrl);
+  if (statusEl) statusEl.textContent = 'Starting low-latency live stream...';
   const img = document.getElementById('drone-stream-view');
+  const overlay = document.getElementById('drone-stream-overlay');
   const empty = document.getElementById('drone-stream-empty');
-  const src = `${API}/stream/drone?url=${encodeURIComponent(streamUrl)}&model_id=potato&t=${Date.now()}`;
-  img.src = src;
+  attachDroneVideo(img, hlsUrl);
   img.style.display = 'block';
+  if (overlay) overlay.style.display = 'block';
   empty.style.display = 'none';
 
   const heroImg = document.getElementById('hero-drone-view');
+  const heroOverlay = document.getElementById('hero-drone-overlay');
   const heroEmpty = document.getElementById('hero-drone-empty');
   if (heroImg && heroEmpty) {
-    heroImg.src = src;
+    attachDroneVideo(heroImg, hlsUrl);
     heroImg.style.display = 'block';
+    if (heroOverlay) heroOverlay.style.display = 'block';
     heroEmpty.style.display = 'none';
   }
 
+  droneCurrentUrl = streamUrl;
   droneStreamActive = true;
-  if (statusEl) statusEl.textContent = 'Annotated stream started. If no video appears, run Test RTMP first.';
+  if (droneDetectTimer) clearInterval(droneDetectTimer);
+  pollDroneDetections();
+  droneDetectTimer = setInterval(pollDroneDetections, DRONE_DETECT_INTERVAL);
+  if (statusEl) statusEl.textContent = 'Live stream started. YOLO overlays update from sampled detections.';
   toast('Drone stream started');
 }
 
 function stopDroneStream() {
   if (!droneStreamActive && !document.getElementById('drone-stream-view')) return;
   const img = document.getElementById('drone-stream-view');
+  const overlay = document.getElementById('drone-stream-overlay');
   const empty = document.getElementById('drone-stream-empty');
   if (!img || !empty) return;
+  if (img._hls) {
+    img._hls.destroy();
+    img._hls = null;
+  }
+  img.pause();
   img.removeAttribute('src');
+  img.load();
   img.style.display = 'none';
+  if (overlay) overlay.style.display = 'none';
   empty.style.display = 'grid';
 
   const heroImg = document.getElementById('hero-drone-view');
+  const heroOverlay = document.getElementById('hero-drone-overlay');
   const heroEmpty = document.getElementById('hero-drone-empty');
   if (heroImg && heroEmpty) {
+    if (heroImg._hls) {
+      heroImg._hls.destroy();
+      heroImg._hls = null;
+    }
+    heroImg.pause();
     heroImg.removeAttribute('src');
+    heroImg.load();
     heroImg.style.display = 'none';
+    if (heroOverlay) heroOverlay.style.display = 'none';
     heroEmpty.style.display = 'grid';
   }
   const statusEl = document.getElementById('drone-stream-status');
   if (statusEl) statusEl.textContent = 'Stream stopped.';
+  const detectionStatusEl = document.getElementById('drone-detection-status');
+  if (detectionStatusEl) detectionStatusEl.textContent = 'No recent detections.';
+  if (droneDetectTimer) {
+    clearInterval(droneDetectTimer);
+    droneDetectTimer = null;
+  }
+  droneCurrentUrl = '';
+  droneDetectionLastAt = 0;
+  clearDroneOverlays();
   droneStreamActive = false;
 }
 
