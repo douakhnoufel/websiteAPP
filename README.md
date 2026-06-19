@@ -41,3 +41,28 @@ file: <image>
 ```
 
 Returns detected diseases, bounding boxes, and confidence scores.
+
+## Paper Figures
+
+The paper-ready diagram sources are in:
+
+- [`docs/paper_figures.md`](docs/paper_figures.md)
+- [`docs/uml/use_case.puml`](docs/uml/use_case.puml)
+- [`docs/uml/sequence_prediction.puml`](docs/uml/sequence_prediction.puml)
+- [`docs/uml/deployment.puml`](docs/uml/deployment.puml)
+- [`docs/uml/component.puml`](docs/uml/component.puml)
+
+It includes:
+
+- system architecture
+- inference workflow
+- deployment topology
+
+## Project Structure
+
+- `main.py` entry point
+- `routers/` request handlers
+- `services/` model, inference, security, and drone logic
+- `templates/index.html` browser UI
+- `models/` YOLO weights
+- `docker-compose.yml` deployment stack
