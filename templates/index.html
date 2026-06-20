@@ -8,23 +8,23 @@
 <title>PotatoScan • Yahia Fares University</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0b0c10;
-    --bg-2: #14161a;
-    --surface: rgba(20, 22, 26, 0.86);
-    --surface-strong: rgba(30, 33, 38, 0.94);
-    --surface-dark: #090b0f;
-    --ink: #f3f4f6;
-    --muted: #9ca3af;
-    --line: rgba(255, 255, 255, 0.08);
+    --bg: #f3f4f6;
+    --bg-2: #e5e7eb;
+    --surface: rgba(255, 255, 255, 0.85);
+    --surface-strong: rgba(255, 255, 255, 0.95);
+    --surface-dark: rgba(255, 255, 255, 0.9);
+    --ink: #111827;
+    --muted: #4b5563;
+    --line: rgba(0, 0, 0, 0.1);
     --primary: #22c55e;
-    --primary-strong: #86efac;
+    --primary-strong: #16a34a;
     --secondary: #3b82f6;
     --warning: #f59e0b;
     --danger: #ef4444;
-    --shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+    --shadow: 0 24px 70px rgba(0, 0, 0, 0.15);
     --radius-xl: 32px;
     --radius-lg: 22px;
     --radius-md: 16px;
@@ -40,45 +40,37 @@
   html {
     scroll-behavior: smooth;
     color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
     min-height: 100vh;
+    min-height: 100dvh;
     font-family: "Chivo", sans-serif;
     color: var(--ink);
-    background:
-      radial-gradient(circle at 80% 20%, rgba(34, 197, 94, 0.05), transparent 28%),
-      radial-gradient(circle at 15% 70%, rgba(255, 255, 255, 0.025), transparent 25%),
-      linear-gradient(180deg, #0b0c10 0%, #0f1217 45%, #11151a 100%);
+    background-color: #87CEEB;
+    overflow-x: hidden;
+    position: relative;
   }
 
   body::before {
     content: "";
     position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-    background-size: 36px 36px;
-    opacity: 0.18;
-    pointer-events: none;
+    inset: -50%;
     z-index: -2;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.8), transparent 50%),
+      radial-gradient(circle at 80% 60%, rgba(240, 248, 255, 0.7), transparent 55%),
+      radial-gradient(circle at 50% 80%, rgba(135, 206, 235, 0.5), transparent 60%);
+    filter: blur(60px);
+    animation: fluidMotion 6s infinite linear;
+    pointer-events: none;
   }
 
-  body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.16) 0,
-      rgba(0, 0, 0, 0.16) 2px,
-      transparent 2px,
-      transparent 4px
-    );
-    opacity: 0.32;
-    pointer-events: none;
-    z-index: -1;
+  @keyframes fluidMotion {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.2); }
+    100% { transform: rotate(360deg) scale(1); }
   }
 
   button,
@@ -98,7 +90,7 @@
     padding: 16px;
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 36px;
-    background: rgba(12, 14, 18, 0.64);
+    background: rgba(255, 255, 255, 0.65);
     backdrop-filter: blur(20px);
     box-shadow: var(--shadow);
   }
@@ -171,18 +163,13 @@
   .chip,
   .api-pill,
   .status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    padding: 10px 14px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    background: rgba(30, 33, 38, 0.88);
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--ink);
   }
 
   .status-pill {
-    background: rgba(255, 255, 255, 0.04);
-    color: var(--muted);
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--ink);
   }
 
   .api-pill span,
@@ -249,9 +236,9 @@
   .sidebar-lead {
     padding: 18px;
     border-radius: 24px;
-    background: linear-gradient(145deg, #14161a, #1e2126);
-    color: #f7f6ef;
-    border: 1px solid rgba(255,255,255,0.08);
+    background: var(--surface-strong);
+    color: #111827;
+    border: 1px solid var(--line);
   }
 
   .sidebar-lead .brand-title {
@@ -304,9 +291,9 @@
     border-radius: 14px;
     display: grid;
     place-items: center;
-    background: rgba(42, 46, 53, 0.9);
+    background: rgba(255, 255, 255, 0.8);
     border: 1px solid var(--line);
-    color: var(--muted);
+    color: var(--primary-strong);
     flex-shrink: 0;
   }
 
@@ -356,6 +343,17 @@
     font-family: "IBM Plex Mono", monospace;
   }
 
+  .mini-stat a {
+    color: var(--ink);
+    font-family: "IBM Plex Mono", monospace;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .mini-stat a:hover {
+    color: var(--primary-strong);
+  }
+
   .content {
     display: grid;
     gap: 20px;
@@ -367,7 +365,7 @@
     padding: 18px;
     background:
       radial-gradient(circle at 80% 20%, rgba(34, 197, 94, 0.1), transparent 22%),
-      linear-gradient(135deg, rgba(20,22,26,0.96), rgba(12,14,18,0.96));
+      linear-gradient(135deg, rgba(255,255,255,0.96), rgba(240,248,255,0.96));
     border-radius: 30px;
   }
 
@@ -460,7 +458,7 @@
     padding: 12px 18px;
     border: 1px solid var(--line);
     border-radius: 999px;
-    background: rgba(30, 33, 38, 0.94);
+    background: rgba(255, 255, 255, 0.9);
     color: var(--ink);
     cursor: pointer;
     transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
@@ -492,7 +490,7 @@
 
   .status-card {
     padding: 14px 16px;
-    background: rgba(30, 33, 38, 0.86);
+    background: rgba(255, 255, 255, 0.65);
     border-radius: 18px;
   }
 
@@ -579,6 +577,140 @@
     max-width: 62ch;
   }
 
+  .model-toolbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.78);
+  }
+
+  .model-active-name {
+    margin-top: 6px;
+    font-weight: 900;
+    font-size: 1.12rem;
+  }
+
+  .model-active-meta {
+    margin-top: 5px;
+    color: var(--muted);
+    line-height: 1.5;
+    font-size: 0.92rem;
+  }
+
+  .model-select-wrap {
+    display: grid;
+    gap: 6px;
+    min-width: 230px;
+    color: var(--muted);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .model-select-wrap select {
+    width: 100%;
+    min-height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 0 12px;
+    background: #fff;
+    color: var(--ink);
+    font: 700 0.92rem Inter, sans-serif;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .model-workbench-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .model-card {
+    margin-top: 0;
+  }
+
+  .model-card-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .model-card-title {
+    font-weight: 900;
+    line-height: 1.2;
+  }
+
+  .model-card-family {
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+
+  .model-status-chip {
+    flex: 0 0 auto;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 0.72rem;
+    font-family: "IBM Plex Mono", monospace;
+    border: 1px solid var(--line);
+  }
+
+  .model-status-chip.loaded {
+    color: #17683f;
+    background: rgba(35, 129, 91, 0.12);
+  }
+
+  .model-status-chip.demo {
+    color: #9a6b05;
+    background: rgba(216, 154, 29, 0.14);
+  }
+
+  .model-status-chip.missing {
+    color: #7a4a3a;
+    background: rgba(201, 88, 55, 0.1);
+  }
+
+  .model-card-desc {
+    margin-top: 12px;
+    color: var(--muted);
+    line-height: 1.55;
+    font-size: 0.93rem;
+  }
+
+  .model-card-meta {
+    display: grid;
+    gap: 8px;
+    margin-top: 14px;
+    font-size: 0.86rem;
+  }
+
+  .model-card-meta div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid rgba(31, 41, 55, 0.08);
+    padding-top: 8px;
+  }
+
+  .model-card-meta span:first-child {
+    color: var(--muted);
+  }
+
+  .model-card-actions {
+    margin-top: 14px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
   .upload-zone,
   .preview-well,
   .drone-stream-view,
@@ -620,10 +752,10 @@
     margin: 0 auto 18px;
     border-radius: 22px;
     border: 1px solid var(--line);
-    background: rgba(30, 33, 38, 0.96);
+    background: rgba(255, 255, 255, 0.85);
     display: grid;
     place-items: center;
-    color: var(--ink);
+    color: var(--primary-strong);
     font-family: "IBM Plex Mono", monospace;
     font-size: 1rem;
   }
@@ -654,7 +786,7 @@
     margin-top: 18px;
     padding: 16px;
     border-radius: 20px;
-    background: rgba(30, 33, 38, 0.9);
+    background: rgba(255, 255, 255, 0.85);
     border: 1px solid var(--line);
   }
 
@@ -676,6 +808,7 @@
 
   .progress-bar,
   .progress-fill,
+  .conf-fill,
   .dist-bar,
   .telemetry-progress span {
     height: 100%;
@@ -735,8 +868,6 @@
   .media-frame video,
   #hero-drone-view,
   #drone-stream-view,
-  #hero-drone-overlay,
-  #drone-stream-overlay,
   #webcam-video,
   #webcam-canvas {
     width: 100%;
@@ -920,15 +1051,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  #hero-drone-overlay,
-  #drone-stream-overlay {
-    position: absolute;
-    inset: 0;
-    background: transparent;
-    pointer-events: none;
-    z-index: 2;
   }
 
   .preview-placeholder,
@@ -1147,8 +1269,8 @@
     padding: 18px;
     border-radius: 20px;
     border: 1px solid var(--line);
-    background: #000;
-    color: #e5e7eb;
+    background: var(--surface-strong);
+    color: #111827;
     font-family: "IBM Plex Mono", monospace;
     white-space: pre-wrap;
     line-height: 1.7;
@@ -1184,9 +1306,10 @@
     min-width: 220px;
     padding: 16px;
     border-radius: 20px;
-    background: rgba(20, 22, 26, 0.85);
-    color: #fff;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--ink);
     backdrop-filter: blur(14px);
+    border: 1px solid var(--line);
   }
 
   .webcam-cls {
@@ -1196,7 +1319,7 @@
 
   .webcam-conf {
     margin-top: 6px;
-    color: rgba(255,255,255,0.82);
+    color: var(--muted);
   }
 
   .webcam-meta {
@@ -1206,7 +1329,7 @@
     flex-wrap: wrap;
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.78rem;
-    color: rgba(255,255,255,0.82);
+    color: var(--muted);
   }
 
   .timeline {
@@ -1229,8 +1352,9 @@
     z-index: 50;
     padding: 14px 18px;
     border-radius: 16px;
-    background: rgba(30, 33, 38, 0.95);
-    color: #fff;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--ink);
+    border: 1px solid var(--line);
     opacity: 0;
     transform: translateY(8px);
     pointer-events: none;
@@ -1327,8 +1451,18 @@
     .mobile-builds,
     .docs-grid,
     .notes-grid,
-    .drone-detail-grid {
+    .drone-detail-grid,
+    .model-workbench-grid {
       grid-template-columns: 1fr;
+    }
+
+    .model-toolbar {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .model-select-wrap {
+      min-width: 0;
     }
 
     .drone-stream-controls {
@@ -1350,6 +1484,175 @@
     }
   }
 </style>
+<style id="frontend-design-overrides">
+  /* AESTHETIC UPGRADE: "AGRITECH GLASS" */
+  :root {
+    --surface: rgba(255, 255, 255, 0.45) !important;
+    --surface-strong: rgba(255, 255, 255, 0.75) !important;
+    --surface-dark: rgba(255, 255, 255, 0.95) !important;
+    --ink: #022c22 !important;
+    --muted: #475569 !important;
+    --line: rgba(255, 255, 255, 0.6) !important;
+    --primary: #10b981 !important;
+    --primary-strong: #059669 !important;
+    --shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.1) !important;
+    --shadow-float: 0 24px 60px -16px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  body {
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    background-color: #e0f2fe !important;
+  }
+
+  /* Noise Overlay for tactile texture */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  .brand-title, .panel-title, .hero-title, .upload-title, .stat-value, .telemetry-value, .result-class-name, .webcam-cls {
+    font-family: "Outfit", sans-serif !important;
+    letter-spacing: -0.03em !important;
+    color: #022c22 !important;
+  }
+
+  .eyebrow, .chip, .panel-kicker, .section-label, .preview-label, .result-section, .stat-label, .metric-label, .mini-label, .support-label, .api-pill span, #model-status, .progress-label, .conf-pct, .dist-pct, .build-path, .endpoint-desc, .note-text, .build-text, .code-block, .drone-label, .note-step, .method-badge {
+    font-family: "JetBrains Mono", monospace !important;
+  }
+
+  .page-shell, .sidebar, .content-card, .support-card, .status-card, .preview-card, .telemetry-card, .result-card, .stat-card, .note-card, .docs-card, .info-card, .stream-card, .mini-card, .preview-box, .media-frame, .upload-zone, .drone-metric {
+    background: var(--surface) !important;
+    backdrop-filter: blur(28px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(160%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    box-shadow: var(--shadow) !important;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  .page-shell {
+    border-radius: 40px !important;
+  }
+
+  .sidebar, .content-card, .support-card {
+    border-radius: 32px !important;
+  }
+
+  .upload-zone:hover, .btn:hover, .nav-btn:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: var(--shadow-float) !important;
+    border-color: rgba(255, 255, 255, 1) !important;
+  }
+
+  .sidebar-lead {
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5)) !important;
+    border: 1px solid rgba(255, 255, 255, 0.9) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05) !important;
+  }
+
+  .brand-mark {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255,255,255,0.4) !important;
+    border-radius: 20px !important;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 12px 18px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--ink);
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  }
+
+  .btn.primary {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    color: white !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.25) !important;
+  }
+
+  .btn.danger {
+    background: rgba(254, 226, 226, 0.8) !important;
+    color: #ef4444 !important;
+    border-color: #fca5a5 !important;
+  }
+
+  .hero-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4)) !important;
+    border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  }
+
+  .nav-btn {
+    background: rgba(255,255,255,0.4) !important;
+    border: 1px solid transparent !important;
+  }
+
+  .nav-btn.active {
+    background: rgba(255,255,255,0.9) !important;
+    border: 1px solid #fff !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06) !important;
+  }
+
+  .nav-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--line);
+    color: var(--primary-strong);
+    flex-shrink: 0;
+  }
+
+  .progress-bar-bg, .conf-track, .dist-bar-bg, .telemetry-progress {
+    background: rgba(0, 0, 0, 0.05) !important;
+    border: 1px solid rgba(255,255,255,0.5) !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02) !important;
+  }
+
+  .progress-bar, .progress-fill, .conf-fill, .dist-bar, .telemetry-progress span {
+    background: linear-gradient(90deg, #34d399, #059669) !important;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4) !important;
+  }
+
+  .upload-zone, .preview-well, .drone-stream-view, .webcam-wrap {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border: 1.5px dashed rgba(0, 0, 0, 0.15) !important;
+    border-radius: 28px !important;
+  }
+
+  .code-block {
+    background: rgba(255, 255, 255, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.9) !important;
+    color: #0f172a !important;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.02) !important;
+  }
+
+  @keyframes floatIn {
+    0% { opacity: 0; transform: translateY(16px) scale(0.98); filter: blur(4px); }
+    100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  }
+
+  .panel.active {
+    animation: floatIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+  }
+
+  .sidebar { animation: floatIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both; }
+  .content-card { animation: floatIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
+  .support-card { animation: floatIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both; }
+</style>
 </head>
 <body>
 <div class="page-shell">
@@ -1357,18 +1660,15 @@
     <div class="brand-wrap">
       <div class="brand-mark" aria-hidden="true">🥔</div>
       <div>
-        <div class="eyebrow">Potato Disease Detection Platform</div>
+        <div class="eyebrow">Yahia Fares University • PFE</div>
         <div class="brand-title">PotatoScan</div>
-        <div class="brand-subtitle">Yahia Fares University • field-ready YOLO monitoring</div>
       </div>
     </div>
     <div class="topbar-status">
-      <div class="status-pill">Graduation Project Demo</div>
       <div class="api-pill">
         <div class="status-dot live" id="api-dot"></div>
         <span id="api-status">API Online</span>
       </div>
-      <div class="chip" id="model-status">Checking model...</div>
     </div>
   </header>
 
@@ -1376,6 +1676,20 @@
     <aside class="sidebar">
       <div class="nav-group-label">Detection Modes</div>
       <div class="nav-stack">
+        <button class="nav-btn" onclick="showPanel('workbench')" id="nav-workbench">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 6.5h16M4 12h16M4 17.5h16"></path>
+              <circle cx="8" cy="6.5" r="1.5"></circle>
+              <circle cx="15" cy="12" r="1.5"></circle>
+              <circle cx="11" cy="17.5" r="1.5"></circle>
+            </svg>
+          </span>
+          <span>
+            <span class="nav-title">Model Workbench</span>
+            <span class="nav-meta">Video + realtime models</span>
+          </span>
+        </button>
         <button class="nav-btn active" onclick="showPanel('image')" id="nav-image">
           <span class="nav-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
@@ -1453,30 +1767,61 @@
         <div class="mini-label">Model Snapshot</div>
         <div class="mini-stat"><span>Architecture</span><span>YOLOv8n</span></div>
         <div class="mini-stat"><span>Classes</span><span>3</span></div>
-        <div class="mini-stat"><span>Dataset</span><span>99 pictures</span></div>
+        <div class="mini-stat"><span>Dataset</span><a href="https://www.kaggle.com/datasets/aarishasifkhan/plantvillage-potato-disease-dataset/data" target="_blank" rel="noopener noreferrer">PlantVillage (Kaggle)</a></div>
         <div class="mini-stat"><span>Input</span><span>640x640</span></div>
         <div class="mini-stat"><span>Target</span><span>&lt;1s/image</span></div>
         <div class="mini-stat"><span>Mission</span><span>Field diagnosis</span></div>
+        <div class="mini-stat"><span>Android App</span><a href="/download/apk">Download APK (224 MB)</a></div>
       </div>
     </aside>
 
     <main class="content">
       <section class="workspace-grid">
         <section class="content-card">
+          <div class="model-toolbar">
+            <div>
+              <div class="panel-kicker">Active Inference Model</div>
+              <div class="model-active-name" id="active-model-name">Potato Disease</div>
+              <div class="model-active-meta" id="active-model-meta">YOLO detector for image, video, webcam, and drone workflows.</div>
+            </div>
+            <label class="model-select-wrap">
+              <span>Model</span>
+              <select id="model-select" onchange="selectModel(this.value)">
+                <option value="potato">Potato Disease</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="panel" id="panel-workbench">
+            <div class="panel-header">
+              <div>
+                <div class="panel-kicker">Model Expansion</div>
+                <h2 class="panel-title">Multi-model workbench</h2>
+                <p class="panel-copy">Select a YOLO detector or ONNX classifier, check whether the artifact is loaded, and keep each model family separated from the potato workflow.</p>
+              </div>
+            </div>
+
+            <div class="model-workbench-grid" id="model-workbench-grid">
+              <div class="result-card">
+                <div class="result-body">Loading model catalog...</div>
+              </div>
+            </div>
+          </div>
+
           <div class="panel active" id="panel-image">
             <div class="panel-header">
               <div>
                 <div class="panel-kicker">Leaf Triage</div>
-                <h2 class="panel-title">Image diagnosis with side-by-side proof</h2>
-                <p class="panel-copy">Upload one potato leaf image and immediately compare the raw input with the annotated result, confidence bars, and a download-ready report image.</p>
+                <h2 class="panel-title">Potato diagnosis with side-by-side proof</h2>
+                <p class="panel-copy">Upload one potato leaf image and compare the raw input with the annotated result, confidence bars, and a download-ready report image.</p>
               </div>
             </div>
 
             <div class="upload-zone" id="img-zone" ondragover="ev.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleImgDrop(event)">
-              <input type="file" accept="image/*" onchange="handleImageFile(this.files[0])">
+              <input id="img-file-input" type="file" accept=".jpg,.jpeg,.png,.webp,.bmp,image/jpeg,image/png,image/webp,image/bmp" onchange="handleImageFile(this.files[0])">
               <div class="upload-icon-wrap">Leaf</div>
               <div class="upload-title">Drop a potato leaf image</div>
-              <div class="upload-sub">JPG, PNG, and WEBP are supported. Best for quick classroom demos and field diagnosis.</div>
+              <div class="upload-sub">JPG, PNG, WEBP, or BMP. Best for potato disease diagnosis and field demos.</div>
             </div>
 
             <div class="progress-wrap" id="img-progress">
@@ -1487,11 +1832,11 @@
             <div class="preview-area" id="img-preview">
               <div class="preview-grid">
                 <div class="preview-box">
-                  <div class="preview-box-label">Original Image</div>
+                  <div class="preview-box-label" id="img-original-label">Original Image</div>
                   <img id="img-original" src="" alt="Original leaf">
                 </div>
                 <div class="preview-box">
-                  <div class="preview-box-label">YOLO Annotated Result</div>
+                  <div class="preview-box-label" id="img-annotated-label">YOLO Annotated Result</div>
                   <img id="img-annotated" src="" alt="Annotated result">
                 </div>
               </div>
@@ -1513,7 +1858,7 @@
             </div>
 
             <div class="upload-zone" id="vid-zone" ondragover="ev.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleVidDrop(event)">
-              <input type="file" accept="video/*" onchange="handleVideoFile(this.files[0])">
+              <input id="vid-file-input" type="file" accept="video/*,.mov" onchange="handleVideoFile(this.files[0])">
               <div class="upload-icon-wrap" aria-hidden="true">
                 <svg viewBox="0 0 24 24">
                   <rect x="4" y="6" width="10" height="12" rx="1.5"></rect>
@@ -1612,24 +1957,22 @@
               </div>
 
               <div class="stream-card" style="padding:18px">
-                <div class="preview-box-label" style="padding:0 0 12px;border-bottom:none">Live Drone Stream</div>
+                <div class="preview-box-label" style="padding:0 0 12px;border-bottom:none">Annotated Drone Stream</div>
                 <div class="drone-stream-controls">
-                  <input id="drone-stream-url" class="drone-input" type="text" placeholder="rtmp://your-server/live/stream-key" value="rtmp://159.89.28.191:1935/live/drone">
+                  <input id="drone-stream-url" class="drone-input" type="text" placeholder="rtmp://your-server/live/stream-key">
                   <button class="btn" onclick="testDroneStream()">Test RTMP</button>
                   <button class="btn primary" onclick="startDroneStream()">Start Stream</button>
                   <button class="btn danger" onclick="stopDroneStream()">Stop Stream</button>
                 </div>
                 <div class="drone-bridge-note" id="drone-stream-status">RTMP not tested yet.</div>
-                <div class="drone-bridge-note" id="drone-detection-status">No recent detections.</div>
                 <div class="drone-stream-view">
-                  <video id="drone-stream-view" autoplay muted playsinline controls style="display:none"></video>
-                  <canvas id="drone-stream-overlay" style="display:none"></canvas>
+                  <img id="drone-stream-view" alt="Annotated drone stream preview" style="display:none">
                   <div id="drone-stream-empty" class="stream-empty">
                     <svg class="crosshair" viewBox="0 0 80 80" fill="none">
                       <circle cx="40" cy="40" r="18" stroke="rgba(93,143,42,0.55)"></circle>
                       <path d="M40 8v16M40 56v16M8 40h16M56 40h16" stroke="rgba(93,143,42,0.55)"></path>
                     </svg>
-                    <div>Start an RTMP stream to mirror the live airborne scan with smooth playback and sampled YOLO overlays.</div>
+                    <div>Start an RTMP stream to mirror the live airborne scan with YOLO overlays.</div>
                   </div>
                 </div>
               </div>
@@ -1687,7 +2030,7 @@
               <div class="note-card">
                 <div class="note-step">1</div>
                 <div class="note-title">Open the service</div>
-                <div class="note-text">Run <strong>start.bat</strong> or start Uvicorn, then open <strong>https://localhost:8000</strong> to present the full experience.</div>
+                <div class="note-text">The service is live at <strong><a href="https://noufeldouakh.me" target="_blank" rel="noopener">noufeldouakh.me</a></strong>. For local demos, run <strong>start.bat</strong> or Uvicorn and open <strong>https://localhost:8000</strong>.</div>
               </div>
               <div class="note-card">
                 <div class="note-step">2</div>
@@ -1741,7 +2084,7 @@
 
             <div class="code-block">import requests
 
-url = "http://localhost:8000/predict/image"
+url = "https://noufeldouakh.me/predict/image"
 files = {"file": open("leaf.jpg", "rb")}
 res = requests.post(url, files=files).json()
 
@@ -1749,9 +2092,10 @@ print(res["prediction"]["class"])
 print(res["prediction"]["confidence"])
 print(res["result_url"])</div>
 
-            <div class="code-block">curl -X POST http://localhost:8000/predict/image \
+            <div class="code-block">curl -X POST https://noufeldouakh.me/predict/image \
   -F "file=@leaf.jpg"</div>
           </div>
+
         </section>
 
         <aside class="support-card">
@@ -1770,6 +2114,13 @@ print(res["result_url"])</div>
               <div class="support-title">3. End with scale</div>
               <div class="support-copy">Use drone mode as the future-facing layer: field scouting, telemetry, and larger agricultural operations.</div>
             </div>
+            <div class="support-item">
+              <div class="support-title">4. Ask users to test from this dataset</div>
+              <div class="support-copy">Ask users to open this PlantVillage Kaggle dataset, download potato leaf images, and test predictions directly in this app.</div>
+              <div class="build-actions" style="margin-top:12px">
+                <a class="btn primary" href="https://www.kaggle.com/datasets/aarishasifkhan/plantvillage-potato-disease-dataset/data" target="_blank" rel="noopener noreferrer">Open Dataset To Test</a>
+              </div>
+            </div>
           </div>
         </aside>
       </section>
@@ -1778,27 +2129,27 @@ print(res["result_url"])</div>
         <div class="preview-head">
           <div>
             <div class="preview-label">Mobile Builds</div>
-            <div class="panel-title" style="margin-top:8px;font-size:1.6rem">Flutter and phone install area</div>
-            <div class="preview-copy">Keep mobile deliverables in their own place so the docs panel stays focused on demo notes and backend endpoints.</div>
+            <div class="panel-title" style="margin-top:8px;font-size:1.6rem">Flutter Android download</div>
+            <div class="preview-copy">Install the latest PotatoScan Android release directly from the website after the APK is placed on the server.</div>
           </div>
         </div>
         <div class="mobile-builds">
           <div class="mobile-build-card docs-card">
             <span class="method-badge method-post">Android</span>
-            <div class="build-title">Flutter APK Slot</div>
-            <div class="build-text">If you package a Flutter client, place the APK in <strong>static/apps</strong> so the dashboard can still act as a simple delivery hub.</div>
-            <div class="build-path">/static/apps/potatoscan.apk</div>
+            <div class="build-title">PotatoScan Android APK</div>
+            <div class="build-text">Current release build: <strong>223.94 MB</strong>, generated on <strong>2026-06-03 03:27</strong>. Android users can download and install it from this link.</div>
+            <div class="build-path">/download/apk</div>
             <div class="build-actions">
-              <a class="btn primary" href="/static/apps/potatoscan.apk" download>Download APK</a>
+              <a class="btn primary" href="/download/apk">Download APK <span style="opacity:0.7;font-size:0.85em;margin-left:4px;">· 224 MB</span></a>
             </div>
           </div>
           <div class="mobile-build-card docs-card">
             <span class="method-badge method-get">iOS</span>
             <div class="build-title">iPhone Build Slot</div>
-            <div class="build-text">Use TestFlight for the normal iPhone path. A signed IPA can also live here for internal sharing when needed.</div>
-            <div class="build-path">/static/apps/potatoscan.ipa</div>
+            <div class="build-text">iOS distribution requires a signed build via TestFlight or an Enterprise profile. A signed IPA will be hosted here once available.</div>
+            <div class="build-path">Coming soon — TestFlight link TBD</div>
             <div class="build-actions">
-              <a class="btn primary" href="/static/apps/potatoscan.ipa" download>Download IPA</a>
+              <span class="btn" style="opacity:0.45;cursor:not-allowed;" aria-disabled="true">Not yet available</span>
             </div>
           </div>
         </div>
@@ -1836,8 +2187,7 @@ print(res["result_url"])</div>
           </div>
         </div>
         <div class="preview-well">
-          <video id="hero-drone-view" autoplay muted playsinline controls style="display:none"></video>
-          <canvas id="hero-drone-overlay" style="display:none"></canvas>
+          <img id="hero-drone-view" alt="Drone footage preview" style="display:none">
           <div id="hero-drone-empty" class="preview-placeholder">
             <svg class="crosshair" viewBox="0 0 80 80" fill="none">
               <circle cx="40" cy="40" r="18" stroke="rgba(93,143,42,0.55)"></circle>
@@ -1878,9 +2228,15 @@ print(res["result_url"])</div>
         </div>
       </section>
 
-      <footer class="footer">
-        <div>PotatoScan • potato disease diagnosis • webcam and drone-ready</div>
-        <div>Yahia Fares University • YOLO backend kept fully compatible</div>
+      <footer class="footer" style="border-top: 1px solid var(--line); padding-top: 16px; margin-top: 24px;">
+        <div>
+          <strong>PotatoScan</strong> • Real-time potato disease diagnosis<br>
+          <span style="font-size: 0.85rem; color: var(--muted);">Cellule Statistique et Documentation</span>
+        </div>
+        <div style="text-align: right;">
+          Yahia Fares University • Master's Graduation Project<br>
+          <span style="font-size: 0.85rem; color: var(--muted);">Promoted by: Sofian Toulayt</span>
+        </div>
       </footer>
     </main>
   </div>
@@ -1888,30 +2244,200 @@ print(res["result_url"])</div>
 
 <div class="toast" id="toast"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js"></script>
 <script>
-const API = location.protocol === 'file:'
-  ? 'https://localhost:8000'
+let API = location.protocol === 'file:'
+  ? (localStorage.getItem('potatoscan_api_base') || '')
   : '';
+let apiBaseReady = null;
+const IS_MOBILE = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || '');
 let wcStream = null, wcTimer = null, wcFacing = 'environment', wcInfer = false;
 let wcAvgMs = null, wcLastTick = 0, wcLastFps = 0, wcLastLatency = 0;
+let wcFrameWidth = 0, wcFrameHeight = 0;
 let droneTimer = null;
 let droneStreamActive = false;
 let droneCommandWatch = null;
-let droneDetectTimer = null;
-let droneDetectionLastAt = 0;
-let droneCurrentUrl = '';
 const WC_BASE_INTERVAL = 800;
 const WC_MIN_INTERVAL = 350;
 const WC_MAX_INTERVAL = 2000;
 const WC_MAX_WIDTH = 640;
 const WC_JPEG_QUALITY = 0.7;
-const DRONE_DETECT_INTERVAL = 1200;
-const DRONE_OVERLAY_TTL_MS = 2200;
+const MAX_IMAGE_BYTES = 20 * 1024 * 1024;
+const MAX_RAW_IMAGE_BYTES = 80 * 1024 * 1024;
+const MAX_VIDEO_BYTES = 100 * 1024 * 1024;
+const MOBILE_IMAGE_MAX_EDGE = 1600;
+const MOBILE_IMAGE_JPEG_QUALITY = 0.86;
+let wcLastErrorToast = 0;
+let modelCatalog = [];
+const DEFAULT_MODEL_ID = 'potato';
+const SAVED_MODEL_VERSION = 'potato-main-v1';
+if (localStorage.getItem('potatoscan_model_version') !== SAVED_MODEL_VERSION) {
+  localStorage.setItem('potatoscan_model_id', DEFAULT_MODEL_ID);
+  localStorage.setItem('potatoscan_model_version', SAVED_MODEL_VERSION);
+}
+let selectedModelId = localStorage.getItem('potatoscan_model_id') || DEFAULT_MODEL_ID;
+
+function activeModel() {
+  return modelCatalog.find(m => m.id === selectedModelId)
+    || modelCatalog.find(m => m.id === DEFAULT_MODEL_ID)
+    || modelCatalog.find(m => m.id === 'potato')
+    || null;
+}
+
+function modelQuery() {
+  return `model_id=${encodeURIComponent(selectedModelId)}`;
+}
+
+function modelSupports(kind) {
+  const model = activeModel();
+  const input = String((model && model.input) || 'image').toLowerCase();
+  return input.includes(kind);
+}
+
+async function ensureApiBase() {
+  if (location.protocol !== 'file:') return API;
+  if (apiBaseReady) return apiBaseReady;
+  apiBaseReady = (async () => {
+    const saved = (localStorage.getItem('potatoscan_api_base') || '').trim();
+    const candidates = [
+      saved,
+      'http://127.0.0.1:8010',
+      'http://127.0.0.1:8000',
+      'http://localhost:8000',
+      'https://localhost:8000'
+    ].filter(Boolean);
+    for (const base of candidates) {
+      try {
+        const res = await fetch(base + '/health', { cache: 'no-store' });
+        if (res.ok) {
+          API = base;
+          localStorage.setItem('potatoscan_api_base', base);
+          return API;
+        }
+      } catch {}
+    }
+    API = saved || 'http://127.0.0.1:8010';
+    return API;
+  })();
+  return apiBaseReady;
+}
+let imgObjectUrl = null;
 
 function droneAuthHeaders() {
   const token = (localStorage.getItem('potatoscan_drone_token') || '').trim();
   return token ? { Authorization: `Bearer ${token}` } : {};
+}
+
+async function readJsonResponse(res) {
+  let data = {};
+  try {
+    data = await res.json();
+  } catch {
+    data = {};
+  }
+  if (!res.ok) {
+    throw new Error(data.detail || data.message || `Request failed (${res.status})`);
+  }
+  return data;
+}
+
+function isImageUpload(file) {
+  const name = (file && file.name ? file.name : '').toLowerCase();
+  const ALLOWED = ['.jpg','.jpeg','.png','.webp','.bmp'];
+  return !!file && (
+    (file.type || '').startsWith('image/') ||
+    ALLOWED.some(ext => name.endsWith(ext))
+  );
+}
+
+function isVideoUpload(file) {
+  const name = (file && file.name ? file.name : '').toLowerCase();
+  return !!file && (
+    (file.type || '').startsWith('video/') ||
+    name.endsWith('.mov')
+  );
+}
+
+function setImageObjectUrl(url) {
+  if (imgObjectUrl) URL.revokeObjectURL(imgObjectUrl);
+  imgObjectUrl = url;
+  document.getElementById('img-original').src = url;
+}
+
+function loadImageFromFile(file) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => resolve({ img, url });
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error('Safari could not read this image. Try a JPG or PNG export.'));
+    };
+    img.src = url;
+  });
+}
+
+function canvasToJpegBlob(canvas, quality) {
+  return new Promise((resolve, reject) => {
+    if (canvas.toBlob) {
+      canvas.toBlob(blob => {
+        if (blob) resolve(blob);
+        else reject(new Error('Could not prepare this image for upload'));
+      }, 'image/jpeg', quality);
+      return;
+    }
+
+    try {
+      const dataUrl = canvas.toDataURL('image/jpeg', quality);
+      const raw = atob(dataUrl.split(',')[1]);
+      const bytes = new Uint8Array(raw.length);
+      for (let i = 0; i < raw.length; i += 1) bytes[i] = raw.charCodeAt(i);
+      resolve(new Blob([bytes], { type: 'image/jpeg' }));
+    } catch {
+      reject(new Error('Could not prepare this image for upload'));
+    }
+  });
+}
+
+async function prepareImageUpload(file) {
+  const name = (file.name || '').toLowerCase();
+  const shouldNormalize = IS_MOBILE || file.size > MAX_IMAGE_BYTES;
+  const { img, url } = await loadImageFromFile(file);
+
+  if (!shouldNormalize) {
+    return { uploadFile: file, previewUrl: url };
+  }
+
+  const naturalWidth = img.naturalWidth || img.width;
+  const naturalHeight = img.naturalHeight || img.height;
+  if (!naturalWidth || !naturalHeight) {
+    URL.revokeObjectURL(url);
+    throw new Error('This image has invalid dimensions');
+  }
+
+  const scale = Math.min(1, MOBILE_IMAGE_MAX_EDGE / Math.max(naturalWidth, naturalHeight));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.max(1, Math.round(naturalWidth * scale));
+  canvas.height = Math.max(1, Math.round(naturalHeight * scale));
+  canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+
+  const blob = await canvasToJpegBlob(canvas, MOBILE_IMAGE_JPEG_QUALITY);
+  const uploadName = (file.name || 'leaf-image').replace(/\.[^.]+$/, '') + '.jpg';
+  const uploadFile = new File([blob], uploadName, { type: 'image/jpeg' });
+
+  if (uploadFile.size > MAX_IMAGE_BYTES) {
+    URL.revokeObjectURL(url);
+    throw new Error('Image is still over 20MB after Safari conversion');
+  }
+
+  return { uploadFile, previewUrl: url };
+}
+
+async function canvasToFrameBlob(canvas) {
+  try {
+    return await canvasToJpegBlob(canvas, WC_JPEG_QUALITY);
+  } catch {
+    return null;
+  }
 }
 
 function showPanel(name) {
@@ -1956,8 +2482,8 @@ async function refreshDroneTelemetry() {
       fetch(API + '/drone/telemetry'),
       fetch(API + '/drone/state')
     ]);
-    const dt = await rt.json();
-    const ds = await rs.json();
+    const dt = await readJsonResponse(rt);
+    const ds = await readJsonResponse(rs);
     if (!dt.ok || !dt.telemetry) return;
     const t = dt.telemetry;
     const s = (ds && ds.state) ? ds.state : {};
@@ -2033,133 +2559,6 @@ function stopDronePolling() {
   }
 }
 
-function buildDroneHlsUrl(streamUrl) {
-  const parsed = new URL(streamUrl);
-  const streamPath = parsed.pathname.replace(/^\/+/, '') || 'live/drone';
-  return `http://${parsed.hostname}:8888/${streamPath}/index.m3u8`;
-}
-
-function attachDroneVideo(videoEl, src) {
-  if (!videoEl) return;
-  if (videoEl._hls) {
-    videoEl._hls.destroy();
-    videoEl._hls = null;
-  }
-  videoEl.pause();
-  videoEl.removeAttribute('src');
-  videoEl.load();
-
-  if (window.Hls && window.Hls.isSupported()) {
-    const hls = new window.Hls({
-      lowLatencyMode: true,
-      backBufferLength: 2,
-      liveSyncDurationCount: 2,
-    });
-    hls.loadSource(src);
-    hls.attachMedia(videoEl);
-    videoEl._hls = hls;
-  } else {
-    videoEl.src = src;
-  }
-}
-
-function fitOverlayToVideo(videoEl, canvasEl) {
-  if (!videoEl || !canvasEl || !videoEl.videoWidth || !videoEl.videoHeight) return false;
-  const rect = videoEl.getBoundingClientRect();
-  const width = Math.max(1, Math.round(rect.width));
-  const height = Math.max(1, Math.round(rect.height));
-  if (canvasEl.width !== width) canvasEl.width = width;
-  if (canvasEl.height !== height) canvasEl.height = height;
-  canvasEl.style.width = width + 'px';
-  canvasEl.style.height = height + 'px';
-  return true;
-}
-
-function clearDroneOverlayCanvas(id) {
-  const canvas = document.getElementById(id);
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
-function clearDroneOverlays() {
-  clearDroneOverlayCanvas('drone-stream-overlay');
-  clearDroneOverlayCanvas('hero-drone-overlay');
-}
-
-function drawDroneOverlay(canvasEl, frameMeta, prediction) {
-  if (!canvasEl || !frameMeta || !prediction || !Array.isArray(prediction.boxes)) return;
-  const ctx = canvasEl.getContext('2d');
-  ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
-  if (!prediction.boxes.length) return;
-
-  const scaleX = canvasEl.width / frameMeta.width;
-  const scaleY = canvasEl.height / frameMeta.height;
-  for (const box of prediction.boxes) {
-    const [x1, y1, x2, y2] = box.bbox;
-    const cls = box.class || prediction.class || 'unknown';
-    const pct = Math.round((box.confidence || prediction.confidence || 0) * 100);
-    const color = clsBgColor(cls);
-    const left = x1 * scaleX;
-    const top = y1 * scaleY;
-    const boxWidth = Math.max(1, (x2 - x1) * scaleX);
-    const boxHeight = Math.max(1, (y2 - y1) * scaleY);
-    const label = `${formatLabel(cls)} ${pct}%`;
-
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 3;
-    ctx.strokeRect(left, top, boxWidth, boxHeight);
-    ctx.font = '13px "IBM Plex Mono", monospace';
-    const textWidth = ctx.measureText(label).width;
-    ctx.fillStyle = color;
-    ctx.fillRect(left, Math.max(0, top - 24), textWidth + 12, 24);
-    ctx.fillStyle = '#0b0c10';
-    ctx.fillText(label, left + 6, Math.max(16, top - 8));
-  }
-}
-
-async function pollDroneDetections() {
-  if (!droneStreamActive || !droneCurrentUrl) return;
-  try {
-    const res = await fetch(API + `/stream/detect?url=${encodeURIComponent(droneCurrentUrl)}&model_id=potato`);
-    const data = await res.json();
-    if (!res.ok || !data.ok) throw new Error(data.detail || `HTTP ${res.status}`);
-
-    const frameMeta = data.frame;
-    const prediction = data.prediction || {};
-    const detected = !!data.detected;
-    const statusEl = document.getElementById('drone-detection-status');
-
-    const overlays = [
-      ['drone-stream-view', 'drone-stream-overlay'],
-      ['hero-drone-view', 'hero-drone-overlay'],
-    ];
-
-    for (const [videoId, overlayId] of overlays) {
-      const video = document.getElementById(videoId);
-      const overlay = document.getElementById(overlayId);
-      if (!fitOverlayToVideo(video, overlay)) continue;
-      overlay.style.display = 'block';
-      if (detected) drawDroneOverlay(overlay, frameMeta, prediction);
-    }
-
-    if (detected) {
-      droneDetectionLastAt = Date.now();
-      if (statusEl) {
-        const label = prediction.label || formatLabel(prediction.class);
-        const conf = Math.round((prediction.confidence || 0) * 100);
-        statusEl.textContent = `Latest detection: ${label} (${conf}%)`;
-      }
-    } else if (Date.now() - droneDetectionLastAt > DRONE_OVERLAY_TTL_MS) {
-      clearDroneOverlays();
-      if (statusEl) statusEl.textContent = 'No recent detections.';
-    }
-  } catch (e) {
-    const statusEl = document.getElementById('drone-detection-status');
-    if (statusEl) statusEl.textContent = `Detection poll error: ${e.message}`;
-  }
-}
-
 async function sendDroneCommand(command) {
   try {
     const statusEl = document.getElementById('drone-command-status');
@@ -2169,8 +2568,8 @@ async function sendDroneCommand(command) {
       headers: { 'Content-Type': 'application/json', ...droneAuthHeaders() },
       body: JSON.stringify({ command })
     });
-    const data = await res.json();
-    if (!res.ok || !data.ok) throw new Error(data.detail || 'Command failed');
+    const data = await readJsonResponse(res);
+    if (!data.ok) throw new Error(data.detail || 'Command failed');
     const cmd = data.queued || {};
     statusEl.textContent = `Queued: ${cmd.command || command} (${cmd.id || 'no-id'})`;
     toast(`Drone command queued: ${command}`);
@@ -2193,8 +2592,8 @@ function watchDroneCommand(commandId) {
       const res = await fetch(API + `/drone/command/${encodeURIComponent(commandId)}`, {
         headers: droneAuthHeaders()
       });
-      const data = await res.json();
-      if (!res.ok || !data.ok || !data.command) return;
+      const data = await readJsonResponse(res);
+      if (!data.ok || !data.command) return;
       const st = data.command.status || 'unknown';
       statusEl.textContent = `Command ${commandId.slice(0, 8)}: ${st}`;
       if (st.startsWith('ack_') || st === 'expired') {
@@ -2214,7 +2613,12 @@ function watchDroneCommand(commandId) {
   }, 1000);
 }
 
-function startDroneStream() {
+async function startDroneStream() {
+  await ensureApiBase();
+  if (!modelSupports('drone')) {
+    toast('Selected model does not support drone stream overlays');
+    return;
+  }
   const urlInput = document.getElementById('drone-stream-url');
   const streamUrl = (urlInput.value || '').trim();
   const statusEl = document.getElementById('drone-stream-status');
@@ -2224,82 +2628,50 @@ function startDroneStream() {
     return;
   }
 
-  const hlsUrl = buildDroneHlsUrl(streamUrl);
-  if (statusEl) statusEl.textContent = 'Starting low-latency live stream...';
+  if (statusEl) statusEl.textContent = 'Starting annotated stream...';
   const img = document.getElementById('drone-stream-view');
-  const overlay = document.getElementById('drone-stream-overlay');
   const empty = document.getElementById('drone-stream-empty');
-  attachDroneVideo(img, hlsUrl);
+  const src = `${API}/stream/drone?url=${encodeURIComponent(streamUrl)}&${modelQuery()}&t=${Date.now()}`;
+  img.src = src;
   img.style.display = 'block';
-  if (overlay) overlay.style.display = 'block';
   empty.style.display = 'none';
 
   const heroImg = document.getElementById('hero-drone-view');
-  const heroOverlay = document.getElementById('hero-drone-overlay');
   const heroEmpty = document.getElementById('hero-drone-empty');
   if (heroImg && heroEmpty) {
-    attachDroneVideo(heroImg, hlsUrl);
+    heroImg.src = src;
     heroImg.style.display = 'block';
-    if (heroOverlay) heroOverlay.style.display = 'block';
     heroEmpty.style.display = 'none';
   }
 
-  droneCurrentUrl = streamUrl;
   droneStreamActive = true;
-  if (droneDetectTimer) clearInterval(droneDetectTimer);
-  pollDroneDetections();
-  droneDetectTimer = setInterval(pollDroneDetections, DRONE_DETECT_INTERVAL);
-  if (statusEl) statusEl.textContent = 'Live stream started. YOLO overlays update from sampled detections.';
+  if (statusEl) statusEl.textContent = 'Annotated stream started. If no video appears, run Test RTMP first.';
   toast('Drone stream started');
 }
 
 function stopDroneStream() {
   if (!droneStreamActive && !document.getElementById('drone-stream-view')) return;
   const img = document.getElementById('drone-stream-view');
-  const overlay = document.getElementById('drone-stream-overlay');
   const empty = document.getElementById('drone-stream-empty');
   if (!img || !empty) return;
-  if (img._hls) {
-    img._hls.destroy();
-    img._hls = null;
-  }
-  img.pause();
   img.removeAttribute('src');
-  img.load();
   img.style.display = 'none';
-  if (overlay) overlay.style.display = 'none';
   empty.style.display = 'grid';
 
   const heroImg = document.getElementById('hero-drone-view');
-  const heroOverlay = document.getElementById('hero-drone-overlay');
   const heroEmpty = document.getElementById('hero-drone-empty');
   if (heroImg && heroEmpty) {
-    if (heroImg._hls) {
-      heroImg._hls.destroy();
-      heroImg._hls = null;
-    }
-    heroImg.pause();
     heroImg.removeAttribute('src');
-    heroImg.load();
     heroImg.style.display = 'none';
-    if (heroOverlay) heroOverlay.style.display = 'none';
     heroEmpty.style.display = 'grid';
   }
   const statusEl = document.getElementById('drone-stream-status');
   if (statusEl) statusEl.textContent = 'Stream stopped.';
-  const detectionStatusEl = document.getElementById('drone-detection-status');
-  if (detectionStatusEl) detectionStatusEl.textContent = 'No recent detections.';
-  if (droneDetectTimer) {
-    clearInterval(droneDetectTimer);
-    droneDetectTimer = null;
-  }
-  droneCurrentUrl = '';
-  droneDetectionLastAt = 0;
-  clearDroneOverlays();
   droneStreamActive = false;
 }
 
 async function testDroneStream() {
+  await ensureApiBase();
   const urlInput = document.getElementById('drone-stream-url');
   const streamUrl = (urlInput.value || '').trim();
   const statusEl = document.getElementById('drone-stream-status');
@@ -2312,8 +2684,7 @@ async function testDroneStream() {
   if (statusEl) statusEl.textContent = 'Testing RTMP connection...';
   try {
     const res = await fetch(API + `/stream/test?url=${encodeURIComponent(streamUrl)}`);
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.detail || `HTTP ${res.status}`);
+    const data = await readJsonResponse(res);
 
     if (data.ok && data.stream) {
       const w = data.stream.width || 0;
@@ -2348,8 +2719,9 @@ initButtonClickAnimations();
 
 async function checkHealth() {
   try {
+    await ensureApiBase();
     const r = await fetch(API + '/health');
-    const d = await r.json();
+    const d = await readJsonResponse(r);
     const dot = document.getElementById('api-dot');
     dot.className = 'status-dot live';
     document.getElementById('api-status').textContent = 'API Online';
@@ -2358,14 +2730,17 @@ async function checkHealth() {
     const loaded = Object.values(d.models || {}).some(m => m.loaded);
     const hasError = Object.values(d.models || {}).some(m => m.error);
     const modelText = hasError ? 'Model error' : (loaded ? 'Model loaded' : 'Demo mode');
-    document.getElementById('model-status').textContent = modelText;
+    const modelStatus = document.getElementById('model-status');
+    if (modelStatus) modelStatus.textContent = modelText;
     const heroModel = document.getElementById('hero-model');
     if (heroModel) heroModel.textContent = modelText;
+    await refreshModels();
   } catch {
     const dot = document.getElementById('api-dot');
     dot.className = 'status-dot offline';
     document.getElementById('api-status').textContent = 'API Offline';
-    document.getElementById('model-status').textContent = 'Cannot reach server';
+    const modelStatus = document.getElementById('model-status');
+    if (modelStatus) modelStatus.textContent = 'Cannot reach server';
     const heroApi = document.getElementById('hero-api');
     if (heroApi) heroApi.textContent = 'Offline';
     const heroModel = document.getElementById('hero-model');
@@ -2374,6 +2749,114 @@ async function checkHealth() {
 }
 checkHealth();
 setInterval(checkHealth, 30000);
+
+async function refreshModels() {
+  await ensureApiBase();
+  const res = await fetch(API + '/models');
+  const models = await readJsonResponse(res);
+  if (!Array.isArray(models)) return;
+  modelCatalog = models;
+  const selected = modelCatalog.find(m => m.id === selectedModelId);
+  if (!selected || !selected.available) {
+    const preferred = modelCatalog.find(m => m.id === DEFAULT_MODEL_ID && m.available);
+    const firstAvailable = modelCatalog.find(m => m.available);
+    selectedModelId = (preferred || firstAvailable || { id: 'potato' }).id;
+  }
+  renderModelSelect();
+  renderModelWorkbench();
+  updateActiveModelUI();
+}
+
+function renderModelSelect() {
+  const select = document.getElementById('model-select');
+  if (!select) return;
+  select.innerHTML = modelCatalog.map(m => {
+    const state = modelStateText(m);
+    return `<option value="${m.id}" ${m.available ? '' : 'disabled'}>${m.name} - ${state}</option>`;
+  }).join('');
+  select.value = selectedModelId;
+}
+
+function modelStateText(model) {
+  if (!model) return 'unknown';
+  if (model.loaded) return 'loaded';
+  if (model.available) return 'demo';
+  const error = String(model.error || '').toLowerCase();
+  if (model.runtime === 'roboflow_workflow' || error.includes('roboflow_api_key')) return 'API key needed';
+  if (error.includes('not installed')) return 'dependency needed';
+  return 'artifact needed';
+}
+
+function renderModelWorkbench() {
+  const grid = document.getElementById('model-workbench-grid');
+  if (!grid) return;
+  grid.innerHTML = modelCatalog.map(m => {
+    const status = modelStateText(m);
+    const statusCls = m.loaded ? 'loaded' : (m.available ? 'demo' : 'missing');
+    const classes = Array.isArray(m.classes) ? m.classes.length : 0;
+    const source = m.source_url ? `<a class="btn" href="${m.source_url}" target="_blank" rel="noopener noreferrer">Source</a>` : '';
+    return `<div class="result-card model-card">
+      <div class="result-body">
+        <div class="model-card-head">
+          <div>
+            <div class="model-card-title">${m.name}</div>
+            <div class="model-card-family">${m.family || 'Model family'}</div>
+          </div>
+          <span class="model-status-chip ${statusCls}">${status}</span>
+        </div>
+        <div class="model-card-desc">${m.description || ''}</div>
+        <div class="model-card-meta">
+          <div><span>Task</span><strong>${m.task}</strong></div>
+          <div><span>Runtime</span><strong>${m.runtime}</strong></div>
+          <div><span>Input</span><strong>${m.input || 'image'}</strong></div>
+          <div><span>Classes</span><strong>${classes}</strong></div>
+        </div>
+        <div class="model-card-actions">
+          <button class="btn primary" onclick="selectModel('${m.id}')">Use Model</button>
+          ${source}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function selectModel(modelId) {
+  const nextModel = modelCatalog.find(m => m.id === modelId);
+  if (nextModel && !nextModel.available) {
+    const reason = nextModel.error || modelStateText(nextModel);
+    toast(`${nextModel.name}: ${reason}`);
+    renderModelSelect();
+    return;
+  }
+  selectedModelId = modelId || DEFAULT_MODEL_ID;
+  localStorage.setItem('potatoscan_model_id', selectedModelId);
+  renderModelSelect();
+  updateActiveModelUI();
+  resetImage();
+  resetVideo();
+  stopDroneStream();
+  toast(`Active model: ${(activeModel() || {}).name || selectedModelId}`);
+}
+
+function updateActiveModelUI() {
+  const model = activeModel();
+  if (!model) return;
+  const nameEl = document.getElementById('active-model-name');
+  const metaEl = document.getElementById('active-model-meta');
+  if (nameEl) nameEl.textContent = model.name;
+  if (metaEl) {
+    const status = model.loaded ? 'loaded' : (model.available ? 'demo-ready' : 'needs artifact');
+    metaEl.textContent = `${model.task} via ${model.runtime} - ${model.input || 'image'} - ${status}`;
+  }
+  const originalLabel = document.getElementById('img-original-label');
+  const annotatedLabel = document.getElementById('img-annotated-label');
+  if (originalLabel) originalLabel.textContent = model.id === 'potato' ? 'Potato Leaf Input' : 'Original Image';
+  if (annotatedLabel) {
+    annotatedLabel.textContent = model.id === 'potato'
+      ? 'Potato Disease YOLO Result'
+      : `${model.name} YOLO Result`;
+  }
+}
 
 const CLS_MAP = {
   healthy: 'healthy',
@@ -2395,11 +2878,11 @@ const LABEL_MAP = {
 };
 
 function clsKey(cls) {
-  return CLS_MAP[cls] || cls;
+  return CLS_MAP[cls] || String(cls || 'unknown').toLowerCase().replace(/[^a-z0-9]+/g, '-');
 }
 
 function clsIcon(cls) {
-  return { healthy: '🌿', early: '🟡', late: '🔴', early_blight: '🟡', late_blight: '🔴', no_detection: '--', unknown: '?' }[cls] || '?';
+  return { healthy: '🌿', early: '🟡', late: '🔴', early_blight: '🟡', late_blight: '🔴', no_detection: '--', unknown: '?' }[cls] || 'AI';
 }
 
 function clsColor(cls) {
@@ -2412,11 +2895,16 @@ function clsBgColor(cls) {
 
 function formatLabel(cls) {
   if (!cls) return 'Unknown';
-  return LABEL_MAP[cls] || cls.replace(/_/g, ' ');
+  const model = activeModel();
+  const labels = (model && model.labels) || {};
+  return labels[cls] || LABEL_MAP[cls] || String(cls).replace(/_/g, ' ');
 }
 
 function confBars(scores) {
-  return ['early', 'healthy', 'late'].map(c => {
+  const model = activeModel();
+  const modelClasses = model && Array.isArray(model.classes) ? model.classes : [];
+  const classes = modelClasses.length ? modelClasses : Object.keys(scores || {});
+  return classes.map(c => {
     const v = Math.round((scores[c] || 0) * 100);
     const label = formatLabel(c);
     return `<div class="conf-row">
@@ -2453,22 +2941,33 @@ function handleImgDrop(ev) {
 }
 
 async function handleImageFile(file) {
-  if (!file || !file.type.startsWith('image/')) return toast('Please select an image file');
+  await ensureApiBase();
+  if (!isImageUpload(file)) return toast('Please select an image file');
+  if (file.size > MAX_RAW_IMAGE_BYTES) return toast('Image must be under 80MB');
 
-  document.getElementById('img-original').src = URL.createObjectURL(file);
+  let prepared;
+  try {
+    prepared = await prepareImageUpload(file);
+  } catch (e) {
+    toast('Image error: ' + e.message);
+    return;
+  }
+
+  setImageObjectUrl(prepared.previewUrl);
   document.getElementById('img-zone').style.display = 'none';
   document.getElementById('img-progress').style.display = 'block';
   document.getElementById('img-pbar').style.width = '30%';
   document.getElementById('img-plabel').textContent = 'Uploading...';
 
   const fd = new FormData();
-  fd.append('file', file);
+  fd.append('file', prepared.uploadFile, prepared.uploadFile.name);
 
   try {
     document.getElementById('img-pbar').style.width = '60%';
     document.getElementById('img-plabel').textContent = 'Running inference...';
-    const res = await fetch(API + '/predict/image', { method: 'POST', body: fd });
-    const data = await res.json();
+    const res = await fetch(API + `/predict/image?${modelQuery()}`, { method: 'POST', body: fd });
+    const data = await readJsonResponse(res);
+    if (!data.result_url || !data.prediction) throw new Error('Prediction response was incomplete');
     document.getElementById('img-pbar').style.width = '100%';
 
     document.getElementById('img-annotated').src = data.result_url;
@@ -2486,10 +2985,16 @@ async function handleImageFile(file) {
 }
 
 function resetImage() {
+  if (imgObjectUrl) URL.revokeObjectURL(imgObjectUrl);
+  imgObjectUrl = null;
   document.getElementById('img-zone').style.display = 'block';
   document.getElementById('img-progress').style.display = 'none';
   document.getElementById('img-preview').style.display = 'none';
   document.getElementById('img-pbar').style.width = '0%';
+  document.getElementById('img-original').removeAttribute('src');
+  document.getElementById('img-annotated').removeAttribute('src');
+  const input = document.getElementById('img-file-input');
+  if (input) input.value = '';
 }
 
 function handleVidDrop(ev) {
@@ -2499,8 +3004,10 @@ function handleVidDrop(ev) {
 }
 
 async function handleVideoFile(file) {
-  if (!file || !file.type.startsWith('video/')) return toast('Please select a video file');
-  if (file.size > 100 * 1024 * 1024) return toast('Video must be under 100MB');
+  await ensureApiBase();
+  if (!isVideoUpload(file)) return toast('Please select a video file');
+  if (!modelSupports('video')) return toast('Selected model supports image inference only');
+  if (file.size > MAX_VIDEO_BYTES) return toast('Video must be under 100MB');
 
   document.getElementById('vid-zone').style.display = 'none';
   document.getElementById('vid-progress').style.display = 'block';
@@ -2517,9 +3024,10 @@ async function handleVideoFile(file) {
   }, 800);
 
   try {
-    document.getElementById('vid-plabel').textContent = 'Processing frames with YOLOv8n...';
-    const res = await fetch(API + '/predict/video', { method: 'POST', body: fd });
-    const data = await res.json();
+    document.getElementById('vid-plabel').textContent = `Processing frames with ${(activeModel() || {}).name || 'model'}...`;
+    const res = await fetch(API + `/predict/video?${modelQuery()}`, { method: 'POST', body: fd });
+    const data = await readJsonResponse(res);
+    if (!data.result_url) throw new Error('Video response was incomplete');
     clearInterval(pint);
     document.getElementById('vid-pbar').style.width = '100%';
 
@@ -2545,8 +3053,8 @@ async function handleVideoFile(file) {
 
     const dist = data.class_distribution || {};
     const distClasses = Object.prototype.hasOwnProperty.call(dist, 'no_detection')
-      ? ['early', 'healthy', 'late', 'no_detection']
-      : ['early', 'healthy', 'late'];
+      ? [...Object.keys(dist).filter(c => c !== 'no_detection'), 'no_detection']
+      : Object.keys(dist);
     document.getElementById('vid-result').innerHTML = `
       <div class="result-header">
         <div class="result-badge badge-${clsKey(cls)}">${clsIcon(cls)}</div>
@@ -2593,13 +3101,38 @@ function resetVideo() {
   document.getElementById('vid-progress').style.display = 'none';
   document.getElementById('vid-preview').style.display = 'none';
   document.getElementById('vid-pbar').style.width = '0%';
+  document.getElementById('vid-annotated').removeAttribute('src');
+  const input = document.getElementById('vid-file-input');
+  if (input) input.value = '';
 }
 
 async function startWebcam() {
+  await ensureApiBase();
+  if (!modelSupports('webcam')) {
+    toast('Selected model does not support realtime webcam mode');
+    return;
+  }
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    toast('Camera API is not available on this browser');
+    return;
+  }
+  if (!window.isSecureContext && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+    toast('Camera needs HTTPS on mobile. Open this page with HTTPS and accept the certificate.');
+    return;
+  }
   try {
     if (wcStream) wcStream.getTracks().forEach(t => t.stop());
-    wcStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: wcFacing }, audio: false });
+    const primary = { video: { facingMode: { ideal: wcFacing } }, audio: false };
+    const fallback = { video: true, audio: false };
+    try {
+      wcStream = await navigator.mediaDevices.getUserMedia(primary);
+    } catch {
+      wcStream = await navigator.mediaDevices.getUserMedia(fallback);
+    }
     const vid = document.getElementById('webcam-video');
+    vid.setAttribute('playsinline', 'true');
+    vid.setAttribute('muted', 'true');
+    vid.setAttribute('autoplay', 'true');
     vid.srcObject = wcStream;
     vid.onloadedmetadata = () => {
       vid.play().catch(() => {});
@@ -2619,7 +3152,10 @@ async function startWebcam() {
     document.getElementById('wc-result-card').style.display = 'block';
     document.getElementById('webcam-empty').style.display = 'none';
   } catch (e) {
-    toast('Camera error: ' + e.message);
+    const mobileHint = IS_MOBILE
+      ? ' On mobile: use HTTPS, allow camera permission, and retry.'
+      : '';
+    toast('Camera error: ' + e.message + mobileHint);
   }
 }
 
@@ -2669,33 +3205,38 @@ function startWcLoop() {
     c.width = Math.round(vid.videoWidth * scale);
     c.height = Math.round(vid.videoHeight * scale);
     c.getContext('2d').drawImage(vid, 0, 0, c.width, c.height);
-    c.toBlob(async blob => {
-      try {
-        const fd = new FormData();
-        fd.append('file', blob, 'frame.jpg');
-        const res = await fetch(API + '/predict/frame', { method: 'POST', body: fd });
-        if (!res.ok) throw new Error('Frame request failed');
-        const data = await res.json();
-        const now = performance.now();
-        if (wcLastTick) {
-          const loopMs = now - wcLastTick;
-          wcLastFps = Math.round(1000 / loopMs);
-        }
-        wcLastTick = now;
-        wcLastLatency = data.inference_ms || 0;
-        if (wcLastLatency) {
-          wcAvgMs = wcAvgMs ? (wcAvgMs * 0.8 + wcLastLatency * 0.2) : wcLastLatency;
-        }
-        updateWcDisplay(data);
-      } catch (e) {
-        toast('Realtime error: ' + e.message);
-      } finally {
-        wcInfer = false;
-        const target = wcAvgMs ? wcAvgMs * 1.2 : WC_BASE_INTERVAL;
-        const nextDelay = Math.min(WC_MAX_INTERVAL, Math.max(WC_MIN_INTERVAL, Math.round(Math.max(WC_BASE_INTERVAL, target))));
-        wcTimer = setTimeout(tick, nextDelay);
+    wcFrameWidth = c.width;
+    wcFrameHeight = c.height;
+    try {
+      const blob = await canvasToFrameBlob(c);
+      if (!blob) throw new Error('Could not capture camera frame');
+      const fd = new FormData();
+      fd.append('file', blob, 'frame.jpg');
+      const res = await fetch(API + `/predict/frame?${modelQuery()}`, { method: 'POST', body: fd });
+      const data = await readJsonResponse(res);
+      const now = performance.now();
+      if (wcLastTick) {
+        const loopMs = now - wcLastTick;
+        wcLastFps = Math.round(1000 / loopMs);
       }
-    }, 'image/jpeg', WC_JPEG_QUALITY);
+      wcLastTick = now;
+      wcLastLatency = data.inference_ms || 0;
+      if (wcLastLatency) {
+        wcAvgMs = wcAvgMs ? (wcAvgMs * 0.8 + wcLastLatency * 0.2) : wcLastLatency;
+      }
+      updateWcDisplay(data);
+    } catch (e) {
+      const now = Date.now();
+      if (now - wcLastErrorToast > 5000) {
+        wcLastErrorToast = now;
+        toast('Realtime error: ' + e.message);
+      }
+    } finally {
+      wcInfer = false;
+      const target = wcAvgMs ? wcAvgMs * 1.2 : WC_BASE_INTERVAL;
+      const nextDelay = Math.min(WC_MAX_INTERVAL, Math.max(WC_MIN_INTERVAL, Math.round(Math.max(WC_BASE_INTERVAL, target))));
+      wcTimer = setTimeout(tick, nextDelay);
+    }
   };
   tick();
 }
@@ -2714,25 +3255,34 @@ function updateWcDisplay(data) {
 
   const cvs = document.getElementById('webcam-canvas');
   const ctx = cvs.getContext('2d');
+  if (wcFrameWidth && wcFrameHeight && (cvs.width !== wcFrameWidth || cvs.height !== wcFrameHeight)) {
+    cvs.width = wcFrameWidth;
+    cvs.height = wcFrameHeight;
+  }
   ctx.clearRect(0, 0, cvs.width, cvs.height);
-  const sx = cvs.offsetWidth / cvs.width;
-  const sy = cvs.offsetHeight / cvs.height;
   for (const box of (data.boxes || [])) {
     const [x1, y1, x2, y2] = box.bbox;
     const c = box.class || cls;
     const pct = Math.round((box.confidence || data.confidence || 0) * 100);
-    const rx = x1 * sx, ry = y1 * sy, rw = (x2 - x1) * sx, rh = (y2 - y1) * sy;
+    const rx = x1, ry = y1, rw = x2 - x1, rh = y2 - y1;
     ctx.strokeStyle = clsBgColor(c);
     ctx.lineWidth = 3;
     ctx.strokeRect(rx, ry, rw, rh);
     ctx.fillStyle = clsBgColor(c);
-    const txt = `${c} ${pct}%`;
+    const txt = overlayLabel(c, pct);
     ctx.font = '12px monospace';
-    const tw = ctx.measureText(txt).width;
-    ctx.fillRect(rx, ry - 20, tw + 10, 20);
+    const tw = Math.min(ctx.measureText(txt).width, Math.max(80, cvs.width - rx - 12));
+    const labelY = ry > 22 ? ry - 22 : ry + 4;
+    ctx.fillRect(rx, labelY, tw + 10, 20);
     ctx.fillStyle = '#0a0a0a';
-    ctx.fillText(txt, rx + 5, ry - 6);
+    ctx.fillText(txt, rx + 5, labelY + 14, tw);
   }
+}
+
+function overlayLabel(cls, pct) {
+  const label = String(cls || 'unknown').replace(/_/g, ' ');
+  const shortLabel = label.length > 28 ? label.slice(0, 27).trim() + '...' : label;
+  return `${shortLabel} ${pct}%`;
 }
 </script>
 </body>
