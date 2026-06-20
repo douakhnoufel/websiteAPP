@@ -1,0 +1,42 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+actor "User" as User
+actor "Drone Bridge" as DroneBridge
+actor "MediaMTX" as MediaMTX
+
+rectangle "PotatoScan System" {
+  usecase "View UI" as UC_ViewUI
+  usecase "Check Health" as UC_Health
+  usecase "List Models" as UC_Models
+  usecase "Predict Image" as UC_Image
+  usecase "Predict Video" as UC_Video
+  usecase "Predict Frame" as UC_Frame
+  usecase "Test Stream" as UC_TestStream
+  usecase "View Live Drone Stream" as UC_LiveStream
+  usecase "Detect on Stream" as UC_DetectStream
+  usecase "Read Drone Telemetry" as UC_Telemetry
+  usecase "Send Drone Command" as UC_Command
+}
+
+User --> UC_ViewUI
+User --> UC_Health
+User --> UC_Models
+User --> UC_Image
+User --> UC_Video
+User --> UC_Frame
+User --> UC_TestStream
+User --> UC_LiveStream
+User --> UC_DetectStream
+User --> UC_Telemetry
+User --> UC_Command
+
+MediaMTX --> UC_TestStream
+MediaMTX --> UC_LiveStream
+MediaMTX --> UC_DetectStream
+DroneBridge --> UC_Telemetry
+DroneBridge --> UC_Command
+
+@enduml

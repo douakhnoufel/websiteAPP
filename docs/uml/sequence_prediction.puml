@@ -1,0 +1,27 @@
+@startuml
+skinparam shadowing false
+skinparam sequenceMessageAlign center
+autonumber
+
+actor Client
+participant "FastAPI" as API
+participant "routers/predict.py" as Predict
+participant "services/model_manager.py" as ModelMgr
+participant "services/inference.py" as Infer
+database "uploads/" as Uploads
+database "outputs/" as Outputs
+
+Client -> API: POST /predict/image
+API -> Predict: route call
+Predict -> Uploads: save uploaded file
+Predict -> Predict: validate type and size
+Predict -> Infer: run_inference(image, model_id)
+Infer -> ModelMgr: get_model_info(model_id)
+ModelMgr --> Infer: model metadata + YOLO instance
+Infer --> Predict: prediction data
+Predict -> Infer: draw_inference(image, pred, model_id)
+Predict -> Outputs: write annotated image
+Predict --> API: JSON result_url + prediction
+API --> Client: response
+
+@enduml
