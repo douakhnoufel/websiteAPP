@@ -1,0 +1,48 @@
+@startuml
+skinparam shadowing false
+skinparam componentStyle rectangle
+
+component "main.py" as Main
+component "routers/health.py" as Health
+component "routers/predict.py" as Predict
+component "routers/stream.py" as Stream
+component "routers/drone.py" as Drone
+component "core/config.py" as Config
+component "services/model_manager.py" as ModelMgr
+component "services/inference.py" as Infer
+component "services/security.py" as Security
+component "services/drone_manager.py" as DroneMgr
+component "services/file_handler.py" as Files
+component "templates/index.html" as Template
+component "static/" as Static
+database "models/potato.pt" as ModelFile
+database "uploads/" as Uploads
+database "outputs/" as Outputs
+
+Main --> Health
+Main --> Predict
+Main --> Stream
+Main --> Drone
+Main --> Config
+
+Health --> Template
+Health --> ModelMgr
+
+Predict --> ModelMgr
+Predict --> Infer
+Predict --> Files
+Predict --> Uploads
+Predict --> Outputs
+
+Stream --> Security
+Stream --> ModelMgr
+Stream --> Infer
+
+Drone --> Security
+Drone --> DroneMgr
+
+ModelMgr --> ModelFile
+Infer --> ModelMgr
+Main --> Static
+
+@enduml

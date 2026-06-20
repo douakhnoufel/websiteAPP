@@ -1,0 +1,42 @@
+@startuml
+skinparam shadowing false
+skinparam componentStyle rectangle
+
+node "Client Device" as Client {
+  artifact "Browser / App"
+}
+
+node "Host / VPS" as Host {
+  node "potatoescan container" as App {
+    component "FastAPI :8000" as FastAPI
+    component "Routers" as Routers
+    component "Services" as Services
+    component "templates/index.html" as Template
+    artifact "models/" as Models
+    artifact "uploads/" as Uploads
+    artifact "outputs/" as Outputs
+  }
+
+  node "mediamtx container" as Stream {
+    component "MediaMTX" as MTX
+    component "RTMP :1935" as RTMP
+    component "RTSP :8554" as RTSP
+    component "HTTP :8888" as HTTP1
+    component "HTTP :8889" as HTTP2
+  }
+}
+
+Client --> FastAPI : HTTP 8000
+FastAPI --> Template
+FastAPI --> Routers
+Routers --> Services
+Services --> Models
+FastAPI --> Uploads
+FastAPI --> Outputs
+FastAPI --> MTX : RTMP / RTSP ingest
+MTX --> RTMP
+MTX --> RTSP
+MTX --> HTTP1
+MTX --> HTTP2
+
+@enduml
